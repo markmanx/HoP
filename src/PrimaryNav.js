@@ -1,26 +1,42 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Constants from './Constants.js';
 import { TweenMax, TimelineMax, Expo } from 'gsap';
 import Button from './Button.js';
 
-const navStyle = {
-  position: 'absolute',
-  top: '0',
-  width: '100%',
-  height: '60px',
-  backgroundColor: 'orange',
-  marginTop: '-60px'
+const styles = {
+  wrapper: {
+    position: 'absolute',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    bottom: 0,
+    width: '100%',
+    height: Constants.sizes.primaryNavHeight,
+    backgroundColor: 'orange'
+  },
+  menuItem: {
+    padding: '10px 20px',
+    width: '33%',
+    height: '100%',
+    textAlign: 'center',
+    boxSizing: 'border-box'
+  }
 }
 
 class PrimaryNav extends Component {
-  onClick(e) {
-    this.props.onClick(e);
+  state = {
+
   }
 
   render() {
     return (
-      <div id="primary-nav" style={navStyle}>
-        <Button text="Click Me" onClick={(e) => this.onClick(e)}></Button>
+      <div id="primary-nav" style={styles.wrapper}>
+        <Button text="previous room" arrowAlignment="left" css={styles.menuItem} />
+        <Button text="Map" onClick={(e) => this.props.toggleMapPanel(e)} active={this.props.mapPanelShowing} css={styles.menuItem} />
+        <Button text="Info" onClick={(e) => this.props.toggleInfoPanel(e)} active={this.props.infoPanelShowing} css={styles.menuItem} />
+        <Button text="next room" arrowAlignment="right" css={styles.menuItem} />
       </div>
     )
   }

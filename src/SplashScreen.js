@@ -15,6 +15,12 @@ const divStyle = {
   justifyContent: 'center'
 }
 
+const styles = {
+  exploreButton: {
+    marginTop: '150px'
+  }
+}
+
 const videoSettings = {
   videojs: {
     muted: true,
@@ -27,10 +33,6 @@ const videoSettings = {
 }
 
 class SplashScreen extends Component {
-  componentDidMount() {
-
-  }
-
   onStart(e) {
     this.props.onStart();
   }
@@ -47,7 +49,9 @@ class SplashScreen extends Component {
           <div className="wrapper" style={divStyle}>
             <Text text="Houses of Parliament" type="jumbo"></Text>
             <Text text="Explore this iconic seat of power" type="regular"></Text>
-            <Button text="Let's Explore" onClick={(e) => this.onStart(e)}></Button>
+            <div style={styles.exploreButton}>
+              <Button text="Let's Explore" onClick={(e) => this.onStart(e)} arrowAlignment="right"></Button>
+            </div>
           </div>
 
         </div>

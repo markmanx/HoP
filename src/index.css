@@ -8,16 +8,6 @@
   src: url('./assets/fonts/CNNSansDisplay-Light.woff');
 }
 
-.text.jumbo {
-  font-family: 'CNNSans-Bold';
-  font-size: 40px;
-  color: white;
-}
-
-.text.center {
-  text-align: center;
-}
-
 html, body {
   margin: 0;
   padding: 0;
@@ -31,4 +21,20 @@ html, body {
   left: 0;
   top: 0;
   overflow: hidden;
+}
+
+.rotate180 {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.rotate45 {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }

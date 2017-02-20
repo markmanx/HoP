@@ -8,12 +8,13 @@ class SlidePanel extends Component {
     super(props);
 
     this.state = {
-      localIsMapShowing: this.props.isMapShowing,
+      localIsShowing: this.props.isShowing,
       divStyle: {
         position: 'absolute',
         width: '100%',
-        height: (Constants.slidePanel.height * 100) + '%',
-        bottom: -(window.innerHeight * Constants.slidePanel.height),
+        height: (window.innerHeight - (parseInt(Constants.sizes.audioUiDiam) + (parseInt(Constants.sizes.audioUiMargin) * 2))) + 'px',
+        bottom: -(window.innerHeight - parseInt(Constants.sizes.audioUiDiam)) + parseInt(Constants.sizes.primaryNavHeight) + (parseInt(Constants.sizes.audioUiMargin) * 2) + 'px',
+        overflow: 'hidden',
         backgroundColor: 'white'
       }
     };
@@ -36,10 +37,10 @@ class SlidePanel extends Component {
     var el = ReactDOM.findDOMNode(this.refs.panel);
     var tl = new TimelineMax();
 
-    if (newProps.isMapShowing) {
-      tl.append(this.anim.tweenTo(1)).addCallback(() => { target.setState({localIsMapShowing: true}), 1 });
+    if (newProps.isShowing) {
+      tl.append(this.anim.tweenTo(1)).addCallback(() => { target.setState({localIsShowing: true}), 1 });
     } else {
-      tl.append(this.anim.tweenTo(0)).addCallback(() => { target.setState({localIsMapShowing: false}), 0 });
+      tl.append(this.anim.tweenTo(0)).addCallback(() => { target.setState({localIsShowing: false}), 0 });
     }
   }
 
@@ -47,7 +48,6 @@ class SlidePanel extends Component {
     return (
       <div className="slide-panel" style={this.state.divStyle} ref="panel">
         {this.props.children}
-        <h1>{this.state.localIsMapShowing ? 'yes' : 'no'}</h1>
       </div>
     )
   }

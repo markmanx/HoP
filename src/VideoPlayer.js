@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import 'video.js/dist/video-js.css'
 import videojs from 'video.js';
-import VideoPanorama from 'videojs-panorama'; //https://github.com/yanwsh/videojs-panorama/issues/22
+import VideoPanorama from 'videojs-panorama';
 
 // Implementing videojs with React >> https://github.com/videojs/video.js/pull/3972
 // https://github.com/videojs/video.js/pull/3972/commits/99b6e83fe13e157b6667558a204cdc1dd18426fb
@@ -41,7 +41,7 @@ class VideoPlayer extends Component {
       if (this.props.videoSettings.is360) {
         VideoPanorama(this.player, {
             clickToToggle: (!this.props.isMobile),
-            autoMobileOrientation: true,
+            autoMobileOrientation: false,
             initFov: 100,
             VREnable: this.props.isMobile,
             clickAndDrag: true,
