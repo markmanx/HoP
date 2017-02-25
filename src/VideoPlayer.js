@@ -1,60 +1,63 @@
-import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-
+import React, { Component } from 'react';
 import 'video.js/dist/video-js.css'
 import videojs from 'video.js';
 import VideoPanorama from 'videojs-panorama';
 
-// Implementing videojs with React >> https://github.com/videojs/video.js/pull/3972
-// https://github.com/videojs/video.js/pull/3972/commits/99b6e83fe13e157b6667558a204cdc1dd18426fb
-
-const playerStyle = {
-  position: 'absolute',
-  minHeight: '100%',
-  minWidth: '100%',
-  width: 'auto',
-  height: 'auto',
-  top: 0,
-  left: 0
+const styles = {
+  player: {
+    position: 'absolute',
+    minHeight: '100%',
+    minWidth: '100%',
+    width: 'auto',
+    height: 'auto',
+    top: 0,
+    left: 0
+  }
 }
 
 class VideoPlayer extends Component {
+  state = {
+    isFirstPlay: true
+  }
+
   initializePlayer(){
 
-      var videoElement = this.refs.player;
-
-      this.player = videojs(videoElement, this.props.videoSettings.videojs,  () => {
+      this.player = videojs(this.playerEl, this.props.videoSettings.videojs,  () => {
           window.addEventListener("resize", () => {
               var canvas = this.player.getChild('Canvas');
               if(canvas) canvas.handleResize();
           });
 
-          if (!this.props.videoSettings.is360) this.player.play();
+          if (this.props.videoSettings.is360) {
+            this.player.on('canplay', this.initPanorama.bind(this));
+          } else {
+            this.player.play();
+          }
+
       });
 
-      this.player.src(this.props.videoSettings.src);
+      var width = this.playerEl.offsetWidth;
+      var height = this.playerEl.offsetHeight;
+      this.player.width(width);
+      this.player.height(height);
+  }
 
-      var width = videoElement.offsetWidth;
-      var height = videoElement.offsetHeight;
-      this.player.width(width), this.player.height(height);
+  initPanorama() {
+    VideoPanorama(this.player, {
+        clickToToggle: (!this.props.isMobile),
+        autoMobileOrientation: false,
+        initFov: 100,
+        VREnable: this.props.isMobile,
+        clickAndDrag: true,
+        NoticeMessage: '',
+        callback: function () {
+          this.player.play();
+        }.bind(this)
+    });
 
-      if (this.props.videoSettings.is360) {
-        VideoPanorama(this.player, {
-            clickToToggle: (!this.props.isMobile),
-            autoMobileOrientation: false,
-            initFov: 100,
-            VREnable: this.props.isMobile,
-            clickAndDrag: true,
-            NoticeMessage: '',
-            callback: function () {
-              this.player.play();
-            }.bind(this)
-        });
-
-        this.player.on("VRModeOn", function(){
-            this.player.controlBar.fullscreenToggle.trigger("tap");
-        });
-      }
+    this.player.on("VRModeOn", function(){
+        this.player.controlBar.fullscreenToggle.trigger("tap");
+    });
   }
 
   componentDidMount() {
@@ -63,7 +66,12 @@ class VideoPlayer extends Component {
 
   render() {
     return (
-      <video className="video-js vjs-default-skin" style={playerStyle} crossOrigin="anonymous" controls ref="player">
+      <video
+        className="video-js vjs-default-skin"
+        style={styles.player}
+        crossOrigin="anonymous"
+        controls
+        ref={el => this.playerEl = el}>
       </video>
     )
   }

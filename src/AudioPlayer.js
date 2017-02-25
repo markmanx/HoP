@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Constants from './Constants.js';
-import ProgressBar, {Circle} from 'react-progressbar.js';
+import {Circle} from 'react-progressbar.js';
 import Sound from 'react-sound';
 import audioIcon from './assets/audio-icons/Max-Foster_270px.png';
 
@@ -11,7 +11,7 @@ const progressBarOptions = {
   trailColor: 'white'
 }
 
-let progressWrapperDiam = (progressBarOptions.strokeWidth * 2) + parseInt(Constants.sizes.audioUiDiam);
+let progressWrapperDiam = (progressBarOptions.strokeWidth * 2) + parseInt(Constants.sizes.audioUiDiam, 10);
 
 const styles = {
   audioWrapper: {
@@ -28,8 +28,8 @@ const styles = {
     width: progressWrapperDiam + 'px',
     height: progressWrapperDiam + 'px',
     marginLeft: Constants.sizes.audioUiMargin,
-    '-webkit-border-radius': '400px',
-    '-moz-border-radius': '400px',
+    WebkitBorderRadius: '400px',
+    MozBorderRadius: '400px',
     borderRadius: '400px'
   },
   audioIcon: {
@@ -74,21 +74,23 @@ class AudioPlayer extends Component {
 
   togglePause(e) {
     this.setState({
-      playStatus: (this.state.playStatus == Sound.status.PLAYING) ? Sound.status.PAUSED : Sound.status.PLAYING
+      playStatus: (this.state.playStatus === Sound.status.PLAYING) ? Sound.status.PAUSED : Sound.status.PLAYING
     });
   }
 
   render() {
     return (
       <div style={styles.audioWrapper}>
+
         <Sound
           url={this.props.audioSettings.url}
           playStatus={this.state.playStatus}
           onLoading={(e) => this.onAudioLoading(e)}
           onPlaying={(e) => this.onAudioPlaying(e)}
-          onFinishedPlaying={(e) => this.onAudioFinished(e)} />
+          onFinishedPlaying={(e) => this.onAudioFinished(e)}/>
+
         <div style={styles.progressWrapper} onClick={(e) => this.togglePause(e)} >
-          <img src={audioIcon} style={styles.audioIcon} />
+          <img src={audioIcon} style={styles.audioIcon} alt='audio-icon' />
           <Circle
             containerStyle={styles.progressBar}
             options={progressBarOptions}
@@ -96,9 +98,11 @@ class AudioPlayer extends Component {
             progress={this.state.progress}
             />
         </div>
+
         <div style={styles.roomTitle}>
           {this.props.title}
         </div>
+
       </div>
     )
   }

@@ -4,7 +4,7 @@ import App from './App';
 import SplashScreen from './SplashScreen';
 import Room from './Room';
 import './index.css';
-import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 ReactDOM.render(
   <Router history={browserHistory}>

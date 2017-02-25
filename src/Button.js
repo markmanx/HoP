@@ -71,11 +71,11 @@ class Button extends Component {
         }
         {
           this.props.arrowAlignment === 'left' &&
-            <img src={arrowImg} className="rotate180" style={{marginRight: '7px'}}/>
+            <img src={arrowImg} className="rotate180" style={{marginRight: '7px'}} alt='arrow' />
         }
         {this.state.isExpanded ? this.props.text : '+'}
         {this.props.arrowAlignment === 'right' &&
-          <img src={arrowImg} style={{marginLeft: '7px'}} />
+          <img src={arrowImg} style={{marginLeft: '7px'}} alt='arrow' />
         }
       </div>
     )

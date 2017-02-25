@@ -35,5 +35,9 @@ module.exports = {
     shadow: {
       textShadow: '1px 1px 2px #000000'
     }
-  }
+  },
+  navItems: [
+    {name: 'MAP', icon: ''},
+    {name: 'ROOM_INFO', icon: ''}
+  ]
 }

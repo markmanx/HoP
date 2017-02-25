@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Constants from './Constants.js';
-import { TweenMax, TimelineMax, Expo } from 'gsap';
 import Button from './Button.js';
+import Map from './Map.js';
+import SlidePanel from './SlidePanel.js';
+import closeIconImg from './assets/close-icon.png';
 
 const styles = {
   wrapper: {
     position: 'absolute',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     bottom: 0,
     width: '100%',
@@ -22,21 +22,73 @@ const styles = {
     height: '100%',
     textAlign: 'center',
     boxSizing: 'border-box'
+  },
+  roomInfoWrapper: {
+    width: '100%',
+    height: '100%',
+    padding: '40px 30px',
+    boxSizing: 'border-box',
+    color: Constants.colors.text_dark,
+    overflow: 'scroll'
+  },
+  roomInfoClose: {
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '60px',
+    height: '60px',
+    right: 0,
+    top: 0,
+    backgroundColor: 'white'
   }
 }
 
 class PrimaryNav extends Component {
-  state = {
+  isCurrNavItem(name) {
+    if (typeof this.props.currNavIndex !== 'undefined' && this.props.navItems[this.props.currNavIndex].name === name) {
+      return true;
+    }
 
+    return false;
   }
 
   render() {
     return (
-      <div id="primary-nav" style={styles.wrapper}>
-        <Button text="previous room" arrowAlignment="left" css={styles.menuItem} />
-        <Button text="Map" onClick={(e) => this.props.toggleMapPanel(e)} active={this.props.mapPanelShowing} css={styles.menuItem} />
-        <Button text="Info" onClick={(e) => this.props.toggleInfoPanel(e)} active={this.props.infoPanelShowing} css={styles.menuItem} />
-        <Button text="next room" arrowAlignment="right" css={styles.menuItem} />
+      <div>
+
+        <SlidePanel
+          isShowing={this.isCurrNavItem('ROOM_INFO')}
+          children={
+            <div style={styles.roomInfoWrapper}>
+              <div style={styles.roomInfoClose} onClick={(e) => this.props.toggleInfoPanel(e)}>
+                <img src={closeIconImg} alt="map" />
+              </div>
+              <div style={Constants.text.small}>{this.props.roomData.title}</div>
+              <div style={Constants.text.h2}>{this.props.roomData.descTitle}</div>
+              <div className="separator"></div>
+              <div style={Constants.text.regular}>{this.props.roomData.desc}</div>
+            </div>
+          }
+          />
+
+        <SlidePanel
+          isShowing={this.isCurrNavItem('MAP')}
+          children={
+            <div>
+              <Map
+                onRoomClicked={ (item, e) => this.props.onRoomClicked(item, e) }
+                roomsVisited={this.props.roomsVisited}
+                totalRooms={this.props.totalRooms}
+                />
+            </div>} />
+
+        <div id="primary-nav" style={styles.wrapper}>
+          {this.props.navItems.map((item, index) =>
+            <Button key={index} text={item.name} onClick={(e) => this.props.onNavItemClicked(e, index)} active={this.isCurrNavItem(item.name)} css={styles.menuItem} />
+          )}
+        </div>
+
       </div>
     )
   }

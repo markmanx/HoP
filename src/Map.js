@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Constants from './Constants.js';
-import ProgressBar, {Line} from 'react-progressbar.js';
+import {Line} from 'react-progressbar.js';
 import ElementPan from 'react-element-pan';
 import mapImg from './assets/Hop-model-illustration.png';
 import Button from './Button.js';
@@ -30,39 +30,39 @@ const styles = {
     width: (window.innerWidth - 50) + 'px',
     left: '25px',
     bottom: '25px',
-    height: '100px'
+    height: '30px'
   }
 }
 
 class Map extends Component {
-  state = {
-    introRan: false
+  getHotspotCSS(coords) {
+    return {
+      position: 'absolute',
+      left: coords[0] + 'px',
+      top: coords[1] + 'px'
+    }
   }
 
   render() {
     return (
         <div id="wrapper" style={styles.map}>
+
           <ElementPan
             style={styles.mapWrapper}>
-            <img src={mapImg} />
+            <img src={mapImg} alt='map'/>
             <div style={styles.hotspotWrapper}>
-              {RoomData.map(item => {
-                let divStyle = {
-                  position: 'absolute',
-                  left: item.coords[0] + 'px',
-                  top: item.coords[1] + 'px'
-                }
-
+              {RoomData.map((item, index) => {
                 return (
-                  <div style={divStyle}>
-                    <Button key={item.slug} text={item.title} onClick={this.props.onRoomClicked.bind(this, item)} expandable={true} isHotspot={true} ></Button>
+                  <div style={this.getHotspotCSS(item.coords)} key={index}>
+                    <Button text={item.title} onClick={this.props.onRoomClicked.bind(this, item)} expandable={true} isHotspot={true} ></Button>
                   </div>
                 )
               })}
             </div>
           </ElementPan>
+
           <div style={styles.progressWrapper}>
-            {this.props.roomsVisited.length + '/' + this.props.totalRooms + ' hotpoints discovered!'}
+            {this.props.roomsVisited.length + '/' + this.props.totalRooms + ' rooms discovered!'}
             <Line
               containerStyle={styles.progressBar}
               options={progressBarOptions}
@@ -70,6 +70,7 @@ class Map extends Component {
               progress={this.props.roomsVisited.length / this.props.totalRooms}
               />
           </div>
+
         </div>
     )
   }
