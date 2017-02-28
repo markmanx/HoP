@@ -13,7 +13,10 @@ const styles = {
     width: '100%',
     height: '100%',
     overflow: 'hidden',
-    backgroundColor: Constants.colors.ui_tertiary
+    backgroundColor: Constants.colors.ui_tertiary,
+    backgroundImage: 'url(' + process.env.PUBLIC_URL + '/assets/logo.png' + ')',
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat'
   }
 }
 

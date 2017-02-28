@@ -16,16 +16,17 @@ module.exports = {
   text: {
     h1: {
       fontFamily: 'CNNSans-Bold',
-      fontSize: '40px'
+      fontSize: '50px',
+      lineHeight: '54px'
     },
     h2: {
       fontFamily: 'CNNSans-Light',
-      fontSize: '30px',
+      fontSize: '20px',
       letterSpacing: '1px'
     },
-    regular: {
+    h3: {
       fontFamily: 'CNNSans-Light',
-      fontSize: '20px'
+      fontSize: '28px'
     },
     small: {
       fontFamily: 'CNNSans-Light',

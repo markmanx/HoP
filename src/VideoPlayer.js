@@ -17,29 +17,38 @@ const styles = {
 
 class VideoPlayer extends Component {
   state = {
-    isFirstPlay: true
+    isFirstPlay: true,
+    mounted: false,
+    initRequested: false
   }
 
   initializePlayer(){
+    this.setState({ initRequested: true });
 
-      this.player = videojs(this.playerEl, this.props.videoSettings.videojs,  () => {
-          window.addEventListener("resize", () => {
-              var canvas = this.player.getChild('Canvas');
-              if(canvas) canvas.handleResize();
-          });
+    if (!this.state.mounted) return;
 
-          if (this.props.videoSettings.is360) {
-            this.player.on('canplay', this.initPanorama.bind(this));
-          } else {
-            this.player.play();
-          }
+    this.player = videojs(this.playerEl, this.props.videoSettings.videojs,  () => {
+        window.addEventListener("resize", () => {
+            var canvas = this.player.getChild('Canvas');
+            if(canvas) canvas.handleResize();
+        });
 
-      });
+        this.player.on('canplay', this.onCanPlay.bind(this));
+    });
 
-      var width = this.playerEl.offsetWidth;
-      var height = this.playerEl.offsetHeight;
-      this.player.width(width);
-      this.player.height(height);
+    var width = this.playerEl.offsetWidth;
+    var height = this.playerEl.offsetHeight;
+    this.player.width(width);
+    this.player.height(height);
+  }
+
+  onCanPlay() {
+    if (this.props.videoSettings.is360) {
+      this.initPanorama();
+    } else {
+      this.player.play();
+      this.props.onVideoReady();
+    }
   }
 
   initPanorama() {
@@ -51,17 +60,26 @@ class VideoPlayer extends Component {
         clickAndDrag: true,
         NoticeMessage: '',
         callback: function () {
+          console.log(this.player.panorama)
           this.player.play();
+          this.props.onVideoReady();
         }.bind(this)
     });
-
+    /*
     this.player.on("VRModeOn", function(){
         this.player.controlBar.fullscreenToggle.trigger("tap");
     });
+    */
   }
 
   componentDidMount() {
-    this.initializePlayer();
+    this.setState({ mounted: true });
+
+    if (this.state.initRequested) this.initializePlayer();
+  }
+
+  componentWillUnmount() {
+    this.player && this.player.off('canplay', this.onCanPlay.bind(this));
   }
 
   render() {

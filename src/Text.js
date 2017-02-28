@@ -1,41 +1,20 @@
 import React, { Component } from 'react';
 
+const styles = {
+   span: {
+     position: 'relative',
+     display: 'block'
+   }
+}
+
 class Text extends Component {
-  constructor(props) {
-    super(props);
-
-    let spanStyle = {
-      position: 'relative',
-      display: 'block'
-    };
-
-    switch(this.props.type) {
-      case 'jumbo':
-        Object.assign(spanStyle, {
-          fontFamily: 'CNNSans-Bold',
-          fontSize: '50px',
-          lineHeight: '55px',
-          color: 'white'
-        })
-        break;
-      case 'regular':
-      default:
-        Object.assign(spanStyle, {
-          fontFamily: 'CNNSans-Light',
-          fontSize: '20px',
-          lineHeight: '25px',
-          color: 'white'
-        })
-    }
-
-    this.state = {
-      spanStyle: spanStyle
-    }
+  getStyle() {
+    return Object.assign({}, styles.span, this.props.textStyle, {color: this.props.color});
   }
 
   render() {
     return (
-      <span style={this.state.spanStyle}>
+      <span style={this.getStyle()}>
         {this.props.text}
       </span>
     )

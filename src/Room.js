@@ -5,30 +5,56 @@ import AudioPlayer from './AudioPlayer.js';
 
 class Room extends Component {
   state = {
-    key: this.props.key
+    key: this.props.key,
+    audioReady: false,
+    videoReady: false,
+    contentReady: false
   }
 
   componentDidMount() {
-    this.card.onEnter();
+    this.card.onEnter(() => this.enterAnimComplete());
+  }
+
+  enterAnimComplete() {
+    this.videoPlayer.initializePlayer();
   }
 
   componentWillLeave(callback) {
     this.card.onExit(callback);
   }
 
+  onVideoReady() {
+    this.setState({
+      videoReady: true
+    })
+
+    this.card.onContentLoaded();
+  }
+
+  onAudioLoaded() {
+    this.setState({
+      audioReady: true
+    })
+  }
+
   render() {
     return (
-      <Card ref={card => this.card = card} key={this.state.key}>
+      <Card
+        ref={card => this.card = card}
+        key={this.state.key}
+        cardTitle={this.props.roomData.title}>
 
-        <div>
-          <VideoPlayer
-            videoSettings={this.props.roomData.videoSettings}
-            isMobile={this.props.isMobile} />
-          <AudioPlayer
-            title={this.props.roomData.title}
-            audioSettings={this.props.roomData.audioSettings}
-            />
-        </div>
+          <div>
+            <VideoPlayer
+              videoSettings={this.props.roomData.videoSettings}
+              isMobile={this.props.isMobile}
+              onVideoReady={(e) => this.onVideoReady(e)}
+              ref={player => this.videoPlayer = player} />
+            <AudioPlayer
+              title={this.props.roomData.title}
+              audioSettings={this.props.roomData.audioSettings}
+              />
+          </div>
 
       </Card>
     )

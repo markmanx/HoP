@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
+import Constants from './Constants.js';
 import VideoPlayer from './VideoPlayer.js';
 import Card from './Card.js';
 import Text from './Text.js';
 import Button from './Button.js';
 
-const divStyle = {
-  display: '-webkit-box',
-  display: '-ms-flexbox',
-  display: 'flex',
-  flexDirection: 'column',
-  textAlign: 'center',
-  alignItems: 'center',
-  justifyContent: 'center'
-}
-
 const styles = {
+  textWrapper: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    display: '-webkit-box',
+    display: '-ms-flexbox',
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   exploreButton: {
     marginTop: '150px'
   }
@@ -59,14 +64,13 @@ class SplashScreen extends Component {
               isMobile={this.props.isMobile}>
             </VideoPlayer>
 
-            <div className="wrapper" style={divStyle}>
-              <Text text="Houses of Parliament" type="jumbo" ref="line1"></Text>
-              <Text text="Explore this iconic seat of power" type="regular" ref="line2"></Text>
+            <div style={styles.textWrapper}>
+              <Text text="Houses of Parliament" textStyle={Constants.text.h1} color={Constants.colors.text_light}></Text>
+              <Text text="Explore this iconic seat of power" textStyle={Constants.text.h2} color={Constants.colors.text_light}></Text>
               <div style={styles.exploreButton}>
                 <Button text="Let's Explore"
                   onClick={(e) => this.onStart(e)}
-                  arrowAlignment="right"
-                  ref="button">
+                  arrowAlignment="right">
                 </Button>
               </div>
             </div>

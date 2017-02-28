@@ -3,7 +3,7 @@ import Constants from './Constants.js';
 import {Line} from 'react-progressbar.js';
 import ElementPan from 'react-element-pan';
 import mapImg from './assets/Hop-model-illustration.png';
-import Button from './Button.js';
+import Hotspot from './Hotspot.js';
 import RoomData from './RoomData.js';
 
 const progressBarOptions = {
@@ -31,10 +31,18 @@ const styles = {
     left: '25px',
     bottom: '25px',
     height: '30px'
+  },
+  zoomWrapper: {
+
   }
 }
 
 class Map extends Component {
+
+  zoomIn(section) {
+
+  }
+
   getHotspotCSS(coords) {
     return {
       position: 'absolute',
@@ -47,18 +55,17 @@ class Map extends Component {
     return (
         <div id="wrapper" style={styles.map}>
 
-          <ElementPan
-            style={styles.mapWrapper}>
-            <img src={mapImg} alt='map'/>
-            <div style={styles.hotspotWrapper}>
-              {RoomData.map((item, index) => {
-                return (
-                  <div style={this.getHotspotCSS(item.coords)} key={index}>
-                    <Button text={item.title} onClick={this.props.onRoomClicked.bind(this, item)} expandable={true} isHotspot={true} ></Button>
-                  </div>
-                )
-              })}
-            </div>
+          <ElementPan style={styles.mapWrapper}>
+              <img src={mapImg} alt='map'/>
+              <div style={styles.hotspotWrapper}>
+                {RoomData.map((item, index) => {
+                  return (
+                    <div style={this.getHotspotCSS(item.coords)} key={index}>
+                      <Hotspot text={item.title} onClick={this.props.onRoomClicked.bind(this, item)} expandable={true} isHotspot={true} ></Hotspot>
+                    </div>
+                  )
+                })}
+              </div>
           </ElementPan>
 
           <div style={styles.progressWrapper}>

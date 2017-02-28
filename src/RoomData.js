@@ -1,7 +1,8 @@
 const RoomData = [
   {
+    sectionId: 0,
     slug: 'ElizabethTower',
-    title: 'Elizabeth Tower',
+    title: 'The Elizabeth Tower',
     descTitle: 'Inside the clock dial',
     desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis purus ac nunc rutrum suscipit nec ac justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis purus ac nunc rutrum suscipit nec ac justo.  Vestibulum quis vestibulum erat, at imperdiet libero. Cras feugiat gravida tempus. Vivamus sollicitudin neque ut elit vehicula accumsan. Proin vitae consequat sapien. Nulla a massa id tortor aliquet bibendum id vel velit. Aenean augue tellus, vehicula nec fringilla et, tincidunt non quam. Donec interdum nisi at semper mollis. Sed placerat, tellus et accumsan molestie, magna ipsum vulputate mauris, nec congue lorem lorem sit amet lectus. Proin rutrum turpis ac accumsan auctor.',
     coords: [100, 100],
@@ -18,6 +19,7 @@ const RoomData = [
     }
   },
   {
+    sectionId: 1,
     slug: 'slug',
     title: 'Yo',
     descTitle: 'Inside the clock dial',
