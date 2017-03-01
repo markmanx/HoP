@@ -93,6 +93,7 @@ class VideoPlayer extends Component {
   render() {
     return (
       <video
+        webkit-playsinline
         className="video-js vjs-default-skin"
         style={styles.player}
         crossOrigin="anonymous"
