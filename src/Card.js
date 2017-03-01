@@ -61,7 +61,12 @@ class Card extends Component {
   render() {
     return (
 
-        <div key={this.props.key} style={styles.outerWrapper} ref={el => this.outerWrapper = el}>
+        <div
+          key={this.props.key}
+          style={styles.outerWrapper}
+          ref={el => this.outerWrapper = el}
+          onClick={(e) => this.props.onClick(e)}>
+
           <div style={styles.innerWrapper} ref={el => this.innerWrapper = el}>
             {this.props.children}
             { (typeof this.props.cardTitle === 'string') &&
@@ -70,6 +75,7 @@ class Card extends Component {
               </div>
             }
           </div>
+
         </div>
 
     )

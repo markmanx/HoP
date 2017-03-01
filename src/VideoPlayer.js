@@ -56,6 +56,11 @@ class VideoPlayer extends Component {
     if (this.state.playing) this.player.play();
   }
 
+  play() {
+    console.log('yo')
+    this.player.play();
+  }
+
   initPanorama() {
     VideoPanorama(this.player, {
         clickToToggle: (!this.props.isMobile),
