@@ -61,7 +61,7 @@ class PrimaryNav extends Component {
           isExpanded={this.isCurrNavItem(C.navItems.ROOM_INFO)}
           onOpen={(e) => this.props.onNavItemOpened(e, C.navItems.ROOM_INFO)}
           onClose={(e) => this.props.onNavItemClosed(e)}
-          navIconUrl={process.env.PUBLIC_URL + '/icons/map.png'}
+          navIconUrl={C.assetsDir + '/icons/map.png'}
           children={
             <div style={styles.roomInfoWrapper}>
               <div style={C.text.small}>{this.props.roomData.title}</div>
@@ -77,7 +77,7 @@ class PrimaryNav extends Component {
           isExpanded={this.isCurrNavItem(C.navItems.MAP)}
           onOpen={(e) => this.props.onNavItemOpened(e, C.navItems.MAP)}
           onClose={(e) => this.props.onNavItemClosed(e)}
-          navIconUrl={process.env.PUBLIC_URL + '/icons/map.png'}
+          navIconUrl={C.assetsDir + '/icons/map.png'}
           children={
             <div>
               <Map

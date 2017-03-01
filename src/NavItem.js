@@ -37,6 +37,7 @@ const styles = {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: (C.navItemSize * .5) + 'px ',
+    zIndex: 2
   },
   navIcon: {
     width: '100%',
@@ -63,11 +64,11 @@ class NavItem extends Component {
   }
 
   getNavIconCss() {
-    return Object.assign({}, styles.icon, styles.navIcon, {backgroundImage: 'url(' + this.props.navIconUrl + ')'});
+    return Object.assign({}, styles.icon, styles.navIcon, styles.circle, {backgroundImage: 'url(' + this.props.navIconUrl + ')'});
   }
 
   getCloseIconCss() {
-    return Object.assign({}, styles.icon, styles.closeIcon, {backgroundImage: 'url(' + process.env.PUBLIC_URL + '/icons/close.png)'})
+    return Object.assign({}, styles.icon, styles.closeIcon, {backgroundImage: 'url(' + C.assetsDir + '/icons/close.png)'})
   }
 
   getPulseCss() {
@@ -120,12 +121,12 @@ class NavItem extends Component {
             style={this.getCloseIconCss()}
             onClick={(e) => this.onClose(e)}>
           </div>
+        </div>
 
-          <div
-            style={this.getNavIconCss()}
-            ref={(el) => this.navIconEl = el}
-            onClick={(e, id) => this.onOpen(e, id)}>
-          </div>
+        <div
+          style={this.getNavIconCss()}
+          ref={(el) => this.navIconEl = el}
+          onClick={(e, id) => this.onOpen(e, id)}>
         </div>
 
       </div>
