@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Constants from './Constants.js';
+import C from './Constants.js';
 import { TimelineMax, Expo } from 'gsap';
 
 const styles = {
   wrapper: {
     position: 'absolute',
     width: '100%',
-    height: (window.innerHeight - parseInt(Constants.sizes.primaryNavHeight, 10)) + 'px',
-    bottom: -(window.innerHeight - parseInt(Constants.sizes.primaryNavHeight, 10)) + 'px',
+    height: (window.innerHeight - parseInt(C.sizes.primaryNavHeight, 10)) + 'px',
+    bottom: -(window.innerHeight - parseInt(C.sizes.primaryNavHeight, 10)) + 'px',
     overflow: 'hidden',
     backgroundColor: 'white'
   }
@@ -16,7 +16,7 @@ const styles = {
 class SlidePanel extends Component {
   setupAnim() {
     return new TimelineMax({paused: true})
-      .to(this.panelEl, 0.8, {bottom: parseInt(Constants.sizes.primaryNavHeight, 10), ease: Expo.easeInOut})
+      .to(this.panelEl, 0.8, {bottom: parseInt(C.sizes.primaryNavHeight, 10), ease: Expo.easeInOut})
   }
 
   componentDidMount() {

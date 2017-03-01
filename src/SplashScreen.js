@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Constants from './Constants.js';
+import C from './Constants.js';
 import VideoPlayer from './VideoPlayer.js';
 import Card from './Card.js';
 import Text from './Text.js';
@@ -65,8 +65,8 @@ class SplashScreen extends Component {
               playing={true} />
 
             <div style={styles.textWrapper}>
-              <Text text="Houses of Parliament" textStyle={Constants.text.h1} color={Constants.colors.text_light}></Text>
-              <Text text="Explore this iconic seat of power" textStyle={Constants.text.h2} color={Constants.colors.text_light}></Text>
+              <Text text="Houses of Parliament" textStyle={C.text.h1} color={C.colors.text_light}></Text>
+              <Text text="Explore this iconic seat of power" textStyle={C.text.h2} color={C.colors.text_light}></Text>
             </div>
           </div>
 

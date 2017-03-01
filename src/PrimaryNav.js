@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Constants from './Constants.js';
+import C from './Constants.js';
 import NavItem from './NavItem.js';
 import Map from './Map.js';
 import SlidePanel from './SlidePanel.js';
@@ -13,15 +13,15 @@ const styles = {
     justifyContent: 'center',
     bottom: 0,
     width: '100%',
-    height: Constants.navItemSize + 'px',
-    bottom: Constants.pagePadding + 'px'
+    height: C.navItemSize + 'px',
+    bottom: C.pagePadding + 'px'
   },
   roomInfoWrapper: {
     width: '100%',
     height: '100%',
     padding: '40px 30px',
     boxSizing: 'border-box',
-    color: Constants.colors.text_dark,
+    color: C.colors.text_dark,
     overflow: 'scroll'
   }
 }
@@ -39,14 +39,14 @@ class PrimaryNav extends Component {
         indexOf = this.props.navItems.indexOf(id);
 
     if (indexOf === -1) {
-      css.bottom = -Constants.navItemSize;
+      css.bottom = -C.navItemSize;
     } else {
-      let leftPos = ((indexOf * Constants.navItemSize) + (indexOf * Constants.navItemSpacing)) - (Constants.navItemSpacing * .5),
+      let leftPos = ((indexOf * C.navItemSize) + (indexOf * C.navItemSpacing)) - (C.navItemSpacing * .5),
           numItems = this.props.navItems.length,
-          centerLeftOffset = (window.innerWidth * .5) - ((numItems * Constants.navItemSize) * .5);
+          centerLeftOffset = (window.innerWidth * .5) - ((numItems * C.navItemSize) * .5);
 
       css.left = leftPos + centerLeftOffset;
-      css.bottom = Constants.pagePadding;
+      css.bottom = C.pagePadding;
     }
 
     return css;
@@ -57,25 +57,25 @@ class PrimaryNav extends Component {
       <div>
 
         <NavItem
-          posCss={this.getNavItemPos(Constants.navItems.ROOM_INFO)}
-          isExpanded={this.isCurrNavItem(Constants.navItems.ROOM_INFO)}
-          onOpen={(e) => this.props.onNavItemOpened(e, Constants.navItems.ROOM_INFO)}
+          posCss={this.getNavItemPos(C.navItems.ROOM_INFO)}
+          isExpanded={this.isCurrNavItem(C.navItems.ROOM_INFO)}
+          onOpen={(e) => this.props.onNavItemOpened(e, C.navItems.ROOM_INFO)}
           onClose={(e) => this.props.onNavItemClosed(e)}
           navIconUrl={process.env.PUBLIC_URL + '/icons/map.png'}
           children={
             <div style={styles.roomInfoWrapper}>
-              <div style={Constants.text.small}>{this.props.roomData.title}</div>
-              <div style={Constants.text.h2}>{this.props.roomData.descTitle}</div>
+              <div style={C.text.small}>{this.props.roomData.title}</div>
+              <div style={C.text.h2}>{this.props.roomData.descTitle}</div>
               <div className="separator"></div>
-              <div style={Constants.text.regular}>{this.props.roomData.desc}</div>
+              <div style={C.text.regular}>{this.props.roomData.desc}</div>
             </div>
           }
         />
 
         <NavItem
-          posCss={this.getNavItemPos(Constants.navItems.MAP)}
-          isExpanded={this.isCurrNavItem(Constants.navItems.MAP)}
-          onOpen={(e) => this.props.onNavItemOpened(e, Constants.navItems.MAP)}
+          posCss={this.getNavItemPos(C.navItems.MAP)}
+          isExpanded={this.isCurrNavItem(C.navItems.MAP)}
+          onOpen={(e) => this.props.onNavItemOpened(e, C.navItems.MAP)}
           onClose={(e) => this.props.onNavItemClosed(e)}
           navIconUrl={process.env.PUBLIC_URL + '/icons/map.png'}
           children={

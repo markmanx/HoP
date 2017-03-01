@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Constants from './Constants.js';
+import C from './Constants.js';
 import Text from './Text.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 
@@ -66,7 +66,7 @@ class Card extends Component {
             {this.props.children}
             { (typeof this.props.cardTitle === 'string') &&
               <div style={styles.titleWrapper} ref={el => this.cardTitle = el}>
-                <Text text={this.props.cardTitle} textStyle={Constants.text.h1} color={Constants.colors.text_light}></Text>
+                <Text text={this.props.cardTitle} textStyle={C.text.h1} color={C.colors.text_light}></Text>
               </div>
             }
           </div>

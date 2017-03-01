@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Constants from './Constants.js';
+import C from './Constants.js';
 import Text from './Text';
 
 let timer = null;
@@ -13,8 +13,8 @@ const styles = {
     textAlign: 'center',
     padding: '5px 20px',
     cursor: 'pointer',
-    backgroundColor: Constants.colors.ui_primary,
-    color: Constants.colors.text_light
+    backgroundColor: C.colors.ui_primary,
+    color: C.colors.text_light
   },
   expanded: {
     padding: '15px 50px'
@@ -23,7 +23,7 @@ const styles = {
     position: 'absolute',
     width: '30px',
     height: '30px',
-    backgroundColor: Constants.colors.ui_primary,
+    backgroundColor: C.colors.ui_primary,
     bottom: '-15px',
     left: '30px',
     marginLeft: '-15px',
@@ -55,7 +55,7 @@ class Hotspot extends Component {
   }
 
   getStyle() {
-    return this.state.isExpanded ? Object.assign({}, styles.wrapper, styles.expanded) : Object.assign({}, styles.wrapper, Constants.text.h3);
+    return this.state.isExpanded ? Object.assign({}, styles.wrapper, styles.expanded) : Object.assign({}, styles.wrapper, C.text.h3);
   }
 
   willComponentUnmount() {

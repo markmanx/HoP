@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import Constants from './Constants.js';
+import C from './Constants.js';
 import {Circle} from 'react-progressbar.js';
 import Sound from 'react-sound';
 import audioIcon from './assets/audio-icons/Max-Foster_270px.png';
 
 const progressBarOptions = {
   strokeWidth: 6,
-  color: Constants.colors.ui_primary,
+  color: C.colors.ui_primary,
   trailWidth: 6,
   trailColor: 'white'
 }
 
-let progressWrapperDiam = (progressBarOptions.strokeWidth * 2) + parseInt(Constants.sizes.audioUiDiam, 10);
+let progressWrapperDiam = (progressBarOptions.strokeWidth * 2) + parseInt(C.sizes.audioUiDiam, 10);
 
 const styles = {
   audioWrapper: {
@@ -21,13 +21,13 @@ const styles = {
     alignItems: 'center',
     width: '100%',
     height: progressWrapperDiam + 'px',
-    marginTop: Constants.sizes.audioUiMargin,
+    marginTop: C.sizes.audioUiMargin,
     overflow: 'hidden'
   },
   progressWrapper: {
     width: progressWrapperDiam + 'px',
     height: progressWrapperDiam + 'px',
-    marginLeft: Constants.sizes.audioUiMargin,
+    marginLeft: C.sizes.audioUiMargin,
     WebkitBorderRadius: '400px',
     MozBorderRadius: '400px',
     borderRadius: '400px'
@@ -44,10 +44,10 @@ const styles = {
   },
   roomTitle: Object.assign({
     marginLeft: '15px',
-    color: Constants.colors.text_light
+    color: C.colors.text_light
     },
-    Constants.text.regular,
-    Constants.text.shadow)
+    C.text.regular,
+    C.text.shadow)
 }
 
 class AudioPlayer extends Component {

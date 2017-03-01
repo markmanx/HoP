@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Constants from './Constants.js';
+import C from './Constants.js';
 import Text from './Text';
 import arrowImg from './assets/button-arrow.png';
 
@@ -12,12 +12,12 @@ const styles = {
     textAlign: 'center',
     padding: '15px 50px',
     cursor: 'pointer',
-    backgroundColor: Constants.colors.ui_primary,
-    color: Constants.colors.text_light
+    backgroundColor: C.colors.ui_primary,
+    color: C.colors.text_light
   },
   active: {
     backgroundColor: 'white',
-    color: Constants.colors.ui_tertiary
+    color: C.colors.ui_tertiary
   }
 }
 

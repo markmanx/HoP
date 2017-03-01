@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Constants from './Constants.js';
+import C from './Constants.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 
 const styles = {
   wrapper: {
     position: 'absolute',
-    width: Constants.navItemSize + 'px',
-    height: Constants.navItemSize + 'px',
-    bottom: Constants.pagePadding + 'px'
+    width: C.navItemSize + 'px',
+    height: C.navItemSize + 'px',
+    bottom: C.pagePadding + 'px'
   },
   innerContent: {
     position: 'absolute',
@@ -28,15 +28,15 @@ const styles = {
   },
   pulse: {
     position: 'absolute',
-    width: Constants.navItemSize + 'px',
-    height: Constants.navItemSize + 'px',
+    width: C.navItemSize + 'px',
+    height: C.navItemSize + 'px',
     backgroundColor: 'white'
   },
   icon: {
     position: 'absolute',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-    backgroundSize: (Constants.navItemSize * .5) + 'px ',
+    backgroundSize: (C.navItemSize * .5) + 'px ',
   },
   navIcon: {
     width: '100%',
@@ -44,8 +44,8 @@ const styles = {
     backgroundColor: 'orange',
   },
   closeIcon: {
-    width: Constants.navItemSize + 'px',
-    height: Constants.navItemSize + 'px',
+    width: C.navItemSize + 'px',
+    height: C.navItemSize + 'px',
     right: 0,
     top: 0,
     backgroundColor: 'white'
@@ -104,7 +104,7 @@ class NavItem extends Component {
       <div
         ref={(el) => this.wrapperEl = el}
         style={this.getWrapperCss()}>
-        
+
         <div
           style={this.getPulseCss()}
           ref={(el) => this.pulseEl = el}>

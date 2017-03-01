@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Constants from './Constants.js';
+import C from './Constants.js';
 import {Line} from 'react-progressbar.js';
 import ElementPan from 'react-element-pan';
 import mapImg from './assets/Hop-model-illustration.png';
@@ -8,9 +8,9 @@ import RoomData from './RoomData.js';
 
 const progressBarOptions = {
   strokeWidth: 3,
-  color: Constants.colors.ui_tertiary,
+  color: C.colors.ui_tertiary,
   trailWidth: 3,
-  trailColor: Constants.colors.ui_quaternary
+  trailColor: C.colors.ui_quaternary
 }
 
 const styles = {

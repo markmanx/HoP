@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {browserHistory} from 'react-router';
-import Constants from './Constants.js';
+import C from './Constants.js';
 import TransitionGroup from 'react-addons-transition-group';
 import RoomData from './RoomData.js';
 import PrimaryNav from './PrimaryNav.js';
@@ -13,7 +13,7 @@ const styles = {
     width: '100%',
     height: '100%',
     overflow: 'hidden',
-    backgroundColor: Constants.colors.ui_tertiary,
+    backgroundColor: C.colors.ui_tertiary,
     backgroundImage: 'url(' + process.env.PUBLIC_URL + '/assets/logo.png' + ')',
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat'
@@ -23,7 +23,7 @@ const styles = {
 class App extends Component {
   state = {
     navItems:[
-      Constants.navItems.MAP
+      C.navItems.MAP
     ],
     currNavId: -1,
     isMobile: true,

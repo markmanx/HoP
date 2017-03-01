@@ -1,4 +1,5 @@
 module.exports = {
+  assetsDir: process.env.PUBLIC_URL + '/assets',
   sizes: {
     slidePanelHeight: 0.8,
     primaryNavHeight: '60px',
