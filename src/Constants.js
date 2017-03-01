@@ -3,8 +3,12 @@ module.exports = {
     slidePanelHeight: 0.8,
     primaryNavHeight: '60px',
     audioUiDiam: '80px',
-    audioUiMargin: '20px'
+    audioUiMargin: '20px',
+    navItem: '80px'
   },
+  navItemSize: 65,
+  navItemSpacing: 20,
+  pagePadding: 20,
   colors: {
     ui_primary: '#F6A623',
     ui_secondary: '#F9CA7B',
@@ -37,8 +41,8 @@ module.exports = {
       textShadow: '1px 1px 2px #000000'
     }
   },
-  navItems: [
-    {name: 'MAP', icon: ''},
-    {name: 'ROOM_INFO', icon: ''}
-  ]
+  navItems: {
+    'ROOM_INFO': 0,
+    'MAP': 1
+  }
 }

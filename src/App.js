@@ -22,8 +22,11 @@ const styles = {
 
 class App extends Component {
   state = {
-    navShowing: false,
-    currNavIndex: undefined,
+    navItems:[
+      Constants.navItems.MAP,
+      Constants.navItems.ROOM_INFO
+    ],
+    currNavId: -1,
     isMobile: true,
     roomData: RoomData[0],
     roomsVisited: [],
@@ -54,7 +57,7 @@ class App extends Component {
 
     this.setState({
       roomData: RoomData[roomId],
-      currNavIndex: undefined
+      currNavId: undefined
     })
 
     browserHistory.push('/room/' + RoomData[roomId].slug);
@@ -73,18 +76,21 @@ class App extends Component {
     this.switchRoomBySlug(item.slug);
   }
 
-  onNavItemClicked(e, index) {
-    let targetNavIndex;
+  onNavItemOpened(e, id) {
+    let targetNavId;
 
-    if (this.state.currNavIndex === index) {
-      targetNavIndex = undefined;
+    if (this.state.currNavId === id) {
+      targetNavId = undefined;
     } else {
-      targetNavIndex = index;
+      targetNavId = id;
     }
 
-    this.setState({
-      currNavIndex: targetNavIndex
-    });
+    this.setState({ currNavId: targetNavId });
+  }
+
+  onNavItemClosed(e) {
+    console.log('yo')
+    this.setState({ currNavId: undefined });
   }
 
   render() {
@@ -100,12 +106,13 @@ class App extends Component {
           </TransitionGroup>
 
           <PrimaryNav
-            navItems={Constants.navItems}
-            onNavItemClicked={ (e, index) => this.onNavItemClicked(e, index) }
+            navItems={this.state.navItems}
+            onNavItemOpened={ (e, index) => this.onNavItemOpened(e, index) }
+            onNavItemClosed={ (e) => this.onNavItemClosed(e) }
             onRoomClicked={ (e) => this.onRoomClicked(e) }
             roomData={this.state.roomData}
             roomsVisited={this.state.roomsVisited}
-            currNavIndex={this.state.currNavIndex}
+            currNavId={this.state.currNavId}
             totalRooms={this.state.totalRooms}
             />
         </div>

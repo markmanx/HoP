@@ -54,7 +54,7 @@ class VideoPlayer extends Component {
   initPanorama() {
     VideoPanorama(this.player, {
         clickToToggle: (!this.props.isMobile),
-        autoMobileOrientation: false,
+        autoMobileOrientation: true,
         initFov: 100,
         VREnable: this.props.isMobile,
         clickAndDrag: true,
@@ -65,11 +65,6 @@ class VideoPlayer extends Component {
           this.props.onVideoReady();
         }.bind(this)
     });
-    /*
-    this.player.on("VRModeOn", function(){
-        this.player.controlBar.fullscreenToggle.trigger("tap");
-    });
-    */
   }
 
   componentDidMount() {

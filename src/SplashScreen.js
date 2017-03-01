@@ -19,9 +19,6 @@ const styles = {
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  exploreButton: {
-    marginTop: '150px'
   }
 }
 
@@ -67,12 +64,6 @@ class SplashScreen extends Component {
             <div style={styles.textWrapper}>
               <Text text="Houses of Parliament" textStyle={Constants.text.h1} color={Constants.colors.text_light}></Text>
               <Text text="Explore this iconic seat of power" textStyle={Constants.text.h2} color={Constants.colors.text_light}></Text>
-              <div style={styles.exploreButton}>
-                <Button text="Let's Explore"
-                  onClick={(e) => this.onStart(e)}
-                  arrowAlignment="right">
-                </Button>
-              </div>
             </div>
           </div>
         }>
