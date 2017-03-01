@@ -11,7 +11,7 @@ const RoomData = [
         videojs: {
           muted: true,
           controls: false,
-          sources: [{src: process.env.PUBLIC_URL + '/assets/videos/video1.mp4', type: "video/mp4" }]
+          sources: [{src: process.env.PUBLIC_URL + '/assets/video/video1.mp4', type: "video/mp4" }]
         }
     },
     audioSettings: {
