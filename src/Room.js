@@ -17,7 +17,7 @@ class Room extends Component {
   }
 
   enterAnimComplete() {
-    //this.setState({ playing: true });
+    this.setState({ playing: true });
   }
 
   componentWillLeave(callback) {
@@ -25,10 +25,7 @@ class Room extends Component {
   }
 
   onVideoReady() {
-    this.setState({
-      videoReady: true
-    })
-
+    this.setState({ videoReady: true })
     this.card.onContentLoaded();
   }
 

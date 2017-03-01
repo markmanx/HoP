@@ -27,12 +27,13 @@ class VideoPlayer extends Component {
   }
 
   initializePlayer(){
+    console.log('player initialized');
     this.player = videojs(this.playerEl, this.props.videoSettings.videojs,  () => {
       window.addEventListener("resize", () => {
           var canvas = this.player.getChild('Canvas');
           if(canvas) canvas.handleResize();
       });
-
+      console.log('player ready');
       this.player.on('canplay', () => this.onCanPlay());
     });
 
@@ -43,6 +44,7 @@ class VideoPlayer extends Component {
   }
 
   onCanPlay() {
+    console.log('player canplay');
     if (this.props.videoSettings.is360) {
       this.initPanorama();
     } else {
@@ -51,13 +53,14 @@ class VideoPlayer extends Component {
   }
 
   onReady() {
+    console.log('all ready')
     this.setState({ playerReady: true });
     this.props.onVideoReady && this.props.onVideoReady();
     if (this.state.playing) this.player.play();
   }
 
   play() {
-    console.log('yo')
+    console.log('play called')
     this.player.play();
   }
 
@@ -83,7 +86,7 @@ class VideoPlayer extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.playing) {
-      this.setState({ playing: true })
+      this.play();
     }
   }
 
