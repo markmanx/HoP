@@ -31,18 +31,10 @@ const styles = {
     left: '25px',
     bottom: '25px',
     height: '30px'
-  },
-  hotspotWrapper: {
-    position: 'absolute'
   }
 }
 
 class Map extends Component {
-
-  zoomIn(section) {
-
-  }
-
   getHotspotCSS(coords) {
     return {
       position: 'absolute',
@@ -66,16 +58,14 @@ class Map extends Component {
           </div>
 
           <ElementPan style={styles.mapWrapper}>
-              <img src={mapImg} alt='map'/>
-              <div style={styles.hotspotWrapper}>
-                {RoomData.map((item, index) => {
-                  return (
-                    <div style={this.getHotspotCSS(item.coords)} key={index}>
-                      <Hotspot text={item.title} onClick={this.props.onRoomClicked.bind(this, item)} expandable={true} isHotspot={true} ></Hotspot>
-                    </div>
-                  )
-                })}
-              </div>
+            <img src={mapImg} alt='map'/>
+            {RoomData.map((item, index) => {
+              return (
+                <div style={this.getHotspotCSS(item.coords)} key={index}>
+                  <Hotspot text={item.title} onClick={this.props.onRoomClicked.bind(this, item)} expandable={true} isHotspot={true} ></Hotspot>
+                </div>
+              )
+            })}
           </ElementPan>
 
         </div>
