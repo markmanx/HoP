@@ -57,7 +57,6 @@ class Map extends Component {
               />
           </div>
 
-          <ElementPan style={styles.mapWrapper}>
             <img src={mapImg} alt='map'/>
             {RoomData.map((item, index) => {
               return (
@@ -66,7 +65,7 @@ class Map extends Component {
                 </div>
               )
             })}
-          </ElementPan>
+
 
         </div>
     )
