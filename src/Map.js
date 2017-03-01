@@ -32,8 +32,8 @@ const styles = {
     bottom: '25px',
     height: '30px'
   },
-  zoomWrapper: {
-
+  hotspotWrapper: {
+    position: 'absolute'
   }
 }
 
@@ -55,6 +55,16 @@ class Map extends Component {
     return (
         <div id="wrapper" style={styles.map}>
 
+          <div style={styles.progressWrapper}>
+            {this.props.roomsVisited.length + '/' + this.props.totalRooms + ' rooms discovered!'}
+            <Line
+              containerStyle={styles.progressBar}
+              options={progressBarOptions}
+              initialAnimate={false}
+              progress={this.props.roomsVisited.length / this.props.totalRooms}
+              />
+          </div>
+
           <ElementPan style={styles.mapWrapper}>
               <img src={mapImg} alt='map'/>
               <div style={styles.hotspotWrapper}>
@@ -67,16 +77,6 @@ class Map extends Component {
                 })}
               </div>
           </ElementPan>
-
-          <div style={styles.progressWrapper}>
-            {this.props.roomsVisited.length + '/' + this.props.totalRooms + ' rooms discovered!'}
-            <Line
-              containerStyle={styles.progressBar}
-              options={progressBarOptions}
-              initialAnimate={false}
-              progress={this.props.roomsVisited.length / this.props.totalRooms}
-              />
-          </div>
 
         </div>
     )
