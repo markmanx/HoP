@@ -16,24 +16,24 @@ const styles = {
 }
 
 class VideoPlayer extends Component {
-  state = {
-    isFirstPlay: true,
-    mounted: false,
-    initRequested: false
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isFirstPlay: true,
+      playerReady: false,
+      playing: this.props.playing
+    }
   }
 
   initializePlayer(){
-    this.setState({ initRequested: true });
-
-    if (!this.state.mounted) return;
-
     this.player = videojs(this.playerEl, this.props.videoSettings.videojs,  () => {
-        window.addEventListener("resize", () => {
-            var canvas = this.player.getChild('Canvas');
-            if(canvas) canvas.handleResize();
-        });
+      window.addEventListener("resize", () => {
+          var canvas = this.player.getChild('Canvas');
+          if(canvas) canvas.handleResize();
+      });
 
-        this.player.on('canplay', this.onCanPlay.bind(this));
+      this.player.on('canplay', () => this.onCanPlay());
     });
 
     var width = this.playerEl.offsetWidth;
@@ -46,9 +46,14 @@ class VideoPlayer extends Component {
     if (this.props.videoSettings.is360) {
       this.initPanorama();
     } else {
-      this.player.play();
-      this.props.onVideoReady();
+      this.onReady();
     }
+  }
+
+  onReady() {
+    this.setState({ playerReady: true });
+    this.props.onVideoReady && this.props.onVideoReady();
+    if (this.state.playing) this.player.play();
   }
 
   initPanorama() {
@@ -59,22 +64,22 @@ class VideoPlayer extends Component {
         VREnable: this.props.isMobile,
         clickAndDrag: true,
         NoticeMessage: '',
-        callback: function () {
-          console.log(this.player.panorama)
-          this.player.play();
-          this.props.onVideoReady();
-        }.bind(this)
+        callback: () => this.onReady()
     });
   }
 
   componentDidMount() {
-    this.setState({ mounted: true });
-
-    if (this.state.initRequested) this.initializePlayer();
+    this.initializePlayer();
   }
 
   componentWillUnmount() {
     this.player && this.player.off('canplay', this.onCanPlay.bind(this));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.playing) {
+      this.setState({ playing: true })
+    }
   }
 
   render() {

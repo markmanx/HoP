@@ -8,7 +8,8 @@ class Room extends Component {
     key: this.props.key,
     audioReady: false,
     videoReady: false,
-    contentReady: false
+    contentReady: false,
+    playing: true
   }
 
   componentDidMount() {
@@ -16,7 +17,7 @@ class Room extends Component {
   }
 
   enterAnimComplete() {
-    this.videoPlayer.initializePlayer();
+    this.setState({ playing: true });
   }
 
   componentWillLeave(callback) {
@@ -32,9 +33,7 @@ class Room extends Component {
   }
 
   onAudioLoaded() {
-    this.setState({
-      audioReady: true
-    })
+    this.setState({ audioReady: true })
   }
 
   render() {
@@ -49,7 +48,8 @@ class Room extends Component {
               videoSettings={this.props.roomData.videoSettings}
               isMobile={this.props.isMobile}
               onVideoReady={(e) => this.onVideoReady(e)}
-              ref={player => this.videoPlayer = player} />
+              playing={this.state.playing}/>
+
             <AudioPlayer
               title={this.props.roomData.title}
               audioSettings={this.props.roomData.audioSettings}

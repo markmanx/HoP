@@ -26,7 +26,7 @@ const videoSettings = {
   videojs: {
     muted: true,
     controls: false,
-    sources: [{src: process.env.PUBLIC_URL + '/assets/video1.mp4', type: "video/mp4" }]
+    sources: [{src: 'http://vjs.zencdn.net/v/oceans.mp4', type: "video/mp4" }]
   },
   is360: false
 }
@@ -53,19 +53,23 @@ class SplashScreen extends Component {
 
   render() {
     return(
-      <Card ref={card => this.card = card} key={this.state.key}
+      <Card
+        ref={card => this.card = card}
+        key={this.state.key}
         children={
+
           <div className="wrapper">
             <VideoPlayer
               videoSettings={videoSettings}
-              isMobile={this.props.isMobile}>
-            </VideoPlayer>
+              isMobile={this.props.isMobile}
+              playing={true} />
 
             <div style={styles.textWrapper}>
               <Text text="Houses of Parliament" textStyle={Constants.text.h1} color={Constants.colors.text_light}></Text>
               <Text text="Explore this iconic seat of power" textStyle={Constants.text.h2} color={Constants.colors.text_light}></Text>
             </div>
           </div>
+
         }>
       </Card>
     )
