@@ -3,9 +3,14 @@ import C from './Constants.js';
 import VideoPlayer from './VideoPlayer.js';
 import Card from './Card.js';
 import Text from './Text.js';
-import Button from './Button.js';
 
 const styles = {
+  wrapper: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'black'
+  },
   textWrapper: {
     position: 'absolute',
     width: '100%',
@@ -35,10 +40,6 @@ class SplashScreen extends Component {
     }
   }
 
-  onStart(e) {
-    this.props.onStart();
-  }
-
   onVideoReady() {
 
   }
@@ -54,11 +55,11 @@ class SplashScreen extends Component {
   render() {
     return(
       <Card
-        ref={card => this.card = card}
+        ref={el => this.card = el}
         key={this.state.key}
         children={
 
-          <div className="wrapper">
+          <div style={styles.wrapper}>
             <VideoPlayer
               videoSettings={videoSettings}
               id="splashScreen"
@@ -67,8 +68,8 @@ class SplashScreen extends Component {
               playing={true} />
 
             <div style={styles.textWrapper}>
-              <Text text="Houses of Parliaments" textStyle={C.text.h1} color={C.colors.text_light}></Text>
-              <Text text="Explore this iconic seat of power" textStyle={C.text.h2} color={C.colors.text_light}></Text>
+              <Text text="Houses of Parliament" textStyle={C.h1} color={C.textLight}></Text>
+              <Text text="Explore this iconic seat of power" textStyle={C.h2} color={C.textLight}></Text>
             </div>
           </div>
 

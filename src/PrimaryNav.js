@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import C from './Constants.js';
 import NavItem from './NavItem.js';
 import Map from './Map.js';
-import SlidePanel from './SlidePanel.js';
 
 const styles = {
   wrapper: {
@@ -21,7 +20,7 @@ const styles = {
     height: '100%',
     padding: '40px 30px',
     boxSizing: 'border-box',
-    color: C.colors.text_dark,
+    color: C.textDark,
     overflow: 'scroll'
   }
 }
@@ -41,7 +40,7 @@ class PrimaryNav extends Component {
     if (indexOf === -1) {
       css.bottom = -C.navItemSize;
     } else {
-      let leftPos = ((indexOf * C.navItemSize) + (indexOf * C.navItemSpacing)) - (C.navItemSpacing * .5),
+      let leftPos = ((indexOf * C.navItemSize) + (indexOf * C.navItemSpacing)) - (0),
           numItems = this.props.navItems.length,
           centerLeftOffset = (window.innerWidth * .5) - ((numItems * C.navItemSize) * .5);
 
@@ -64,10 +63,10 @@ class PrimaryNav extends Component {
           navIconUrl={C.assetsDir + '/icons/map.png'}
           children={
             <div style={styles.roomInfoWrapper}>
-              <div style={C.text.small}>{this.props.roomData.title}</div>
-              <div style={C.text.h2}>{this.props.roomData.descTitle}</div>
+              <div style={C.h4}>{this.props.roomData.title}</div>
+              <div style={C.h2}>{this.props.roomData.descTitle}</div>
               <div className="separator"></div>
-              <div style={C.text.regular}>{this.props.roomData.desc}</div>
+              <div style={C.h3}>{this.props.roomData.desc}</div>
             </div>
           }
         />

@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import C from './Constants.js';
 import {Circle} from 'react-progressbar.js';
 import Sound from 'react-sound';
-import audioIcon from './assets/audio-icons/Max-Foster_270px.png';
 
 const progressBarOptions = {
   strokeWidth: 6,
-  color: C.colors.ui_primary,
+  color: C.color1,
   trailWidth: 6,
   trailColor: 'white'
 }
 
-let progressWrapperDiam = (progressBarOptions.strokeWidth * 2) + parseInt(C.sizes.audioUiDiam, 10);
+let progressWrapperDiam = (progressBarOptions.strokeWidth * 2) + C.navItemSize;
 
 const styles = {
   audioWrapper: {
@@ -21,13 +20,13 @@ const styles = {
     alignItems: 'center',
     width: '100%',
     height: progressWrapperDiam + 'px',
-    marginTop: C.sizes.audioUiMargin,
+    marginTop: C.pagePadding + 'px',
     overflow: 'hidden'
   },
   progressWrapper: {
     width: progressWrapperDiam + 'px',
     height: progressWrapperDiam + 'px',
-    marginLeft: C.sizes.audioUiMargin,
+    marginLeft: C.pagePadding + 'px',
     WebkitBorderRadius: '400px',
     MozBorderRadius: '400px',
     borderRadius: '400px'
@@ -40,14 +39,15 @@ const styles = {
   },
   progressBar: {
     position: 'absolute',
-    width: '92px'
+    width: (C.navItemSize + (progressBarOptions.strokeWidth * 2))  + 'px'
   },
-  roomTitle: Object.assign({
-    marginLeft: '15px',
-    color: C.colors.text_light
+  roomTitle: Object.assign(
+    {
+      marginLeft: '15px',
+      color: C.textLight,
+      textShadow: C.textShadow
     },
-    C.text.regular,
-    C.text.shadow)
+    C.h4)
 }
 
 class AudioPlayer extends Component {
@@ -90,7 +90,7 @@ class AudioPlayer extends Component {
           onFinishedPlaying={(e) => this.onAudioFinished(e)}/>
 
         <div style={styles.progressWrapper} onClick={(e) => this.togglePause(e)} >
-          <img src={audioIcon} style={styles.audioIcon} alt='audio-icon' />
+          <img src={C.assetsDir + '/icons/Max-Foster_270px.png'} style={styles.audioIcon} alt='audio-icon' />
           <Circle
             containerStyle={styles.progressBar}
             options={progressBarOptions}

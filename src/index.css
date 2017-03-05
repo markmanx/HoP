@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'CNNSans-Bold';
-  src: url('./assets/fonts/CNNSansDisplay-Bold.woff');
+  src: url('../public/assets/fonts/CNNSansDisplay-Bold.woff');
 }
 
 @font-face {
   font-family: 'CNNSans-Light';
-  src: url('./assets/fonts/CNNSansDisplay-Light.woff');
+  src: url('../public/assets/fonts/CNNSansDisplay-Light.woff');
 }
 
 html, body {
@@ -37,4 +37,10 @@ html, body {
   -o-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.ui-shadow {
+  -webkit-box-shadow: 0px 10px 19px 0px rgba(0,0,0,0.44);
+  -moz-box-shadow: 0px 10px 19px 0px rgba(0,0,0,0.44);
+  box-shadow: 0px 10px 19px 0px rgba(0,0,0,0.44);
 }

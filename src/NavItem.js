@@ -7,7 +7,8 @@ const styles = {
     position: 'absolute',
     width: C.navItemSize + 'px',
     height: C.navItemSize + 'px',
-    bottom: C.pagePadding + 'px'
+    bottom: C.pagePadding + 'px',
+    zIndex: 0
   },
   innerContent: {
     position: 'absolute',
@@ -24,12 +25,14 @@ const styles = {
     bottom: 0,
     WebkitBorderRadius: 0,
     MozBorderRadius: 0,
-    borderRadius: 0
+    borderRadius: 0,
+    zIndex: 10
   },
   pulse: {
     position: 'absolute',
     width: C.navItemSize + 'px',
     height: C.navItemSize + 'px',
+    display: 'none',
     backgroundColor: 'white'
   },
   icon: {
@@ -47,9 +50,14 @@ const styles = {
   closeIcon: {
     width: C.navItemSize + 'px',
     height: C.navItemSize + 'px',
-    right: 0,
-    top: 0,
-    backgroundColor: 'white'
+    right: C.pagePadding + 'px',
+    top: C.pagePadding + 'px',
+    backgroundColor: C.color1
+  },
+  shadow: {
+    WebkitBoxShadow: '0px 10px 19px 0px rgba(0,0,0,0.44)',
+    MozBoxShadow: '0px 10px 19px 0px rgba(0,0,0,0.44)',
+    boxShadow: '0px 10px 19px 0px rgba(0,0,0,0.44)'
   },
   circle: {
     WebkitBorderRadius: '1000px',
@@ -60,15 +68,15 @@ const styles = {
 
 class NavItem extends Component {
   getWrapperCss() {
-    return Object.assign({}, styles.wrapper, this.props.posCss);
+    return Object.assign({}, styles.wrapper, C.enableGPU, this.props.posCss);
   }
 
   getNavIconCss() {
-    return Object.assign({}, styles.icon, styles.navIcon, styles.circle, {backgroundImage: 'url(' + this.props.navIconUrl + ')'});
+    return Object.assign({}, styles.icon, styles.navIcon, styles.circle, styles.shadow, {backgroundImage: 'url(' + this.props.navIconUrl + ')'});
   }
 
   getCloseIconCss() {
-    return Object.assign({}, styles.icon, styles.closeIcon, {backgroundImage: 'url(' + C.assetsDir + '/icons/close.png)'})
+    return Object.assign({}, styles.icon, styles.closeIcon, styles.circle, styles.shadow, {backgroundImage: 'url(' + C.assetsDir + '/icons/close.png)'})
   }
 
   getPulseCss() {
@@ -85,7 +93,11 @@ class NavItem extends Component {
 
   onClose(e) {
     this.props.onClose(e);
-    TweenMax.to(this.pulseEl, 1, {scale: 2.5, opacity: 0, repeat: -1})
+  }
+
+  componentDidMount() {
+    this.pulseAnim = new TimelineMax({paused: true, repeat: -1})
+      .to(this.pulseEl, 1, {scale: 2.5, opacity: 0});
   }
 
   componentWillReceiveProps(nextProps) {

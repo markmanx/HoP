@@ -62,14 +62,14 @@ class Card extends Component {
 
         <div
           key={this.props.key}
-          style={styles.outerWrapper}
+          style={Object.assign({}, styles.outerWrapper, C.enableGPU)}
           ref={el => this.outerWrapper = el}>
 
           <div style={styles.innerWrapper} ref={el => this.innerWrapper = el}>
             {this.props.children}
             { (typeof this.props.cardTitle === 'string') &&
               <div style={styles.titleWrapper} ref={el => this.cardTitle = el}>
-                <Text text={this.props.cardTitle} textStyle={C.text.h1} color={C.colors.text_light}></Text>
+                <Text text={this.props.cardTitle} textStyle={C.h1} color={C.textLight}></Text>
               </div>
             }
           </div>

@@ -13,8 +13,8 @@ const styles = {
     textAlign: 'center',
     padding: '5px 20px',
     cursor: 'pointer',
-    backgroundColor: C.colors.ui_primary,
-    color: C.colors.text_light
+    backgroundColor: C.color1,
+    color: C.textLight
   },
   expanded: {
     padding: '15px 50px'
@@ -23,7 +23,7 @@ const styles = {
     position: 'absolute',
     width: '30px',
     height: '30px',
-    backgroundColor: C.colors.ui_primary,
+    backgroundColor: C.color1,
     bottom: '-15px',
     left: '30px',
     marginLeft: '-15px',
@@ -55,7 +55,7 @@ class Hotspot extends Component {
   }
 
   getStyle() {
-    return this.state.isExpanded ? Object.assign({}, styles.wrapper, styles.expanded) : Object.assign({}, styles.wrapper, C.text.h3);
+    return this.state.isExpanded ? Object.assign({}, styles.wrapper, styles.expanded) : Object.assign({}, styles.wrapper, C.h3);
   }
 
   willComponentUnmount() {

@@ -13,8 +13,8 @@ const styles = {
     width: '100%',
     height: '100%',
     overflow: 'hidden',
-    backgroundColor: C.colors.ui_tertiary,
-    backgroundImage: 'url(' + process.env.PUBLIC_URL + '/assets/logo.png' + ')',
+    backgroundColor: C.color3,
+    backgroundImage: 'url(' + C.assetsDir + '/images/logo.png' + ')',
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat'
   }
@@ -36,10 +36,6 @@ class App extends Component {
     if (typeof this.props.params.slug !== 'undefined') {
       this.switchRoomBySlug(this.props.params.slug);
     }
-  }
-
-  onStart() {
-    this.switchRoomById(0);
   }
 
   switchRoomById(roomId) {
@@ -88,7 +84,6 @@ class App extends Component {
   }
 
   onNavItemClosed(e) {
-    console.log('yo')
     this.setState({ currNavId: undefined });
   }
 

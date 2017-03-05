@@ -5,13 +5,19 @@ import videojs from 'video.js';
 import VideoPanorama from 'videojs-panorama';
 
 const styles = {
-  player: {
+  vidWrapper: {
     position: 'absolute',
+    left: 0,
+    top: 0,
     width: '100%',
     height: '100%',
-    top: 0,
-    left: 0,
-    backgroundColor: 'green'
+    display: '-webkit-box',
+    display: '-ms-flexbox',
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 }
 
@@ -39,10 +45,9 @@ class VideoPlayer extends Component {
       } else {
         this.onReady();
       }
-      //this.player.on('canplay', () => this.onPlayerReady());
     });
 
-
+    this.onResize();
   }
 
   onReady() {
@@ -63,6 +68,21 @@ class VideoPlayer extends Component {
     });
   }
 
+  onResize() {
+    if (!this.player) return;
+
+    let videoAspectRatio = 16 / 9;
+    let windowAspectRatio = window.innerWidth / window.innerHeight;
+
+    if (videoAspectRatio > windowAspectRatio) {
+      this.player.width(window.innerHeight * videoAspectRatio);
+      this.player.height(window.innerHeight);
+    } else {
+      this.player.width(window.innerWidth);
+      this.player.height(window.innerWidth * videoAspectRatio);
+    }
+  }
+
   componentDidMount() {
     this.initializePlayer();
   }
@@ -78,13 +98,13 @@ class VideoPlayer extends Component {
 
   render() {
     const videoHtml = `
-      <video id="${this.props.id}" style="position: absolute; min-width: 100%; min-height: 100%; top: 0; left: 0; background-color: green;" class="video-js vjs-default-skin" preload="auto" playsInline muted>
+      <video id="${this.props.id}" class="video-js vjs-default-skin" preload="auto" playsInline muted>
       </video>
     `
 
     // must use 'dangerouslySetInnerHTML' so videojs can autoplay on iOS (https://github.com/videojs/video.js/issues/3816)
     return (
-      <div dangerouslySetInnerHTML={{__html: videoHtml}}></div>
+      <div style={styles.vidWrapper} dangerouslySetInnerHTML={{__html: videoHtml}}></div>
     )
   }
 }
