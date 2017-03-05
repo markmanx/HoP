@@ -29,7 +29,7 @@ const styles = {
 
 const videoSettings = {
   is360: false,
-  sources: [{src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4', type: "video/mp4" }]
+  sources: [{src: C.assetsDir + '/video/video1.mp4', type: "video/mp4" }]
 }
 
 class SplashScreen extends Component {
