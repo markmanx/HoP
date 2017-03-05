@@ -33,28 +33,45 @@ const styles = {
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    pointerEvents: 'none'
+    pointerEvents: 'none',
+    backgroundColor: 'black'
   }
 }
 
 class Card extends Component {
-  onEnter(callback) {
-    new TimelineMax({delay: 1.5, onComplete: () => callback && callback() })
+  state = {
+    contentReady: false
+  }
+
+  onEnter() {
+    new TimelineMax({delay: 1.5, onComplete: this.props.onEnter })
       .set(this.innerWrapper, {borderRadius: 30, scale: 0.7, z: 0.001})
       .to(this.innerWrapper, 0.4, {left: 0, ease: Expo.easeOut})
       .to(this.innerWrapper, 0.7, {scale: 1, borderRadius: 0, ease: Expo.easeInOut})
   }
 
-  onContentLoaded() {
-    new TimelineMax({delay: 1})
-      .append(TweenMax.to(this.cardTitle, 0.5, {scale: 1.3, ease: Expo.easeIn}))
-      .append(TweenMax.to(this.cardTitle, 0.3, {opacity: 0}), -0.2)
+  onContentReady() {
+    if (this.cardTitle) {
+      new TimelineMax({delay: 1})
+        .append(TweenMax.to(this.cardTitle, 0.5, {scale: 1.3, ease: Expo.easeIn}))
+        .append(TweenMax.to(this.cardTitle, 0.3, {opacity: 0}), -0.2)
+    }
   }
 
   onExit(callback) {
     new TimelineMax({onComplete: callback})
       .to(this.innerWrapper, 0.7, {scale: 0.7, borderRadius: 30, ease: Expo.easeInOut})
       .to(this.innerWrapper, 0.4, {left: -window.innerWidth, ease: Expo.easeIn})
+  }
+
+  componentDidMount() {
+    this.onEnter();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.contentReady && !this.state.contentReady) {
+      this.onContentReady();
+    }
   }
 
   render() {

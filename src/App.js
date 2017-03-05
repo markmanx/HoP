@@ -22,9 +22,7 @@ const styles = {
 
 class App extends Component {
   state = {
-    navItems:[
-      C.navItems.MAP
-    ],
+    navItems:[C.navItems.MAP],
     currNavId: -1,
     isMobile: true,
     roomData: RoomData[0],

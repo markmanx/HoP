@@ -53,29 +53,19 @@ const styles = {
 class AudioPlayer extends Component {
   state = {
     progress: 0,
-    playStatus: Sound.status.PLAYING
-  }
-
-  onAudioLoading(e) {
-
+    playing: true
   }
 
   onAudioPlaying(e) {
-    this.setState({
-      progress: e.position / e.duration
-    })
+    this.setState({ progress: e.position / e.duration });
   }
 
   onAudioFinished(e) {
-    this.setState({
-      playStatus: Sound.status.PAUSED
-    })
+    this.setState({ playing: false });
   }
 
-  togglePause(e) {
-    this.setState({
-      playStatus: (this.state.playStatus === Sound.status.PLAYING) ? Sound.status.PAUSED : Sound.status.PLAYING
-    });
+  onControlClicked(e) {
+    this.setState({ playing: !this.state.playing });
   }
 
   render() {
@@ -84,12 +74,11 @@ class AudioPlayer extends Component {
 
         <Sound
           url={this.props.audioSettings.url}
-          playStatus={this.state.playStatus}
-          onLoading={(e) => this.onAudioLoading(e)}
+          playStatus={this.props.ready && this.state.playing ? Sound.status.PLAYING : Sound.status.PAUSED}
           onPlaying={(e) => this.onAudioPlaying(e)}
           onFinishedPlaying={(e) => this.onAudioFinished(e)}/>
 
-        <div style={styles.progressWrapper} onClick={(e) => this.togglePause(e)} >
+        <div style={styles.progressWrapper} onClick={(e) => this.onControlClicked(e)} >
           <img src={C.assetsDir + '/icons/Max-Foster_270px.png'} style={styles.audioIcon} alt='audio-icon' />
           <Circle
             containerStyle={styles.progressBar}

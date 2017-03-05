@@ -35,17 +35,19 @@ const videoSettings = {
 class SplashScreen extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      key: this.props.key
+      key: this.props.key,
+      videoReady: false
     }
   }
 
-  onVideoReady() {
-
+  onCardEntered() {
+    
   }
 
-  componentDidMount() {
-    this.card.onEnter();
+  onVideoReady() {
+    this.setState({ videoReady: true });
   }
 
   componentWillLeave(callback) {
@@ -57,6 +59,8 @@ class SplashScreen extends Component {
       <Card
         ref={el => this.card = el}
         key={this.state.key}
+        onEnter={() => this.onCardEntered()}
+        contentReady={this.state.videoReady}
         children={
 
           <div style={styles.wrapper}>
@@ -73,8 +77,7 @@ class SplashScreen extends Component {
             </div>
           </div>
 
-        }>
-      </Card>
+        }/>
     )
   }
 }

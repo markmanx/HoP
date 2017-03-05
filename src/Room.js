@@ -4,46 +4,39 @@ import VideoPlayer from './VideoPlayer.js';
 import AudioPlayer from './AudioPlayer.js';
 
 class Room extends Component {
-  state = {
-    key: this.props.key,
-    audioReady: false,
-    videoReady: false,
-    contentReady: false,
-    playing: true
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      key: this.props.key,
+      audioReady: true,  // Assume that the audio has loaded already
+      videoReady: false,
+      cardEntered: false
+    }
   }
 
-  componentDidMount() {
-    this.card.onEnter(() => this.enterAnimComplete());
+
+  onCardEntered() {
+    this.setState({ cardEntered: true });
   }
 
-  enterAnimComplete() {
-    this.setState({ playing: true });
+  onVideoReady() {
+    this.setState({ videoReady: true })
   }
 
   componentWillLeave(callback) {
     this.card.onExit(callback);
   }
 
-  onVideoReady() {
-    this.setState({ videoReady: true })
-    this.card.onContentLoaded();
-  }
-
-  onAudioLoaded() {
-    this.setState({ audioReady: true })
-  }
-
-  play() {
-    this.player.play();
-  }
-
   render() {
     return (
       <Card
-        ref={card => this.card = card}
+        ref={el => this.card = el}
         key={this.state.key}
         cardTitle={this.props.roomData.title}
-        onClick={(e) => this.play(e)}>
+        onEnter={() => this.onCardEntered()}
+        contentReady={this.state.videoReady && this.state.audioReady && this.state.cardEntered}
+        children={
 
           <div>
             <VideoPlayer
@@ -52,15 +45,16 @@ class Room extends Component {
               videoSettings={this.props.roomData.videoSettings}
               isMobile={this.props.isMobile}
               onVideoReady={(e) => this.onVideoReady(e)}
-              playing={this.state.playing}/>
+              playing={this.state.videoReady && this.state.cardEntered}/>
 
             <AudioPlayer
               title={this.props.roomData.title}
               audioSettings={this.props.roomData.audioSettings}
-              />
+              ready={this.state.cardEntered}
+              playing={this.state.playing}/>
           </div>
 
-      </Card>
+        }/>
     )
   }
 }
