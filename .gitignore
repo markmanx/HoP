@@ -9,6 +9,9 @@
 # babel cache
 /node_modules/.cache
 
+# test
+/test
+
 # misc
 .DS_Store
 .env

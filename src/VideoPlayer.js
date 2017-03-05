@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import C from './Constants.js'
 import 'video.js/dist/video-js.css'
 import videojs from 'video.js';
 import VideoPanorama from 'videojs-panorama';
@@ -6,12 +7,11 @@ import VideoPanorama from 'videojs-panorama';
 const styles = {
   player: {
     position: 'absolute',
-    minHeight: '100%',
-    minWidth: '100%',
-    width: 'auto',
-    height: 'auto',
+    width: '100%',
+    height: '100%',
     top: 0,
-    left: 0
+    left: 0,
+    backgroundColor: 'green'
   }
 }
 
@@ -27,41 +27,28 @@ class VideoPlayer extends Component {
   }
 
   initializePlayer(){
-    console.log('player initialized');
-    this.player = videojs(this.playerEl, this.props.videoSettings.videojs,  () => {
+    this.player = videojs(this.props.id, {sources: this.props.videoSettings.sources},  () => {
+
       window.addEventListener("resize", () => {
           var canvas = this.player.getChild('Canvas');
-          if(canvas) canvas.handleResize();
+          if (canvas) canvas.handleResize();
       });
-      console.log('player ready');
-      this.player.on('canplay', () => this.onCanPlay());
+
+      if (this.props.videoSettings.is360) {
+        this.initPanorama();
+      } else {
+        this.onReady();
+      }
+      //this.player.on('canplay', () => this.onPlayerReady());
     });
 
-    var width = this.playerEl.offsetWidth;
-    var height = this.playerEl.offsetHeight;
-    this.player.width(width);
-    this.player.height(height);
-  }
 
-  onCanPlay() {
-    console.log('player canplay');
-    if (this.props.videoSettings.is360) {
-      this.initPanorama();
-    } else {
-      this.onReady();
-    }
   }
 
   onReady() {
-    console.log('all ready')
     this.setState({ playerReady: true });
     this.props.onVideoReady && this.props.onVideoReady();
     if (this.state.playing) this.player.play();
-  }
-
-  play() {
-    console.log('play called')
-    this.player.play();
   }
 
   initPanorama() {
@@ -81,25 +68,23 @@ class VideoPlayer extends Component {
   }
 
   componentWillUnmount() {
-    this.player && this.player.off('canplay', this.onCanPlay.bind(this));
+    this.player && this.player.dispose();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.playing) {
-      this.play();
-    }
+    this.player && nextProps.playing ? this.player.play() : this.player.paused();
+    this.setState({ playing: nextProps.playing });
   }
 
   render() {
-    return (
-      <video
-        playsInline
-        className="video-js vjs-default-skin"
-        style={styles.player}
-        crossOrigin="anonymous"
-        controls
-        ref={el => this.playerEl = el}>
+    const videoHtml = `
+      <video id="${this.props.id}" style="position: absolute; min-width: 100%; min-height: 100%; top: 0; left: 0; background-color: green;" class="video-js vjs-default-skin" preload="auto" playsInline muted>
       </video>
+    `
+
+    // must use 'dangerouslySetInnerHTML' so videojs can autoplay on iOS (https://github.com/videojs/video.js/issues/3816)
+    return (
+      <div dangerouslySetInnerHTML={{__html: videoHtml}}></div>
     )
   }
 }

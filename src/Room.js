@@ -9,7 +9,7 @@ class Room extends Component {
     audioReady: false,
     videoReady: false,
     contentReady: false,
-    playing: false
+    playing: true
   }
 
   componentDidMount() {
@@ -48,6 +48,7 @@ class Room extends Component {
           <div>
             <VideoPlayer
               ref={player => this.player = player}
+              id={this.props.roomData.slug}
               videoSettings={this.props.roomData.videoSettings}
               isMobile={this.props.isMobile}
               onVideoReady={(e) => this.onVideoReady(e)}

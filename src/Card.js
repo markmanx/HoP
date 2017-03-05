@@ -33,8 +33,7 @@ const styles = {
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    pointerEvents: 'none',
-    backgroundColor: 'black'
+    pointerEvents: 'none'
   }
 }
 
@@ -64,8 +63,7 @@ class Card extends Component {
         <div
           key={this.props.key}
           style={styles.outerWrapper}
-          ref={el => this.outerWrapper = el}
-          onClick={(e) => this.props.onClick(e)}>
+          ref={el => this.outerWrapper = el}>
 
           <div style={styles.innerWrapper} ref={el => this.innerWrapper = el}>
             {this.props.children}

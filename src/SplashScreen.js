@@ -23,12 +23,8 @@ const styles = {
 }
 
 const videoSettings = {
-  videojs: {
-    muted: true,
-    controls: false,
-    sources: [{src: 'http://vjs.zencdn.net/v/oceans.mp4', type: "video/mp4" }]
-  },
-  is360: false
+  is360: false,
+  sources: [{src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4', type: "video/mp4" }]
 }
 
 class SplashScreen extends Component {
@@ -41,6 +37,10 @@ class SplashScreen extends Component {
 
   onStart(e) {
     this.props.onStart();
+  }
+
+  onVideoReady() {
+
   }
 
   componentDidMount() {
@@ -61,11 +61,13 @@ class SplashScreen extends Component {
           <div className="wrapper">
             <VideoPlayer
               videoSettings={videoSettings}
+              id="splashScreen"
               isMobile={this.props.isMobile}
+              onVideoReady={(e) => this.onVideoReady(e)}
               playing={true} />
 
             <div style={styles.textWrapper}>
-              <Text text="Houses of Parliament" textStyle={C.text.h1} color={C.colors.text_light}></Text>
+              <Text text="Houses of Parliaments" textStyle={C.text.h1} color={C.colors.text_light}></Text>
               <Text text="Explore this iconic seat of power" textStyle={C.text.h2} color={C.colors.text_light}></Text>
             </div>
           </div>

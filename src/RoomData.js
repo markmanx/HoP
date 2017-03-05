@@ -8,11 +8,7 @@ const RoomData = [
     coords: [100, 100],
     videoSettings: {
         is360: true,
-        videojs: {
-          muted: true,
-          controls: false,
-          sources: [{src: process.env.PUBLIC_URL + '/assets/video/video1.mp4', type: "video/mp4" }]
-        }
+        sources: [{src: process.env.PUBLIC_URL + '/assets/video/video1.mp4', type: "video/mp4" }]
     },
     audioSettings: {
       url: process.env.PUBLIC_URL + '/assets/audio/room1.mp3'
@@ -27,11 +23,7 @@ const RoomData = [
     coords: [150, 300],
     videoSettings: {
         is360: true,
-        videojs: {
-          muted: true,
-          controls: false,
-          sources: [{src: 'http://vjs.zencdn.net/v/oceans.mp4', type: "video/mp4" }]
-        }
+        sources: [{src: process.env.PUBLIC_URL + '/assets/video/video1.mp4', type: "video/mp4" }]
     },
     audioSettings: {
       url: 'http://www.schillmania.com/projects/soundmanager2/demo/_mp3/rain.mp3'
