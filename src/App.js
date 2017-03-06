@@ -67,8 +67,13 @@ class App extends Component {
   }
 
   onRoomClicked(item, e) {
-    this.switchRoomBySlug(item.slug);
-    this.onNavItemClosed();
+    this.setState({
+      currNavId: undefined,
+      pauseMedia: false
+    });
+
+    this.roomSwitchTimer && clearTimeout(this.roomSwitchTimer);
+    this.roomSwitchTimer = setTimeout(() => this.switchRoomBySlug(item.slug), 1000);
   }
 
   onNavItemOpened(e, id) {
@@ -81,16 +86,16 @@ class App extends Component {
     }
 
     this.setState({
-      pauseMedia: true,
-      currNavId: targetNavId
+      currNavId: targetNavId,
+      pauseMedia: true
     });
   }
 
   onNavItemClosed() {
-    this.setState({ currNavId: undefined });
-
-    this.timer && clearTimeout(this.timer);
-    this.timer = setTimeout(() => this.setState({ pauseMedia: false }), 500);
+    this.setState({
+      currNavId: undefined,
+      pauseMedia: false
+    });
   }
 
   render() {
@@ -98,8 +103,7 @@ class App extends Component {
         <div style={styles.wrapper}>
           <TransitionGroup>
           {this.props.children && React.cloneElement(this.props.children, {
-              key: this.props.location.pathname,
-              onStart: (e) => this.onStart(e),
+              key: this.props.location.key,
               roomData: this.state.roomData,
               isMobile: this.state.isMobile,
               pauseMedia: this.state.pauseMedia

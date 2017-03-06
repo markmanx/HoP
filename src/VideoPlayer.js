@@ -27,8 +27,7 @@ class VideoPlayer extends Component {
 
     this.state = {
       isFirstPlay: true,
-      playerReady: false,
-      playing: true
+      playerReady: false
     }
   }
 
@@ -53,7 +52,7 @@ class VideoPlayer extends Component {
   onReady() {
     this.setState({ playerReady: true });
     this.props.onVideoReady && this.props.onVideoReady();
-    if (this.state.playing) this.player.play();
+    this.player.play();
   }
 
   initPanorama() {
@@ -97,8 +96,6 @@ class VideoPlayer extends Component {
     } else {
       this.player && this.player.pause();
     }
-
-    this.setState({ playing: true });
   }
 
   shouldComponentUpdate(nextProps, nextState) {

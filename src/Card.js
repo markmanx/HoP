@@ -78,7 +78,6 @@ class Card extends Component {
     return (
 
         <div
-          key={this.props.key}
           style={Object.assign({}, styles.outerWrapper, C.enableGPU)}
           ref={el => this.outerWrapper = el}>
 

@@ -8,7 +8,8 @@ class Room extends Component {
     super(props);
 
     this.state = {
-      key: this.props.key,
+      roomData: props.roomData,
+      isExiting: false,
       audioReady: true,  // Assume that the audio has loaded already
       videoReady: false,
       cardEntered: false
@@ -24,6 +25,7 @@ class Room extends Component {
   }
 
   componentWillLeave(callback) {
+    this.setState({ isExiting: true });
     this.card.onExit(callback);
   }
 
@@ -31,8 +33,7 @@ class Room extends Component {
     return (
       <Card
         ref={el => this.card = el}
-        key={this.state.key}
-        cardTitle={this.props.roomData.title}
+        cardTitle={this.state.roomData.title}
         onEnter={() => this.onCardEntered()}
         contentReady={this.state.videoReady && this.state.audioReady && this.state.cardEntered}
         children={
@@ -40,18 +41,18 @@ class Room extends Component {
           <div>
             <VideoPlayer
               ref={player => this.player = player}
-              id={this.props.roomData.slug}
-              videoSettings={this.props.roomData.videoSettings}
+              id={this.state.roomData.slug}
+              videoSettings={this.state.roomData.videoSettings}
               isMobile={this.props.isMobile}
               onVideoReady={(e) => this.onVideoReady(e)}
               ready={this.state.videoReady && this.state.cardEntered}
-              pauseMedia={this.props.pauseMedia}/>
+              pauseMedia={this.isExiting ? false : this.props.pauseMedia}/>
 
             <AudioPlayer
-              title={this.props.roomData.title}
-              audioSettings={this.props.roomData.audioSettings}
+              title={this.state.roomData.title}
+              audioSettings={this.state.roomData.audioSettings}
               ready={this.state.videoReady && this.state.cardEntered}
-              pauseMedia={this.props.pauseMedia}/>
+              pauseMedia={this.isExiting ? false : this.props.pauseMedia}/>
           </div>
 
         }/>
