@@ -28,7 +28,7 @@ class VideoPlayer extends Component {
     this.state = {
       isFirstPlay: true,
       playerReady: false,
-      playing: this.props.playing
+      playing: true
     }
   }
 
@@ -92,8 +92,17 @@ class VideoPlayer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.player && nextProps.playing ? this.player.play() : this.player.paused();
-    this.setState({ playing: nextProps.playing });
+    if (nextProps.ready && !nextProps.pauseMedia) {
+      this.player && this.player.play();
+    } else {
+      this.player && this.player.pause();
+    }
+
+    this.setState({ playing: true });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
   }
 
   render() {

@@ -38,12 +38,13 @@ class SplashScreen extends Component {
 
     this.state = {
       key: this.props.key,
-      videoReady: false
+      videoReady: false,
+      cardEntered: false
     }
   }
 
   onCardEntered() {
-    
+    this.setState({ cardEntered: true })
   }
 
   onVideoReady() {
@@ -69,7 +70,8 @@ class SplashScreen extends Component {
               id="splashScreen"
               isMobile={this.props.isMobile}
               onVideoReady={(e) => this.onVideoReady(e)}
-              playing={true} />
+              ready={this.state.videoReady && this.state.cardEntered}
+              pauseMedia={this.props.pauseMedia}/>
 
             <div style={styles.textWrapper}>
               <Text text="Houses of Parliament" textStyle={C.h1} color={C.textLight}></Text>

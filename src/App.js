@@ -27,7 +27,8 @@ class App extends Component {
     isMobile: true,
     roomData: RoomData[0],
     roomsVisited: [],
-    totalRooms: RoomData.length
+    totalRooms: RoomData.length,
+    pauseMedia: false
   }
 
   componentDidMount() {
@@ -67,6 +68,7 @@ class App extends Component {
 
   onRoomClicked(item, e) {
     this.switchRoomBySlug(item.slug);
+    this.onNavItemClosed();
   }
 
   onNavItemOpened(e, id) {
@@ -78,11 +80,17 @@ class App extends Component {
       targetNavId = id;
     }
 
-    this.setState({ currNavId: targetNavId });
+    this.setState({
+      pauseMedia: true,
+      currNavId: targetNavId
+    });
   }
 
-  onNavItemClosed(e) {
+  onNavItemClosed() {
     this.setState({ currNavId: undefined });
+
+    this.timer && clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.setState({ pauseMedia: false }), 500);
   }
 
   render() {
@@ -94,6 +102,7 @@ class App extends Component {
               onStart: (e) => this.onStart(e),
               roomData: this.state.roomData,
               isMobile: this.state.isMobile,
+              pauseMedia: this.state.pauseMedia
             })}
           </TransitionGroup>
 

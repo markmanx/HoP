@@ -15,7 +15,6 @@ class Room extends Component {
     }
   }
 
-
   onCardEntered() {
     this.setState({ cardEntered: true });
   }
@@ -45,13 +44,14 @@ class Room extends Component {
               videoSettings={this.props.roomData.videoSettings}
               isMobile={this.props.isMobile}
               onVideoReady={(e) => this.onVideoReady(e)}
-              playing={this.state.videoReady && this.state.cardEntered}/>
+              ready={this.state.videoReady && this.state.cardEntered}
+              pauseMedia={this.props.pauseMedia}/>
 
             <AudioPlayer
               title={this.props.roomData.title}
               audioSettings={this.props.roomData.audioSettings}
-              ready={this.state.cardEntered}
-              playing={this.state.playing}/>
+              ready={this.state.videoReady && this.state.cardEntered}
+              pauseMedia={this.props.pauseMedia}/>
           </div>
 
         }/>

@@ -74,7 +74,7 @@ class AudioPlayer extends Component {
 
         <Sound
           url={this.props.audioSettings.url}
-          playStatus={this.props.ready && this.state.playing ? Sound.status.PLAYING : Sound.status.PAUSED}
+          playStatus={this.props.ready && this.state.playing && !this.props.pauseMedia ? Sound.status.PLAYING : Sound.status.PAUSED}
           onPlaying={(e) => this.onAudioPlaying(e)}
           onFinishedPlaying={(e) => this.onAudioFinished(e)}/>
 
