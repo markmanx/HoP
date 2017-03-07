@@ -7,8 +7,8 @@ module.exports = {
   pagePadding: 20,
   navItemSize: 65,
   navItemSpacing: 20,
-  mapImgWidth: 529,
-  mapImgHeight: 393,
+  mapImgWidth: 600,
+  mapImgHeight: 400,
 
   // Colors
   color1: '#F6A623',

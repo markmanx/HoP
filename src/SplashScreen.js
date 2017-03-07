@@ -29,7 +29,7 @@ const styles = {
 
 const videoSettings = {
   is360: false,
-  sources: [{src: C.assetsDir + '/video/video1.mp4', type: "video/mp4" }]
+  sources: [{src: C.assetsDir + '/video/splash-screen.mp4', type: "video/mp4" }]
 }
 
 class SplashScreen extends Component {
@@ -74,8 +74,8 @@ class SplashScreen extends Component {
               pauseMedia={this.props.pauseMedia}/>
 
             <div style={styles.textWrapper}>
-              <Text text="Houses of Parliament" textStyle={C.h1} color={C.textLight}></Text>
-              <Text text="Explore this iconic seat of power" textStyle={C.h2} color={C.textLight}></Text>
+              <Text text="Houses of Parliament" textStyle={Object.assign({}, C.h1, {textShadow: C.textShadow})} color={C.textLight}></Text>
+              <Text text="Explore this iconic seat of power" textStyle={Object.assign({}, C.h2, {textShadow: C.textShadow})} color={C.textLight}></Text>
             </div>
           </div>
 

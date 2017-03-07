@@ -26,6 +26,7 @@ class VideoPlayer extends Component {
     super(props);
 
     this.state = {
+      runInit: false,
       isFirstPlay: true,
       playerReady: false
     }
@@ -108,7 +109,7 @@ class VideoPlayer extends Component {
 
   render() {
     const videoHtml = `
-      <video id="${this.props.id}" class="video-js vjs-default-skin" preload="auto" playsInline muted>
+      <video id="${this.props.id}" class="video-js vjs-default-skin" preload="auto" playsInline muted ${this.props.videoSettings.loop && 'loop'}>
       </video>
     `
 

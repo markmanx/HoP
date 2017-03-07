@@ -52,7 +52,7 @@ const styles = {
     height: C.navItemSize + 'px',
     right: C.pagePadding + 'px',
     top: C.pagePadding + 'px',
-    backgroundColor: C.color1
+    backgroundColor: 'white'
   },
   shadow: {
     WebkitBoxShadow: '0px 10px 19px 0px rgba(0,0,0,0.44)',

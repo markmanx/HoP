@@ -51,7 +51,8 @@ class App extends Component {
 
     this.setState({
       roomData: RoomData[roomId],
-      currNavId: undefined
+      currNavId: undefined,
+      navItems: [C.navItems.MAP, C.navItems.ROOM_INFO]
     })
 
     browserHistory.push('/room/' + RoomData[roomId].slug);
@@ -69,11 +70,14 @@ class App extends Component {
   onRoomClicked(item, e) {
     this.setState({
       currNavId: undefined,
-      pauseMedia: false
+      pauseMedia: true
     });
 
     this.roomSwitchTimer && clearTimeout(this.roomSwitchTimer);
     this.roomSwitchTimer = setTimeout(() => this.switchRoomBySlug(item.slug), 1000);
+
+    this.pauseTimer && clearTimeout(this.pauseTimer);
+    this.pauseTimer = setTimeout(() => this.setState({ pauseMedia: false }), 2000);
   }
 
   onNavItemOpened(e, id) {
