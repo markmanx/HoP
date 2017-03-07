@@ -56,7 +56,7 @@ class VideoPlayer extends Component {
   }
 
   initPanorama() {
-    VideoPanorama(this.player, {
+    let panorama = VideoPanorama(this.player, {
         clickToToggle: (!this.props.isMobile),
         autoMobileOrientation: true,
         initFov: 100,
@@ -87,7 +87,11 @@ class VideoPlayer extends Component {
   }
 
   componentWillUnmount() {
-    this.player && this.player.dispose();
+    if (this.player) {
+      let canvas = this.player.getChild('Canvas');
+      canvas.destroy();
+      this.player.dispose();
+    }
   }
 
   componentWillReceiveProps(nextProps) {

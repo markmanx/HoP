@@ -54,7 +54,8 @@ class Card extends Component {
     if (this.cardTitle) {
       new TimelineMax({delay: 1})
         .append(TweenMax.to(this.cardTitle, 0.5, {scale: 1.3, ease: Expo.easeIn}))
-        .append(TweenMax.to(this.cardTitle, 0.3, {opacity: 0}), -0.2)
+        .append(TweenMax.to(this.cardTitle, 0.3, {alpha: 0}), -0.2)
+        .append(TweenMax.set(this.cardTitle, {display: 'none'}))
     }
   }
 
