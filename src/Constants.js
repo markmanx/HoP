@@ -5,7 +5,7 @@ module.exports = {
 
   // Sizes
   pagePadding: 20,
-  navItemSize: 65,
+  navItemSize: 55,
   navItemSpacing: 20,
   mapImgWidth: 600,
   mapImgHeight: 400,

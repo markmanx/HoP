@@ -3,13 +3,13 @@ import C from './Constants.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 
 const styles = {
-  wrapper: {
+  wrapper: Object.assign({}, {
     position: 'absolute',
     width: C.navItemSize + 'px',
     height: C.navItemSize + 'px',
     bottom: C.pagePadding + 'px',
     zIndex: 0
-  },
+  }, C.enableGPU),
   innerContent: {
     position: 'absolute',
     width: '100%',
