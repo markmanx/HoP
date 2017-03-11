@@ -47,4 +47,6 @@ html, body {
 
 .video-js {
   position: absolute;
+  top: 0;
+  left: 0;
 }
