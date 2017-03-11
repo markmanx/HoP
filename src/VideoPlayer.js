@@ -91,7 +91,13 @@ class VideoPlayer extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.player) return;
 
-    nextProps.pauseMedia ? this.player.pause() : this.player.play();
+    if (nextProps.pauseMedia) {
+      this.player.pause();
+      this.canvas && this.canvas._pause();
+    } else {
+      this.player.play();
+      this.canvas && this.canvas._resume();
+    }
   }
 
   render() {

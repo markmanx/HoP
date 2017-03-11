@@ -3,13 +3,13 @@ import C from './Constants.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 
 const styles = {
-  wrapper: Object.assign({}, {
+  wrapper: {
     position: 'absolute',
     width: C.navItemSize + 'px',
     height: C.navItemSize + 'px',
     bottom: C.pagePadding + 'px',
     zIndex: 1
-  }, C.enableGPU),
+  },
   innerContent: {
     position: 'absolute',
     width: '100%',
@@ -107,11 +107,11 @@ class NavItem extends Component {
     if (nextProps.isExpanded) {
       TweenMax.to(this.navIconEl, 0.4, {autoAlpha: 0, ease: Expo.easeInOut});
       TweenMax.to(this.wrapperEl, 0.5, Object.assign({}, styles.wrapper, styles.expanded, {ease: Expo.easeInOut}))
-      TweenMax.to(this.innerContent, 0.5, {borderRadius: 0, ease: Expo.easeInOut});
+      TweenMax.to(this.innerContent, 0.3, {borderRadius: 0, ease: Expo.easeInOut});
     } else {
       TweenMax.to(this.navIconEl, 0.2, {autoAlpha: 1, delay: 0.2});
       TweenMax.to(this.wrapperEl, 0.5, Object.assign({}, styles.wrapper, this.props.posCss, {ease: Expo.easeInOut}))
-      TweenMax.to(this.innerContent, 0.5, {borderRadius: 1000, ease: Expo.easeInOut});
+      TweenMax.to(this.innerContent, 0.2, {borderRadius: 1000, ease: Expo.easeInOut});
     }
   }
 

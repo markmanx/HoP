@@ -27,13 +27,13 @@ class App extends Component {
     ],
     currNavId: -1,
     isMobile: true,
-    roomData: RoomData[0],
+    roomData: undefined,
     roomsVisited: [],
     totalRooms: RoomData.length,
     pauseMedia: false
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.params.slug) {
       this.switchRoomBySlug(this.props.params.slug);
     } else {
@@ -42,41 +42,58 @@ class App extends Component {
   }
 
   switchRoomById(roomId, updateLocation) {
-    if (typeof RoomData[roomId] === 'undefined') return;
+    let targetRoomId = roomId;
+    if (typeof RoomData[targetRoomId] === 'undefined') targetRoomId = 0;
+
+    let room = RoomData[targetRoomId];
 
     let updatedVisitedList = this.state.roomsVisited.slice();
 
-    if (!this.state.roomsVisited.includes(roomId)) {
-      updatedVisitedList.push(roomId);
+    if (!this.state.roomsVisited.includes(targetRoomId)) {
+      updatedVisitedList.push(targetRoomId);
     };
+
+    let navItems = [ C.navItems.MAP ];
+
+    if (targetRoomId !== 0) {
+      navItems.push(C.navItems.ROOM_INFO)
+    }
+
 
     this.setState({
       roomsVisited: updatedVisitedList,
-      roomData: RoomData[roomId],
-      currNavId: undefined
+      roomData: room,
+      currNavId: undefined,
+      navItems: navItems
     });
 
-    browserHistory.push('/room/' + RoomData[roomId].slug);
+    browserHistory.push('/room/' + room.slug);
   }
 
   switchRoomBySlug(roomSlug) {
+    let targetId = 0;
+
     for (let [index, value] of RoomData.entries()) {
       if (value.slug === roomSlug) {
-        this.switchRoomById(index);
-        return;
+        targetId = index;
       }
     }
+
+    this.switchRoomById(targetId);
   }
 
   onRoomClicked(item, e) {
+    this.delayedPlayMedia();
+    this.setState({ currNavId: undefined });
+    this.switchRoomBySlug(item.slug)
+  }
+
+  delayedPlayMedia() {
     this.timer && clearTimeout(this.timer);
 
     this.timer = setTimeout(() => {
       this.setState({ pauseMedia: false });
-      this.switchRoomBySlug(item.slug)
-    }, 0);
-
-    this.setState({ currNavId: undefined });
+    }, 500);
   }
 
   onNavItemOpened(e, id) {
@@ -95,10 +112,9 @@ class App extends Component {
   }
 
   onNavItemClosed() {
-    this.setState({
-      currNavId: undefined,
-      pauseMedia: false
-    });
+    this.delayedPlayMedia();
+
+    this.setState({ currNavId: undefined });
   }
 
   render() {
