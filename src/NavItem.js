@@ -8,7 +8,7 @@ const styles = {
     width: C.navItemSize + 'px',
     height: C.navItemSize + 'px',
     bottom: C.pagePadding + 'px',
-    zIndex: 0
+    zIndex: 1
   }, C.enableGPU),
   innerContent: {
     position: 'absolute',
@@ -19,14 +19,17 @@ const styles = {
     zIndex: 1
   },
   expanded: {
-    width: '100%',
-    height: '100%',
-    left: 0,
-    bottom: 0,
+    width: window.innerWidth - (C.pagePadding) + 'px',
+    height: window.innerHeight - (C.pagePadding) + 'px',
+    left: (C.pagePadding * 0.5) + 'px',
+    bottom: (C.pagePadding * 0.5) + 'px',
     WebkitBorderRadius: 0,
     MozBorderRadius: 0,
     borderRadius: 0,
-    zIndex: 10
+    WebkitBoxShadow: 0,
+    MozBoxShadow: 0,
+    boxShadow: 0,
+    zIndex: 11
   },
   pulse: {
     position: 'absolute',

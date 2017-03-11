@@ -4,11 +4,11 @@ module.exports = {
   assetsDir: process.env.PUBLIC_URL + '/assets',
 
   // Sizes
-  pagePadding: 20,
+  pagePadding: 30,
   navItemSize: 55,
   navItemSpacing: 20,
-  mapImgWidth: 600,
-  mapImgHeight: 400,
+  mapImgWidth: 700,
+  mapImgHeight: 381,
 
   // Colors
   color1: '#F6A623',
@@ -37,6 +37,12 @@ module.exports = {
     fontFamily: 'CNNSans-Light',
     fontSize: '15px',
     lineHeight: '18px'
+  },
+  h5: {
+    fontFamily: 'CNNSans-Light',
+    fontSize: '17px',
+    lineHeight: '22px',
+    letterSpacing: '1px'
   },
   textShadow: '1px 1px 2px #000000',
 

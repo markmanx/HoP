@@ -41,7 +41,7 @@ const styles = {
     position: 'absolute',
     width: (C.navItemSize + (progressBarOptions.strokeWidth * 2))  + 'px'
   },
-  roomTitle: Object.assign(
+  slidePoster: Object.assign(
     {
       marginLeft: '15px',
       color: C.textLight,
@@ -88,7 +88,7 @@ class AudioPlayer extends Component {
             />
         </div>
 
-        <div style={styles.roomTitle}>
+        <div style={styles.slidePoster}>
           {this.props.title}
         </div>
 

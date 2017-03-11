@@ -37,6 +37,20 @@ const styles = {
     justifyContent: 'center',
     pointerEvents: 'none',
     backgroundColor: 'black'
+  },
+  splashScreenWrapper: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    display: '-webkit-box',
+    display: '-ms-flexbox',
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 }
 
@@ -88,18 +102,22 @@ class Slide extends Component {
 
             {this.props.audioSettings &&
               <AudioPlayer
-                title={this.props.roomTitle}
+                title={this.props.slidePoster}
                 audioSettings={this.props.audioSettings}
                 ready={this.state.videoReady}
                 pauseMedia={this.props.pauseMedia}/>
             }
 
-            {
-              (typeof this.props.roomTitle === 'string') &&
+            {typeof this.props.slidePoster === 'string' ? (
               <div style={styles.titleWrapper} ref={el => this.slideTitle = el}>
-                <Text text={this.props.roomTitle} textStyle={C.h1} color={C.textLight}></Text>
+                <Text text={this.props.slidePoster} textStyle={C.h1} color={C.textLight}></Text>
               </div>
-            }
+            ) : (
+              <div style={styles.splashScreenWrapper}>
+                <Text text="Houses of Parliament" textStyle={Object.assign({}, C.h1, {textShadow: C.textShadow})} color={C.textLight}></Text>
+                <Text text="Explore this iconic seat of power" textStyle={Object.assign({}, C.h2, {textShadow: C.textShadow})} color={C.textLight}></Text>
+              </div>
+            )}
           </div>
 
         </div>

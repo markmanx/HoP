@@ -16,12 +16,28 @@ const styles = {
     bottom: C.pagePadding + 'px'
   },
   roomInfoWrapper: {
+    position: 'absolute',
     width: '100%',
-    height: '100%',
+    height: (window.innerHeight - ( C.navItemSize + ( C.pagePadding * 0.5 ) )) + 'px',
+    bottom: 0,
     padding: '40px 30px',
     boxSizing: 'border-box',
     color: C.textDark,
     overflow: 'scroll'
+  },
+  logo: {
+    position: 'absolute',
+    left: C.pagePadding + 'px',
+    bottom: (C.pagePadding + 12) + 'px',
+    width: '55px'
+  },
+  spacer: {
+    width: window.innerWidth - (C.pagePadding * 2) + 'px',
+    height: '1px',
+    left: C.pagePadding + 'px',
+    backgroundColor: C.color1,
+    marginTop: '7px',
+    marginBottom: '15px'
   }
 }
 
@@ -55,6 +71,8 @@ class PrimaryNav extends Component {
     return (
       <div>
 
+        <img style={styles.logo} src={C.assetsDir + '/images/logo.png'} alt="CNN Logo" />
+
         <NavItem
           posCss={this.getNavItemPos(C.navItems.ROOM_INFO)}
           isExpanded={this.isCurrNavItem(C.navItems.ROOM_INFO)}
@@ -63,10 +81,9 @@ class PrimaryNav extends Component {
           navIconUrl={C.assetsDir + '/icons/map.png'}
           children={
             <div style={styles.roomInfoWrapper}>
-              <div style={C.h4}>{this.props.roomData.title}</div>
-              <div style={C.h2}>{this.props.roomData.descTitle}</div>
-              <div className="separator"></div>
-              <div style={C.h3}>{this.props.roomData.desc}</div>
+              <div style={C.h3}>{this.props.roomData.title}</div>
+              <div style={styles.spacer}></div>
+              <div style={C.h5}>{this.props.roomData.description}</div>
             </div>
           }
         />

@@ -21,7 +21,10 @@ const styles = {
 
 class App extends Component {
   state = {
-    navItems:[C.navItems.MAP],
+    navItems:[
+      C.navItems.MAP,
+      C.navItems.ROOM_INFO
+    ],
     currNavId: -1,
     isMobile: true,
     roomData: RoomData[0],
@@ -41,20 +44,17 @@ class App extends Component {
   switchRoomById(roomId, updateLocation) {
     if (typeof RoomData[roomId] === 'undefined') return;
 
-    if (!this.state.roomsVisited.includes(roomId)) {
-      var updatedArr = this.state.roomsVisited.slice();
-      updatedArr.push(roomId);
+    let updatedVisitedList = this.state.roomsVisited.slice();
 
-      this.setState({
-        roomsVisited: updatedArr
-      });
+    if (!this.state.roomsVisited.includes(roomId)) {
+      updatedVisitedList.push(roomId);
     };
 
     this.setState({
+      roomsVisited: updatedVisitedList,
       roomData: RoomData[roomId],
-      currNavId: undefined,
-      navItems: [C.navItems.MAP, C.navItems.ROOM_INFOs]
-    })
+      currNavId: undefined
+    });
 
     browserHistory.push('/room/' + RoomData[roomId].slug);
   }
@@ -69,12 +69,14 @@ class App extends Component {
   }
 
   onRoomClicked(item, e) {
-    this.setState({
-      currNavId: undefined,
-      pauseMedia: false
-    });
+    this.timer && clearTimeout(this.timer);
 
-    this.switchRoomBySlug(item.slug)
+    this.timer = setTimeout(() => {
+      this.setState({ pauseMedia: false });
+      this.switchRoomBySlug(item.slug)
+    }, 0);
+
+    this.setState({ currNavId: undefined });
   }
 
   onNavItemOpened(e, id) {
@@ -107,7 +109,7 @@ class App extends Component {
             videoSettings: this.state.roomData.videoSettings,
             audioSettings: this.state.roomData.audioSettings,
             pauseMedia: this.state.pauseMedia,
-            roomTitle: this.state.roomData.title
+            slidePoster: this.state.roomData.title
           })}
 
           <PrimaryNav

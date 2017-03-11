@@ -43,7 +43,8 @@ const styles = {
     top: 0,
     left: 0,
     width: '100%',
-    height: '100%'
+    height: '100%',
+    opacity: 0.9
   },
   progressWrapper: {
     position: 'absolute',
@@ -58,8 +59,8 @@ class Map extends Component {
   getHotspotCSS(coords) {
     return {
       position: 'absolute',
-      left: coords[0] + 'px',
-      top: coords[1] + 'px'
+      left: `${coords[0]}px`,
+      top: `${coords[1]}px`
     }
   }
 
@@ -72,11 +73,15 @@ class Map extends Component {
               <img src={C.assetsDir + '/images/map.png'} style={styles.mapImg} alt='map'/>
               <div style={styles.hotspotWrapper}>
                 {RoomData.map((item, index) => {
-                  return (
-                    <div style={this.getHotspotCSS(item.coords)} key={index}>
-                      <Hotspot text={item.title} onClick={this.props.onRoomClicked.bind(this, item)} expandable={true} isHotspot={true} ></Hotspot>
-                    </div>
-                  )
+                  if (item.mapCoords) {
+                    return (
+                      <div id="hotspotwrapper" style={this.getHotspotCSS(item.mapCoords)} key={index}>
+                        <Hotspot text={item.title} onClick={this.props.onRoomClicked.bind(this, item)} expandable={true} isHotspot={true} ></Hotspot>
+                      </div>
+                    )
+                  } else {
+                    return false;
+                  }
                   })
                 }
               </div>
