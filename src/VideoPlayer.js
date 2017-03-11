@@ -26,44 +26,37 @@ class VideoPlayer extends Component {
     super(props);
 
     this.state = {
-      runInit: false,
-      isFirstPlay: true,
-      playerReady: false
+      videoId: 'video',
+      videoSettings: this.props.videoSettings,
+      isFirstPlay: true
     }
   }
 
   initializePlayer(){
-    this.player = videojs(this.props.id, {sources: this.props.videoSettings.sources},  () => {
-      window.addEventListener("resize", () => {
-          var canvas = this.player.getChild('Canvas');
-          if (canvas) canvas.handleResize();
-      });
-
-      if (this.props.videoSettings.is360) {
-        this.initPanorama();
-      } else {
-        this.onReady();
-      }
+    this.player = videojs(this.state.videoId, {sources: this.state.videoSettings.sources},  () => {
+      (this.state.videoSettings.is360) ? this.initPanorama() : this.onReady();
     });
 
     this.onResize();
   }
 
   onReady() {
-    this.setState({ playerReady: true });
     this.props.onVideoReady && this.props.onVideoReady();
     this.player.play();
   }
 
   initPanorama() {
-    let panorama = VideoPanorama(this.player, {
-        clickToToggle: (!this.props.isMobile),
+    this.panorama = VideoPanorama(this.player, {
+        clickToToggle: false,
         autoMobileOrientation: true,
         initFov: 100,
-        VREnable: this.props.isMobile,
+        VREnable: false,
         clickAndDrag: true,
         NoticeMessage: '',
-        callback: () => this.onReady()
+        callback: () => {
+          this.canvas = this.player.getChild('Canvas');
+          this.onReady();
+        }
     });
   }
 
@@ -80,6 +73,8 @@ class VideoPlayer extends Component {
       this.player.width(window.innerWidth);
       this.player.height(window.innerWidth * videoAspectRatio);
     }
+
+    this.canvas && this.canvas.handleResize();
   }
 
   componentDidMount() {
@@ -87,28 +82,21 @@ class VideoPlayer extends Component {
   }
 
   componentWillUnmount() {
-    if (this.player) {
-      let canvas = this.player.getChild('Canvas');
-      canvas && canvas.destroy();
-      this.player.dispose();
-    }
+    if (!this.player) return;
+
+    this.canvas && this.canvas.destroy();
+    this.player.dispose();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.ready && !nextProps.pauseMedia) {
-      this.player && this.player.play();
-    } else {
-      this.player && this.player.pause();
-    }
-  }
+    if (!this.player) return;
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return false;
+    nextProps.pauseMedia ? this.player.pause() : this.player.play();
   }
 
   render() {
     const videoHtml = `
-      <video id="${this.props.id}" class="video-js vjs-default-skin" preload="auto" playsInline muted ${this.props.videoSettings.loop && 'loop'}>
+      <video id="${this.state.videoId}" class="video-js vjs-default-skin" preload="auto" playsInline muted>
       </video>
     `
 

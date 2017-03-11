@@ -1,6 +1,12 @@
 const RoomData = [
   {
-    sectionId: 0,
+    coords: [300, 300],
+    videoSettings: {
+        is360: false,
+        sources: [{src: process.env.PUBLIC_URL + '/assets/video/splash-screen.mp4', type: "video/mp4" }]
+    }
+  },
+  {
     slug: 'ElizabethTower',
     title: 'The Elizabeth Tower',
     descTitle: 'Inside the clock dial',
@@ -15,7 +21,6 @@ const RoomData = [
     }
   },
   {
-    sectionId: 1,
     slug: 'slug',
     title: 'Yo',
     descTitle: 'Inside the clock dial',

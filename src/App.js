@@ -31,12 +31,14 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (typeof this.props.params.slug !== 'undefined') {
+    if (this.props.params.slug) {
       this.switchRoomBySlug(this.props.params.slug);
+    } else {
+      this.switchRoomById(0);
     }
   }
 
-  switchRoomById(roomId) {
+  switchRoomById(roomId, updateLocation) {
     if (typeof RoomData[roomId] === 'undefined') return;
 
     if (!this.state.roomsVisited.includes(roomId)) {
@@ -101,11 +103,12 @@ class App extends Component {
     return (
         <div style={styles.wrapper}>
           {this.props.children && React.cloneElement(this.props.children, {
-              key: this.props.location.key,
-              roomData: this.state.roomData,
-              isMobile: this.state.isMobile,
-              pauseMedia: this.state.pauseMedia
-            })}
+            key: this.props.location.key,
+            videoSettings: this.state.roomData.videoSettings,
+            audioSettings: this.state.roomData.audioSettings,
+            pauseMedia: this.state.pauseMedia,
+            roomTitle: this.state.roomData.title
+          })}
 
           <PrimaryNav
             navItems={this.state.navItems}
