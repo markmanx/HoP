@@ -78,10 +78,12 @@ class VideoPlayer extends Component {
   }
 
   componentDidMount() {
-    this.initializePlayer();
+    this.timer = setTimeout(() => this.initializePlayer(), 500);
   }
 
   componentWillUnmount() {
+    this.timer && clearTimeout(this.timer);
+
     if (!this.player) return;
 
     this.canvas && this.canvas.destroy();
