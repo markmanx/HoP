@@ -4,6 +4,7 @@ const RoomData = [
 
   {
     videoSettings: {
+      aspectRatio: 9 / 16,
       is360: false,
       sources: [
         {src: C.assetsDir + '/video/splash-screen.mp4', type: "video/mp4" }

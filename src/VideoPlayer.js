@@ -63,7 +63,7 @@ class VideoPlayer extends Component {
   onResize() {
     if (!this.player) return;
 
-    let videoAspectRatio = 16 / 9;
+    let videoAspectRatio = this.state.videoSettings.aspectRatio || 16 / 9;
     let windowAspectRatio = window.innerWidth / window.innerHeight;
 
     if (videoAspectRatio > windowAspectRatio) {
@@ -71,7 +71,7 @@ class VideoPlayer extends Component {
       this.player.height(window.innerHeight);
     } else {
       this.player.width(window.innerWidth);
-      this.player.height(window.innerWidth * videoAspectRatio);
+      this.player.height(window.innerWidth / videoAspectRatio);
     }
 
     this.canvas && this.canvas.handleResize();
