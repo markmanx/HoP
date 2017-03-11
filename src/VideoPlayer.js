@@ -34,7 +34,6 @@ class VideoPlayer extends Component {
 
   initializePlayer(){
     this.player = videojs(this.props.id, {sources: this.props.videoSettings.sources},  () => {
-
       window.addEventListener("resize", () => {
           var canvas = this.player.getChild('Canvas');
           if (canvas) canvas.handleResize();
@@ -90,7 +89,7 @@ class VideoPlayer extends Component {
   componentWillUnmount() {
     if (this.player) {
       let canvas = this.player.getChild('Canvas');
-      canvas.destroy();
+      canvas && canvas.destroy();
       this.player.dispose();
     }
   }

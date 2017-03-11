@@ -38,29 +38,18 @@ class SplashScreen extends Component {
 
     this.state = {
       key: this.props.key,
-      videoReady: false,
-      cardEntered: false
+      videoReady: false
     }
-  }
-
-  onCardEntered() {
-    this.setState({ cardEntered: true })
   }
 
   onVideoReady() {
     this.setState({ videoReady: true });
   }
 
-  componentWillLeave(callback) {
-    this.card.onExit(callback);
-  }
-
   render() {
     return(
       <Card
-        ref={el => this.card = el}
         key={this.state.key}
-        onEnter={() => this.onCardEntered()}
         contentReady={this.state.videoReady}
         children={
 
@@ -70,7 +59,7 @@ class SplashScreen extends Component {
               id="splashScreen"
               isMobile={this.props.isMobile}
               onVideoReady={(e) => this.onVideoReady(e)}
-              ready={this.state.videoReady && this.state.cardEntered}
+              ready={this.state.videoReady}
               pauseMedia={this.props.pauseMedia}/>
 
             <div style={styles.textWrapper}>

@@ -16,7 +16,7 @@ const styles = {
     position: 'absolute',
     width: '100%',
     height: '100%',
-    left: '100%',
+    left: 0,
     overflow: 'hidden',
     backgroundColor: 'black'
   },
@@ -43,13 +43,6 @@ class Card extends Component {
     contentReady: false
   }
 
-  onEnter() {
-    new TimelineMax({delay: 1.5, onComplete: this.props.onEnter })
-      .set(this.innerWrapper, {borderRadius: 30, scale: 0.7, z: 0.001})
-      .to(this.innerWrapper, 0.4, {left: 0, ease: Expo.easeOut})
-      .to(this.innerWrapper, 0.7, {scale: 1, borderRadius: 0, ease: Expo.easeInOut})
-  }
-
   onContentReady() {
     if (this.cardTitle) {
       new TimelineMax({delay: 1})
@@ -57,16 +50,6 @@ class Card extends Component {
         .append(TweenMax.to(this.cardTitle, 0.3, {alpha: 0}), -0.2)
         .append(TweenMax.to(this.cardTitle, 0.01, {display: 'none'}))
     }
-  }
-
-  onExit(callback) {
-    new TimelineMax({onComplete: callback})
-      .to(this.innerWrapper, 0.7, {scale: 0.7, borderRadius: 30, ease: Expo.easeInOut})
-      .to(this.innerWrapper, 0.4, {left: -window.innerWidth, ease: Expo.easeIn})
-  }
-
-  componentDidMount() {
-    this.onEnter();
   }
 
   componentWillReceiveProps(nextProps) {

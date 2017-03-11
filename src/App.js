@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {browserHistory} from 'react-router';
 import C from './Constants.js';
-import TransitionGroup from 'react-addons-transition-group';
 import RoomData from './RoomData.js';
 import PrimaryNav from './PrimaryNav.js';
 
@@ -52,7 +51,7 @@ class App extends Component {
     this.setState({
       roomData: RoomData[roomId],
       currNavId: undefined,
-      navItems: [C.navItems.MAP, C.navItems.ROOM_INFO]
+      navItems: [C.navItems.MAP, C.navItems.ROOM_INFOs]
     })
 
     browserHistory.push('/room/' + RoomData[roomId].slug);
@@ -70,14 +69,10 @@ class App extends Component {
   onRoomClicked(item, e) {
     this.setState({
       currNavId: undefined,
-      pauseMedia: true
+      pauseMedia: false
     });
 
-    this.roomSwitchTimer && clearTimeout(this.roomSwitchTimer);
-    this.roomSwitchTimer = setTimeout(() => this.switchRoomBySlug(item.slug), 1000);
-
-    this.pauseTimer && clearTimeout(this.pauseTimer);
-    this.pauseTimer = setTimeout(() => this.setState({ pauseMedia: false }), 2000);
+    this.switchRoomBySlug(item.slug)
   }
 
   onNavItemOpened(e, id) {
@@ -105,14 +100,12 @@ class App extends Component {
   render() {
     return (
         <div style={styles.wrapper}>
-          <TransitionGroup>
           {this.props.children && React.cloneElement(this.props.children, {
               key: this.props.location.key,
               roomData: this.state.roomData,
               isMobile: this.state.isMobile,
               pauseMedia: this.state.pauseMedia
             })}
-          </TransitionGroup>
 
           <PrimaryNav
             navItems={this.state.navItems}
