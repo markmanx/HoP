@@ -93,10 +93,10 @@ class VideoPlayer extends Component {
 
     if (nextProps.pauseMedia) {
       this.player.pause();
-      this.canvas && this.canvas._pause();
+      this.canvas && this.canvas._stop();
     } else {
       this.player.play();
-      this.canvas && this.canvas._resume();
+      this.canvas && this.canvas._start();
     }
   }
 
