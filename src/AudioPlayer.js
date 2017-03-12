@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import C from './Constants.js';
 import {Circle} from 'react-progressbar.js';
 import Sound from 'react-sound';
+import { TimelineMax, TweenMax, Expo } from 'gsap';
 
 const progressBarOptions = {
   strokeWidth: 6,
@@ -31,11 +32,31 @@ const styles = {
     MozBorderRadius: '400px',
     borderRadius: '400px'
   },
-  audioIcon: {
+  audioUiInner: {
     position: 'absolute',
     width: ((progressWrapperDiam - progressBarOptions.strokeWidth) + 2) + 'px',
+    height: ((progressWrapperDiam - progressBarOptions.strokeWidth) + 2) + 'px',
     marginLeft: (progressBarOptions.strokeWidth * 0.25) + 'px',
-    marginTop: (progressBarOptions.strokeWidth * 0.25) + 'px'
+    marginTop: (progressBarOptions.strokeWidth * 0.25) + 'px',
+    overflow: 'hidden'
+  },
+  reporterThumb: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%'
+  },
+  playIcon: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundImage: `url("${C.assetsDir}/icons/audio-play.svg")`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundSize: `${C.navItemSize * .5}px`,
+    opacity: 0.8
   },
   progressBar: {
     position: 'absolute',
@@ -53,8 +74,11 @@ const styles = {
 class AudioPlayer extends Component {
   state = {
     progress: 0,
-    playing: true
+    playStatus: undefined
   }
+
+  historySpan = 2;
+  statusHistory = [];
 
   onAudioPlaying(e) {
     this.setState({ progress: e.position / e.duration });
@@ -65,7 +89,39 @@ class AudioPlayer extends Component {
   }
 
   onControlClicked(e) {
-    this.setState({ playing: !this.state.playing });
+    (this.state.playStatus === Sound.status.PLAYING) ? this.playing(false) : this.playing(true);
+  }
+
+  addToHistory(status) {
+    this.statusHistory.unshift(status);
+
+    if (this.statusHistory.length > this.historySpan) this.statusHistory.splice(this.historySpan, this.statusHistory.length - this.historySpan);
+  }
+
+  playing(state, navTriggered) {
+    let status = state ? Sound.status.PLAYING : Sound.status.PAUSED;
+
+    state ? this.playIconAnim.play() : this.playIconAnim.reverse();
+
+    if (!navTriggered) this.addToHistory(status);
+    this.setState({ playStatus: status });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.pauseMedia !== this.props.pauseMedia) {
+      if (nextProps.pauseMedia) {
+        this.playing(false, true);
+      } else if (this.statusHistory[0] === Sound.status.PLAYING) {
+        this.playing(true, true);
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.playIconAnim = new TimelineMax({paused: true})
+      .to(this.playIcon, 0.5, {scale: 1.5, opacity: 0, ease: Expo.easeInOut})
+
+    this.playing(true);
   }
 
   render() {
@@ -74,18 +130,21 @@ class AudioPlayer extends Component {
 
         <Sound
           url={this.props.audioSettings.url}
-          playStatus={this.props.ready && this.state.playing && !this.props.pauseMedia ? Sound.status.PLAYING : Sound.status.PAUSED}
+          playStatus={this.state.playStatus}
           onPlaying={(e) => this.onAudioPlaying(e)}
           onFinishedPlaying={(e) => this.onAudioFinished(e)}/>
 
         <div style={styles.progressWrapper} onClick={(e) => this.onControlClicked(e)} >
-          <img src={C.assetsDir + '/icons/Max-Foster_270px.png'} style={styles.audioIcon} alt='audio-icon' />
+          <div style={styles.audioUiInner}>
+            <img style={styles.reporterThumb} src={C.assetsDir + '/icons/Max-Foster_270px.png'} alt='reporter-thumb'/>
+            <div style={styles.playIcon} ref={el => this.playIcon = el}></div>
+          </div>
+
           <Circle
             containerStyle={styles.progressBar}
             options={progressBarOptions}
             initialAnimate={false}
-            progress={this.state.progress}
-            />
+            progress={this.state.progress}/>
         </div>
 
         <div style={styles.slidePoster}>

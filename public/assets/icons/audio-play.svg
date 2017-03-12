@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="19px" viewBox="0 0 16 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>play button 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mobile:-audio-(paused)" transform="translate(-292.000000, -7.000000)" fill="#FFFFFF">
+            <path d="M292.599691,7.05648563 C292.476982,6.98286017 292.324981,6.98127682 292.200689,7.05133976 C292.076792,7.12179854 292,7.25321603 292,7.39571692 L292,25.6041642 C292,25.7470609 292.076792,25.8784784 292.200689,25.9489372 C292.261252,25.9829791 292.328544,26 292.395836,26 C292.466295,26 292.537149,25.9813957 292.599691,25.9437913 L307.773265,16.8395677 C307.892412,16.7679214 307.965246,16.6392748 307.965246,16.4999406 C307.965246,16.3610022 307.892412,16.2323555 307.773265,16.1607093 L292.599691,7.05648563 Z" id="play-button-2"></path>
+        </g>
+    </g>
+</svg>

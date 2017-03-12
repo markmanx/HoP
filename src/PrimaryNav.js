@@ -51,12 +51,12 @@ class PrimaryNav extends Component {
 
   getNavItemPos(id) {
     let css = {},
-        indexOf = this.props.navItems.indexOf(id);
+        itemIndex = this.props.navItems.indexOf(id);
 
-    if (indexOf === -1) {
+    if (itemIndex === -1) {
       css.bottom = -C.navItemSize;
     } else {
-      let leftPos = ((indexOf * C.navItemSize) + (indexOf * C.navItemSpacing)) - (0),
+      let leftPos = ((itemIndex * C.navItemSize) + (itemIndex * C.navItemSpacing)) - (0),
           numItems = this.props.navItems.length,
           centerLeftOffset = (window.innerWidth * .5) - ((numItems * C.navItemSize) * .5);
 
@@ -65,6 +65,11 @@ class PrimaryNav extends Component {
     }
 
     return css;
+  }
+
+  isPulsating(id) {
+    let itemIndex = this.props.pulsatingNavItems.indexOf(id);
+    return (itemIndex !== -1);
   }
 
   render() {
@@ -77,6 +82,7 @@ class PrimaryNav extends Component {
           posCss={this.getNavItemPos(C.navItems.ROOM_INFO)}
           isExpanded={this.isCurrNavItem(C.navItems.ROOM_INFO)}
           onOpen={(e) => this.props.onNavItemOpened(e, C.navItems.ROOM_INFO)}
+          pulsate={this.isPulsating(C.navItems.ROOM_INFO)}
           onClose={(e) => this.props.onNavItemClosed(e)}
           navIconUrl={C.assetsDir + '/icons/text.png'}
           children={
@@ -92,6 +98,7 @@ class PrimaryNav extends Component {
           posCss={this.getNavItemPos(C.navItems.MAP)}
           isExpanded={this.isCurrNavItem(C.navItems.MAP)}
           onOpen={(e) => this.props.onNavItemOpened(e, C.navItems.MAP)}
+          pulsate={this.isPulsating(C.navItems.MAP)}
           onClose={(e) => this.props.onNavItemClosed(e)}
           navIconUrl={C.assetsDir + '/icons/map.png'}
           children={

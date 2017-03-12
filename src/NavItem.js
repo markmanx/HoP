@@ -35,8 +35,8 @@ const styles = {
     position: 'absolute',
     width: C.navItemSize + 'px',
     height: C.navItemSize + 'px',
-    display: 'none',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    display: 'none'
   },
   icon: {
     position: 'absolute',
@@ -100,6 +100,7 @@ class NavItem extends Component {
 
   componentDidMount() {
     this.pulseAnim = new TimelineMax({paused: true, repeat: -1})
+      .to(this.pulseEl, 0.001, {display: 'block'})
       .to(this.pulseEl, 1, {scale: 2.5, opacity: 0});
   }
 
@@ -107,11 +108,17 @@ class NavItem extends Component {
     if (nextProps.isExpanded) {
       TweenMax.to(this.navIconEl, 0.4, {autoAlpha: 0, ease: Expo.easeInOut});
       TweenMax.to(this.wrapperEl, 0.5, Object.assign({}, styles.wrapper, styles.expanded, {ease: Expo.easeInOut}))
-      TweenMax.to(this.innerContent, 0.3, {borderRadius: 0, ease: Expo.easeInOut});
+      TweenMax.to(this.innerContent, 0.5, {borderRadius: 0, ease: Expo.easeInOut});
     } else {
       TweenMax.to(this.navIconEl, 0.2, {autoAlpha: 1, delay: 0.2});
       TweenMax.to(this.wrapperEl, 0.5, Object.assign({}, styles.wrapper, this.props.posCss, {ease: Expo.easeInOut}))
-      TweenMax.to(this.innerContent, 0.2, {borderRadius: 1000, ease: Expo.easeInOut});
+      TweenMax.to(this.innerContent, 0.5, {borderRadius: 1000, ease: Expo.easeInOut});
+    }
+
+    if (nextProps.pulsate) {
+      this.pulseAnim.play(0);
+    } else {
+      this.pulseAnim.pause(0);
     }
   }
 

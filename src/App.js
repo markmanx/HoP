@@ -21,10 +21,8 @@ const styles = {
 
 class App extends Component {
   state = {
-    navItems:[
-      C.navItems.MAP,
-      C.navItems.ROOM_INFO
-    ],
+    navItems: [],
+    pulsatingNavItems: [],
     currNavId: -1,
     isMobile: true,
     roomData: undefined,
@@ -53,18 +51,26 @@ class App extends Component {
       updatedVisitedList.push(targetRoomId);
     };
 
-    let navItems = [ C.navItems.MAP ];
+    let newNavItems = [],
+        newPulsatingNavItems = [];
 
-    if (targetRoomId !== 0) {
-      navItems.push(C.navItems.ROOM_INFO)
+    switch (targetRoomId) {
+      case 0:
+        newNavItems.push(C.navItems.MAP);
+        newPulsatingNavItems.push(C.navItems.MAP);
+        break;
+      default:
+        newNavItems.push(C.navItems.MAP);
+        newNavItems.push(C.navItems.ROOM_INFO);
+        break;
     }
-
 
     this.setState({
       roomsVisited: updatedVisitedList,
+      navItems: newNavItems,
+      pulsatingNavItems: newPulsatingNavItems,
       roomData: room,
-      currNavId: undefined,
-      navItems: navItems
+      currNavId: undefined
     });
 
     browserHistory.push('/room/' + room.slug);
@@ -107,7 +113,8 @@ class App extends Component {
 
     this.setState({
       currNavId: targetNavId,
-      pauseMedia: true
+      pauseMedia: true,
+      pulsatingNavItems: []
     });
   }
 
@@ -137,6 +144,7 @@ class App extends Component {
             roomsVisited={this.state.roomsVisited}
             currNavId={this.state.currNavId}
             totalRooms={this.state.totalRooms}
+            pulsatingNavItems={this.state.pulsatingNavItems}
             />
         </div>
     );

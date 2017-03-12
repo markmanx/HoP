@@ -60,5 +60,4 @@ module.exports = {
     'ROOM_INFO': 0,
     'MAP': 1
   }
-
 }

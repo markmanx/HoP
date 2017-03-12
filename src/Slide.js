@@ -43,6 +43,13 @@ const styles = {
     width: '100%',
     height: '100%',
     top: 0,
+    left: 0
+  },
+  centeredText: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
     left: 0,
     display: '-webkit-box',
     display: '-ms-flexbox',
@@ -51,6 +58,12 @@ const styles = {
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  headphonesText: {
+    position: 'absolute',
+    width: '100%',
+    textAlign: 'center',
+    bottom: (C.pagePadding * 2) + C.navItemSize + 'px'
   }
 }
 
@@ -114,8 +127,13 @@ class Slide extends Component {
               </div>
             ) : (
               <div style={styles.splashScreenWrapper}>
-                <Text text="Houses of Parliament" textStyle={Object.assign({}, C.h1, {textShadow: C.textShadow})} color={C.textLight}></Text>
-                <Text text="Explore this iconic seat of power" textStyle={Object.assign({}, C.h2, {textShadow: C.textShadow})} color={C.textLight}></Text>
+                <div style={styles.centeredText}>
+                  <Text text="Houses of Parliament" textStyle={Object.assign({}, C.h1, {textShadow: C.textShadow})} color={C.textLight}></Text>
+                  <Text text="Explore this iconic seat of power" textStyle={Object.assign({}, C.h2, {textShadow: C.textShadow})} color={C.textLight}></Text>
+                </div>
+                <div style={styles.headphonesText}>
+                  <Text text="Best experienced with headphones" textStyle={Object.assign({}, C.h4, {textShadow: C.textShadow})} color={C.textLight}></Text>
+                </div>
               </div>
             )}
           </div>
