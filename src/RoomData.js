@@ -36,7 +36,9 @@ const RoomData = [
     description: "One elaborate clock mechanism runs the Great Clock, Big Ben and the four bells that chime the quarter hours. Made of iron, steel and brass, it's 15 and a half feet long, and nearly five feet high. It has three separate sets of gears. Originally, all three sets were wound by hand, but since 1913, two of them have been powered by electricity. The third set of gears still has to be wound by hand three times a week.",
     videoSettings: {
       is360: true,
-      sources: []
+      sources: [
+        {src: C.assetsDir + '/video/BigBenMechanismFloor.mp4', type: "video/mp4" }
+      ]
     },
     audioSettings: {
       url: C.assetsDir + '/audio/BigBenMechanismFloor.mp3'
@@ -96,6 +98,7 @@ const RoomData = [
     slug: 'HouseOfCommons',
     title: 'House of Commons',
     description: "The raucous chamber where members of parliament debate, question, argue, heckle and harangue in a rowdy display of democracy. Once a week when Parliament is in session, the Prime Minister stands at the despatch box to answer questions from both sides of the house. No less a figure than Winston Churchill pressed for the chamber to keep its adversarial architecture after the building was bombed during World War II. “We shape our buildings and afterwards our buildings shape us,” the wartime prime minister argued.",
+    mapCoords: [314, 172],
     videoSettings: {
       is360: true,
       sources: [
@@ -163,7 +166,7 @@ const RoomData = [
     slug: 'ActRoom',
     title: 'Act Room',
     description: "High up in the Victoria Tower, in a climate-controlled room, Parliament archivists keep careful watch over tens of thousands of parchment rolls containing the laws of Great Britain. The oldest dates back to 1497, and the largest is over 400 meters (1,300 feet) long when unfurled. They’re stored in this stone tower for safekeeping: After the previous Palace of Westminster burned down in 1834, Parliament wanted to be sure it had “fireproof repositories for books and documents.”",
-    // mapCoords: [629, 0],
+    mapCoords: [629, 0],
     videoSettings: {
       is360: true,
       sources: [
@@ -214,7 +217,7 @@ const RoomData = [
     slug: 'Basement',
     title: 'Basement',
     description: "Perhaps the most famous basement in Britain, this is where Guy Fawkes placed barrels of gunpowder in order to blow up Parliament and kill the king in 1605. (The Gunpowder Plot was discovered in time to stop it.) Today, by contrast, the basement is a mass of twisted wires and cables and leaking pipes in need of repair. The building hasn’t ever had a major electrical renovation since it was completed in 1870.",
-    //mapCoords: [534, 220],
+    mapCoords: [534, 220],
     videoSettings: {
       is360: true,
       sources: [
