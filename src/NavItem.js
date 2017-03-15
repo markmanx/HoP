@@ -53,8 +53,8 @@ const styles = {
   closeIcon: {
     width: C.navItemSize + 'px',
     height: C.navItemSize + 'px',
-    right: C.pagePadding + 'px',
-    top: C.pagePadding + 'px',
+    right: '5px',
+    top: '5px',
     backgroundColor: 'white'
   },
   shadow: {
@@ -79,7 +79,7 @@ class NavItem extends Component {
   }
 
   getCloseIconCss() {
-    return Object.assign({}, styles.icon, styles.closeIcon, styles.circle, styles.shadow, {backgroundImage: 'url(' + C.assetsDir + '/icons/close.png)'})
+    return Object.assign({}, styles.icon, styles.closeIcon, {backgroundImage: 'url(' + C.assetsDir + '/icons/close.png)'})
   }
 
   getPulseCss() {

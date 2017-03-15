@@ -5,6 +5,7 @@ module.exports = {
 
   // Sizes
   pagePadding: 30,
+  slidePadding: 30,
   navItemSize: 55,
   navItemSpacing: 20,
   mapImgWidth: 700,
@@ -44,6 +45,12 @@ module.exports = {
     lineHeight: '22px',
     letterSpacing: '1px'
   },
+  h6: {
+    fontFamily: 'CNNSans-Bold',
+    fontSize: '16px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase'
+  },
   textShadow: '1px 1px 2px #000000',
 
   // Misc styles
@@ -58,6 +65,7 @@ module.exports = {
   // Nav Items
   navItems: {
     'ROOM_INFO': 0,
-    'MAP': 1
+    'MAP': 1,
+    'SOCIAL': 2
   }
 }

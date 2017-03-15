@@ -15,15 +15,22 @@ const styles = {
     height: C.navItemSize + 'px',
     bottom: C.pagePadding + 'px'
   },
-  roomInfoWrapper: {
+  contentWrapper: {
     position: 'absolute',
     width: '100%',
-    height: (window.innerHeight - ( C.navItemSize + ( C.pagePadding * 0.5 ) )) + 'px',
+    height: '100%',
+    top: 0,
     bottom: 0,
-    padding: '40px 30px',
+    padding: '45px 30px',
     boxSizing: 'border-box',
     color: C.textDark,
     overflow: 'scroll'
+  },
+  creditsWrapper: {
+    padding: `45px ${C.navItemSize + 30}px 45px 30px`
+  },
+  creditsTitle: {
+    display: 'inline-block'
   },
   logo: {
     position: 'absolute',
@@ -31,13 +38,31 @@ const styles = {
     bottom: (C.pagePadding + 12) + 'px',
     width: '55px'
   },
+  socialIcon: {
+    float: 'right',
+    width: (C.navItemSize * .75) + 'px',
+    height: C.navItemSize + 'px',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundSize: '25px 25px'
+  },
+  twitter: {
+    backgroundImage: `url("${C.assetsDir + '/icons/twitter.svg'}")`,
+    right: 0,
+    marginTop: '-17px'
+  },
+  facebook: {
+    backgroundImage: `url("${C.assetsDir + '/icons/facebook.svg'}")`,
+    right: C.slidePadding + 'px',
+    marginTop: '-20px'
+  },
   spacer: {
-    width: window.innerWidth - (C.pagePadding * 2) + 'px',
+    width: '100%',
     height: '1px',
-    left: C.pagePadding + 'px',
+    left: 0,
     backgroundColor: C.color1,
-    marginTop: '7px',
-    marginBottom: '15px'
+    marginTop: '15px',
+    marginBottom: '17px'
   }
 }
 
@@ -86,13 +111,12 @@ class PrimaryNav extends Component {
           onClose={(e) => this.props.onNavItemClosed(e)}
           navIconUrl={C.assetsDir + '/icons/text.png'}
           children={
-            <div style={styles.roomInfoWrapper}>
+            <div style={styles.contentWrapper}>
               <div style={C.h3}>{this.props.roomData.title}</div>
               <div style={styles.spacer}></div>
               <div style={C.h5}>{this.props.roomData.description}</div>
             </div>
-          }
-        />
+          }/>
 
         <NavItem
           posCss={this.getNavItemPos(C.navItems.MAP)}
@@ -109,11 +133,32 @@ class PrimaryNav extends Component {
                 totalRooms={this.props.totalRooms}
                 />
             </div>
-          }
-        />
+          }/>
 
-      </div>
-    )
+        <NavItem
+          posCss={this.getNavItemPos(C.navItems.SOCIAL)}
+          isExpanded={this.isCurrNavItem(C.navItems.SOCIAL)}
+          onOpen={(e) => this.props.onNavItemOpened(e, C.navItems.SOCIAL)}
+          pulsate={this.isPulsating(C.navItems.SOCIAL)}
+          onClose={(e) => this.props.onNavItemClosed(e)}
+          navIconUrl={C.assetsDir + '/icons/more.svg'}
+          children={
+            <div style={Object.assign({}, styles.contentWrapper, styles.creditsWrapper)}>
+              <div style={Object.assign({}, styles.creditsTitle, C.h6)}>Credits</div>
+              <div style={Object.assign({}, styles.facebook, styles.socialIcon)}></div>
+              <div style={Object.assign({}, styles.twitter, styles.socialIcon)}></div>
+              <div style={styles.spacer}></div>
+              <div style={C.h5}>
+                Editorial: Richard Allen Greene, Florence Davey-Attlee, Anastasia Anashkina, Toby Welham
+                <p>Design: Sarah-Grace Mankarious</p>
+                <p>Development: Mark Mankarious</p>
+                <p>Camera: Chris Whyld</p>
+              </div>
+            </div>
+          }/>
+
+        </div>
+      )
   }
 }
 

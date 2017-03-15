@@ -48,7 +48,7 @@ const styles = {
   },
   progressWrapper: {
     position: 'absolute',
-    width: (window.innerWidth - (C.pagePadding * 2)) + 'px',
+    width: window.innerWidth - ( (C.pagePadding * 2) + C.slidePadding ) + 'px',
     left: C.pagePadding + 'px',
     bottom: C.pagePadding + 'px',
     height: '30px'
