@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import C from './Constants.js';
+import Utils from './Utils.js';
 import {Circle} from 'react-progressbar.js';
 import Sound from 'react-sound';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
@@ -62,19 +63,19 @@ const styles = {
     position: 'absolute',
     width: (C.navItemSize + (progressBarOptions.strokeWidth * 2))  + 'px'
   },
-  slidePoster: Object.assign(
+  slidePoster: Utils.mergeStyles(
+    C.h4,
+    C.textShadow,
     {
       marginLeft: '15px',
-      color: C.textLight,
-      textShadow: C.textShadow
-    },
-    C.h4)
+      color: C.textLight
+    })
 }
 
 class AudioPlayer extends Component {
   state = {
     progress: 0,
-    playStatus: undefined
+    playStatus: Sound.status.PLAYING
   }
 
   historySpan = 2;

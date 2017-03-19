@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import C from './Constants.js';
+import Utils from './Utils.js';
 import NavItem from './NavItem.js';
 import Map from './Map.js';
 
@@ -17,17 +18,28 @@ const styles = {
   },
   contentWrapper: {
     position: 'absolute',
+    display: 'flex',
+    alignItems: 'stretch',
+    flexDirection: 'column',
     width: '100%',
     height: '100%',
     top: 0,
     bottom: 0,
-    padding: '45px 30px',
+    WebkitBoxSizing: 'border-box',
+    MozBoxSizing: 'border-box',
     boxSizing: 'border-box',
-    color: C.textDark,
+    color: C.textDark
+  },
+  contentHeader: {
+    padding: '45px 30px 0 30px'
+  },
+  contentOuter: {
+    alignSelf: 'stretch',
+    height: '100%',
     overflow: 'scroll'
   },
-  creditsWrapper: {
-    padding: `45px ${C.navItemSize + 30}px 45px 30px`
+  contentInner: {
+    padding: '17px 30px 45px 30px'
   },
   creditsTitle: {
     display: 'inline-block'
@@ -38,8 +50,12 @@ const styles = {
     bottom: (C.pagePadding + 12) + 'px',
     width: '55px'
   },
+  socialIcons: {
+    padding: '0 30px'
+  },
   socialIcon: {
-    float: 'right',
+    position: 'relative',
+    display: 'inline-block',
     width: (C.navItemSize * .75) + 'px',
     height: C.navItemSize + 'px',
     backgroundRepeat: 'no-repeat',
@@ -48,21 +64,16 @@ const styles = {
   },
   twitter: {
     backgroundImage: `url("${C.assetsDir + '/icons/twitter.svg'}")`,
-    right: 0,
-    marginTop: '-17px'
   },
   facebook: {
     backgroundImage: `url("${C.assetsDir + '/icons/facebook.svg'}")`,
-    right: C.slidePadding + 'px',
-    marginTop: '-20px'
   },
   spacer: {
     width: '100%',
     height: '1px',
     left: 0,
     backgroundColor: C.color1,
-    marginTop: '15px',
-    marginBottom: '17px'
+    marginTop: '15px'
   }
 }
 
@@ -112,9 +123,13 @@ class PrimaryNav extends Component {
           navIconUrl={C.assetsDir + '/icons/text.png'}
           children={
             <div style={styles.contentWrapper}>
-              <div style={C.h3}>{this.props.roomData.title}</div>
-              <div style={styles.spacer}></div>
-              <div style={C.h5}>{this.props.roomData.description}</div>
+              <div style={styles.contentHeader}>
+                <div style={C.h3}>{this.props.roomData.title}</div>
+                <div style={styles.spacer}></div>
+              </div>
+              <div style={styles.contentOuter}>
+                <div style={ Utils.mergeStyles(styles.contentInner, C.h5) }>{this.props.roomData.description}</div>
+              </div>
             </div>
           }/>
 
@@ -143,16 +158,23 @@ class PrimaryNav extends Component {
           onClose={(e) => this.props.onNavItemClosed(e)}
           navIconUrl={C.assetsDir + '/icons/more.svg'}
           children={
-            <div style={Object.assign({}, styles.contentWrapper, styles.creditsWrapper)}>
-              <div style={Object.assign({}, styles.creditsTitle, C.h6)}>Credits</div>
-              <div style={Object.assign({}, styles.facebook, styles.socialIcon)}></div>
-              <div style={Object.assign({}, styles.twitter, styles.socialIcon)}></div>
-              <div style={styles.spacer}></div>
-              <div style={C.h5}>
-                Editorial: Richard Allen Greene, Florence Davey-Attlee, Anastasia Anashkina, Toby Welham
-                <p>Design: Sarah-Grace Mankarious</p>
-                <p>Development: Mark Mankarious</p>
-                <p>Camera: Chris Whyld</p>
+            <div style={ Utils.mergeStyles(styles.contentWrapper) }>
+              <div style={styles.contentHeader}>
+                <div style={C.h6}>Credits</div>
+                <div style={styles.spacer}></div>
+              </div>
+              <div style={styles.contentOuter}>
+                <div style={ Utils.mergeStyles(styles.contentInner, C.h5) }>
+                  Editorial: Richard Allen Greene, Florence Davey-Attlee, Anastasia Anashkina, Toby Welham
+                  <p>Design: Sarah-Grace Mankarious</p>
+                  <p>Development: Mark Mankarious</p>
+                  <p>Camera: Chris Whyld</p>
+                </div>
+              </div>
+              <div style={styles.socialIcons}>
+                <div style={styles.spacer}></div>
+                <div style={ Utils.mergeStyles(styles.facebook, styles.socialIcon) }></div>
+                <div style={ Utils.mergeStyles(styles.twitter, styles.socialIcon) }></div>
               </div>
             </div>
           }/>

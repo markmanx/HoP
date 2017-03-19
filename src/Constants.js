@@ -51,7 +51,16 @@ module.exports = {
     letterSpacing: '2px',
     textTransform: 'uppercase'
   },
-  textShadow: '1px 1px 2px #000000',
+
+  // Shadows CSS
+  textShadow: {
+    textShadow: '1px 1px 3px rgba(0,0,0,0.4)'
+  },
+  buttonShadow: {
+    WebkitBoxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
+    MozBoxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
+    boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)'
+  },
 
   // Misc styles
   enableGPU: {

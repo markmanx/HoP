@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import C from './Constants.js';
+import Utils from './Utils.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 
 const styles = {
@@ -48,7 +49,7 @@ const styles = {
   navIcon: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'orange',
+    backgroundColor: C.color1,
   },
   closeIcon: {
     width: C.navItemSize + 'px',
@@ -56,11 +57,6 @@ const styles = {
     right: '5px',
     top: '5px',
     backgroundColor: 'white'
-  },
-  shadow: {
-    WebkitBoxShadow: '0px 10px 19px 0px rgba(0,0,0,0.44)',
-    MozBoxShadow: '0px 10px 19px 0px rgba(0,0,0,0.44)',
-    boxShadow: '0px 10px 19px 0px rgba(0,0,0,0.44)'
   },
   circle: {
     WebkitBorderRadius: '1000px',
@@ -70,26 +66,6 @@ const styles = {
 }
 
 class NavItem extends Component {
-  getWrapperCss() {
-    return Object.assign({}, styles.wrapper, C.enableGPU, this.props.posCss);
-  }
-
-  getNavIconCss() {
-    return Object.assign({}, styles.icon, styles.navIcon, styles.circle, styles.shadow, {backgroundImage: 'url(' + this.props.navIconUrl + ')'});
-  }
-
-  getCloseIconCss() {
-    return Object.assign({}, styles.icon, styles.closeIcon, {backgroundImage: 'url(' + C.assetsDir + '/icons/close.png)'})
-  }
-
-  getPulseCss() {
-    return Object.assign({}, styles.pulse, styles.circle);
-  }
-
-  getInnerContentCss() {
-    return Object.assign({}, styles.innerContent, styles.circle);
-  }
-
   onOpen(e, id) {
     if (!this.props.isExpanded) this.props.onOpen(e, id);
   }
@@ -126,27 +102,27 @@ class NavItem extends Component {
     return (
       <div
         ref={(el) => this.wrapperEl = el}
-        style={this.getWrapperCss()}>
+        style={ Utils.mergeStyles(styles.wrapper, C.enableGPU, this.props.posCss) }>
 
         <div
-          style={this.getPulseCss()}
+          style={ Utils.mergeStyles(styles.pulse, styles.circle) }
           ref={(el) => this.pulseEl = el}>
         </div>
 
         <div
-          style={this.getInnerContentCss()}
+          style={ Utils.mergeStyles(styles.innerContent, styles.circle) }
           ref={(el) => this.innerContent = el}>
 
           {this.props.children}
 
           <div
-            style={this.getCloseIconCss()}
+            style={ Utils.mergeStyles(styles.icon, styles.closeIcon, Utils.genBgImgStyle(C.assetsDir + '/icons/close.png')) }
             onClick={(e) => this.onClose(e)}>
           </div>
         </div>
 
         <div
-          style={this.getNavIconCss()}
+          style={ Utils.mergeStyles(styles.icon, styles.navIcon, styles.circle, C.buttonShadow, Utils.genBgImgStyle(this.props.navIconUrl)) }
           ref={(el) => this.navIconEl = el}
           onClick={(e, id) => this.onOpen(e, id)}>
         </div>

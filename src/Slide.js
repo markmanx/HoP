@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import C from './Constants.js';
+import Utils from './Utils.js';
 import Text from './Text.js';
 import VideoPlayer from './VideoPlayer.js';
 import AudioPlayer from './AudioPlayer.js';
+import Loader from './Loader.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 
 const styles = {
@@ -28,15 +30,17 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
-    display: '-webkit-box',
-    display: '-ms-flexbox',
     display: 'flex',
     flexDirection: 'column',
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     pointerEvents: 'none',
-    backgroundColor: 'black'
+    backgroundColor: C.color1
+  },
+  title: {
+    position: 'absolute',
+    marginTop: '-80px'
   },
   splashScreenWrapper: {
     position: 'absolute',
@@ -101,10 +105,12 @@ class Slide extends Component {
     return (
 
         <div
-          style={Object.assign({}, styles.outerWrapper, C.enableGPU)}
+          style={ Utils.mergeStyles(styles.outerWrapper, C.enableGPU) }
           ref={el => this.outerWrapper = el}>
 
-          <div style={styles.innerWrapper} ref={el => this.innerWrapper = el}>
+          <div
+            style={styles.innerWrapper}
+            ref={el => this.innerWrapper = el}>
 
             {this.props.videoSettings &&
               <VideoPlayer
@@ -123,16 +129,19 @@ class Slide extends Component {
 
             {typeof this.props.slidePoster === 'string' ? (
               <div style={styles.titleWrapper} ref={el => this.slideTitle = el}>
-                <Text text={this.props.slidePoster} textStyle={C.h1} color={C.textLight}></Text>
+                <div style={styles.title}>
+                  <Text text={this.props.slidePoster + ' loading...'} textStyle={C.h4} color={C.textLight}></Text>
+                </div>
+                <Loader />
               </div>
             ) : (
               <div style={styles.splashScreenWrapper}>
                 <div style={styles.centeredText}>
-                  <Text text="Houses of Parliament" textStyle={Object.assign({}, C.h1, {textShadow: C.textShadow})} color={C.textLight}></Text>
-                  <Text text="Explore this iconic seat of power" textStyle={Object.assign({}, C.h2, {textShadow: C.textShadow})} color={C.textLight}></Text>
+                  <Text text="Houses of Parliament" textStyle={ Utils.mergeStyles(C.h1, C.textShadow) } color={C.textLight}></Text>
+                  <Text text="Explore this iconic seat of power" textStyle={ Utils.mergeStyles(C.h2, C.textShadow) } color={C.textLight}></Text>
                 </div>
                 <div style={styles.headphonesText}>
-                  <Text text="Best experienced with headphones" textStyle={Object.assign({}, C.h4, {textShadow: C.textShadow})} color={C.textLight}></Text>
+                  <Text text="Best experienced with headphones" textStyle={ Utils.mergeStyles(C.h4, C.textShadow) } color={C.textLight}></Text>
                 </div>
               </div>
             )}
