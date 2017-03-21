@@ -4,12 +4,15 @@ module.exports = {
   assetsDir: process.env.PUBLIC_URL + '/assets',
 
   // Sizes
-  pagePadding: 30,
+  pagePadding: 15,
   slidePadding: 30,
   navItemSize: 55,
   navItemSpacing: 20,
   mapImgWidth: 700,
   mapImgHeight: 381,
+  hotspotPadding: 12,
+  hotspotInitialWidth: 50,
+  hotspotInitialHeight: 50,
 
   // Colors
   color1: '#F6A623',

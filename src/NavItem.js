@@ -19,6 +19,13 @@ const styles = {
     overflow: 'hidden',
     zIndex: 1
   },
+  content: {
+    position: 'absolute',
+    width: window.innerWidth - (C.pagePadding * 2) + 'px',
+    height: window.innerHeight - (C.pagePadding * 2) + 'px',
+    left: 0,
+    top: '100%'
+  },
   expanded: {
     width: window.innerWidth - (C.pagePadding) + 'px',
     height: window.innerHeight - (C.pagePadding) + 'px',
@@ -85,10 +92,12 @@ class NavItem extends Component {
       TweenMax.to(this.navIconEl, 0.4, {autoAlpha: 0, ease: Expo.easeInOut});
       TweenMax.to(this.wrapperEl, 0.5, Object.assign({}, styles.wrapper, styles.expanded, {ease: Expo.easeInOut}))
       TweenMax.to(this.innerContent, 0.5, {borderRadius: 0, ease: Expo.easeInOut});
+      TweenMax.to(this.content, 0.5, {top: 0, ease: Expo.easeOut, delay: 0.4});
     } else {
       TweenMax.to(this.navIconEl, 0.2, {autoAlpha: 1, delay: 0.2});
       TweenMax.to(this.wrapperEl, 0.5, Object.assign({}, styles.wrapper, this.props.posCss, {ease: Expo.easeInOut}))
       TweenMax.to(this.innerContent, 0.5, {borderRadius: 1000, ease: Expo.easeInOut});
+      TweenMax.to(this.content, 0.001, {top: '100%', delay: 0.5});
     }
 
     if (nextProps.pulsate) {
@@ -113,7 +122,9 @@ class NavItem extends Component {
           style={ Utils.mergeStyles(styles.innerContent, styles.circle) }
           ref={(el) => this.innerContent = el}>
 
-          {this.props.children}
+          <div style={ styles.content } ref={el => this.content = el}>
+            {this.props.children}
+          </div>
 
           <div
             style={ Utils.mergeStyles(styles.icon, styles.closeIcon, Utils.genBgImgStyle(C.assetsDir + '/icons/close.png')) }
