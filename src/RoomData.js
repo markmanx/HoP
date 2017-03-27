@@ -115,7 +115,7 @@ const RoomData = [
     slug: 'MembersLobby',
     title: 'Member\'s Lobby',
     description: "Directly outside the House of Commons, statues of four great 20th-Century prime ministers overlook the Members’ Lobby. David Lloyd George and Winston Churchill stand on either side of the arch into the House of Commons, while Clement Attlee and Margaret Thatcher face them. The entrance to the Commons is known as the Churchill Arch. Churchill proposed building it out of bomb-scarred stone after the room was damaged by bombs during the Second World War.",
-    mapCoords: [402, 160],
+    mapCoords: [402, 120],
     videoSettings: {
       is360: true,
       sources: [

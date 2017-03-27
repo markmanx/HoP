@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import C from './Constants.js';
+import Utils from './Utils.js';
 import {Line} from 'react-progressbar.js';
 import ElementPan from 'react-element-pan';
 import Hotspot from './Hotspot.js';
@@ -48,7 +49,6 @@ const styles = {
   },
   progressWrapper: {
     position: 'absolute',
-    width: window.innerWidth - ( (C.pagePadding * 2) + C.slidePadding ) + 'px',
     left: C.pagePadding + 'px',
     bottom: C.pagePadding + 'px',
     height: '30px'
@@ -56,12 +56,28 @@ const styles = {
 }
 
 class Map extends Component {
+  state = {
+    mapScaling: 1
+  }
+
   getHotspotCSS(coords) {
     return {
       position: 'absolute',
       left: `${coords[0]}px`,
       top: `${coords[1]}px`
     }
+  }
+
+  componentDidMount() {
+    this.onResize();
+    window.addEventListener('resize', () => this.onResize());
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.onResize());
+  }
+
+  onResize() {
   }
 
   render() {
@@ -88,7 +104,7 @@ class Map extends Component {
             </div>
           </div>
 
-          <div style={styles.progressWrapper}>
+          <div style={ Utils.mergeStyles(styles.progressWrapper, this.props.panelWidth) }>
             {this.props.roomsVisited.length + '/' + this.props.totalRooms + ' rooms discovered!'}
             <Line
               containerStyle={styles.progressBar}

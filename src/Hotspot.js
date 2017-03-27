@@ -58,28 +58,29 @@ const styles = {
 
 class Hotspot extends Component {
   state = {
+    isDesktop: false,
     isExpanded: false
   }
 
   onClick(e) {
     if (!this.state.isExpanded) {
-      this.expand();
+      this.setState({ isExpanded: true });
     } else {
       this.props.onClick && this.props.onClick(e);
     }
   }
 
   expand() {
-    this.setState({ isExpanded: true });
     this.expandAnim.play();
 
-    if (this.timer) clearTimeout(this.timer);
-    this.timer = setTimeout(() => this.collapse(), 3000);
+    if (!this.state.isDesktop) {
+      if (this.timer) clearTimeout(this.timer);
+      this.timer = setTimeout(() => this.setState({ isExpanded: false }), 3000);
+    }
   }
 
   collapse() {
     if (this.timer) clearTimeout(this.timer);
-    this.setState({ isExpanded: false });
     this.expandAnim.reverse();
   }
 
@@ -98,6 +99,34 @@ class Hotspot extends Component {
         TweenMax.to(this.textWrapper, 0.2, {opacity: 1, delay: 0.1}),
         TweenMax.to(this.wrapper, 0.5, {width: textWidth + (C.hotspotPadding * 3), left: -(textWidth / 2), ease: Expo.easeInOut})
       ])
+
+    this.onResize();
+    window.addEventListener('resize', () => this.onResize());
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.onResize());
+  }
+
+  onResize() {
+    let isDesktop = Utils.getWinInfo().isDesktop;
+
+    if (isDesktop) {
+      this.setState({
+        isDesktop: isDesktop,
+        isExpanded: isDesktop
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.state.isExpanded) {
+      if (this.timer) clearTimeout(this.timer);
+      this.expand();
+    } else {
+      if (this.timer) clearTimeout(this.timer);
+      this.collapse();
+    }
   }
 
   render() {

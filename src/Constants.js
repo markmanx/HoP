@@ -79,5 +79,11 @@ module.exports = {
     'ROOM_INFO': 0,
     'MAP': 1,
     'SOCIAL': 2
+  },
+
+  // Orientations
+  orientations: {
+    'LANDSCAPE': 0,
+    'PORTRAIT': 1
   }
 }
