@@ -119,12 +119,10 @@ class Hotspot extends Component {
   onResize() {
     let isDesktop = Utils.getWinInfo().isDesktop;
 
-    if (isDesktop) {
-      this.setState({
-        isDesktop: isDesktop,
-        isExpanded: isDesktop
-      });
-    }
+    this.setState({
+      isDesktop: isDesktop,
+      isExpanded: isDesktop
+    });
   }
 
   componentDidUpdate() {
@@ -142,7 +140,6 @@ class Hotspot extends Component {
       <div
         style={styles.wrapper}
         onMouseUp={(e) => this.onClick(e)}
-        onTouchEnd={(e) => this.onClick(e)}
         ref={el => this.wrapper = el} >
 
         <img style={styles.hotspotPointer} src={C.assetsDir + '/images/hotspot-pointer.svg'} />
