@@ -67,31 +67,36 @@ class Hotspot extends Component {
   }
 
   onClick(e) {
-    if (!this.props.enableClick) return;
+    let now = Date.now(),
+        this.lastClick = this.lastClick || now;
+
+    if (!this.props.enableClick || now - this.lastClick < 50) return;
 
     if (!this.state.isExpanded) {
       this.setState({ isExpanded: true });
     } else {
       this.props.onClick && this.props.onClick(e);
     }
+
+    this.lastClick = now;
   }
 
   expand() {
     this.expandAnim.play();
 
     if (!this.state.isDesktop) {
-      if (this.timer) clearTimeout(this.timer);
-      this.timer = setTimeout(() => this.setState({ isExpanded: false }), 3000);
+      if (this.expandTimer) clearTimeout(this.expandTimer);
+      this.expandTimer = setTimeout(() => this.setState({ isExpanded: false }), 3000);
     }
   }
 
   collapse() {
-    if (this.timer) clearTimeout(this.timer);
+    if (this.expandTimer) clearTimeout(this.expandTimer);
     this.expandAnim.reverse();
   }
 
   willComponentUnmount() {
-    if (this.timer) clearTimeout(this.timer);
+    if (this.expandTimer) clearTimeout(this.expandTimer);
   }
 
   componentDidMount() {
@@ -134,6 +139,7 @@ class Hotspot extends Component {
       <div
         style={styles.wrapper}
         onMouseUp={(e) => this.onClick(e)}
+        onTouchEnd={(e) => this.onClick(e)}
         ref={el => this.wrapper = el} >
 
         <img style={styles.hotspotPointer} src={C.assetsDir + '/images/hotspot-pointer.svg'} />
