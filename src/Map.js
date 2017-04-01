@@ -80,7 +80,7 @@ class Map extends Component {
   }
 
   componentWillUnmount() {
-    if (this.panTimer) this.clearTimeout(this.panTimer);
+    if (this.panTimer) clearTimeout(this.panTimer);
     window.removeEventListener('resize', () => this.onResize());
   }
 

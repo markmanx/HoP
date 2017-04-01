@@ -4,8 +4,6 @@ import Utils from './Utils.js';
 import Text from './Text';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 
-let timer = null;
-
 const styles = {
   wrapper: {
     position: 'absolute',
@@ -93,7 +91,7 @@ class Hotspot extends Component {
   }
 
   willComponentUnmount() {
-    if (timer) clearTimeout(timer);
+    if (this.timer) clearTimeout(this.timer);
   }
 
   componentDidMount() {
@@ -125,13 +123,9 @@ class Hotspot extends Component {
     });
   }
 
-  componentDidUpdate() {
-    if (this.state.isExpanded) {
-      if (this.timer) clearTimeout(this.timer);
-      this.expand();
-    } else {
-      if (this.timer) clearTimeout(this.timer);
-      this.collapse();
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.isExpanded !== prevState.isExpanded) {
+      this.state.isExpanded ? this.expand() : this.collapse();
     }
   }
 
