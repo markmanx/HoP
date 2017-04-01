@@ -30,7 +30,6 @@ const styles = {
   hotspotTextWrapper: {
     position: 'absolute',
     paddingLeft: C.hotspotPadding + 'px',
-
     width: '500px', // large value to make sure the text within it sits on one line
     opacity: 0
   },
@@ -45,6 +44,13 @@ const styles = {
     marginTop: '-11px',
     left: '50%',
     marginLeft: '-11px'
+  },
+  hotspotTick: {
+    position: 'absolute',
+    width: '22px',
+    height: '22px',
+    right: '-11px',
+    top: '-11px'
   },
   hotspotPointer: {
     position: 'absolute',
@@ -63,6 +69,8 @@ class Hotspot extends Component {
   }
 
   onClick(e) {
+    if (!this.props.enableClick) return;
+
     if (!this.state.isExpanded) {
       this.setState({ isExpanded: true });
     } else {
@@ -133,7 +141,8 @@ class Hotspot extends Component {
     return (
       <div
         style={styles.wrapper}
-        onClick={(e) => this.onClick(e)}
+        onMouseUp={(e) => this.onClick(e)}
+        onTouchEnd={(e) => this.onClick(e)}
         ref={el => this.wrapper = el} >
 
         <img style={styles.hotspotPointer} src={C.assetsDir + '/images/hotspot-pointer.svg'} />
@@ -145,6 +154,9 @@ class Hotspot extends Component {
           <img style={styles.plusIcon} src={C.assetsDir + '/icons/hotspot-plus.svg'} ref={el => this.plusIcon = el}/>
         </div>
 
+        {this.props.visited &&
+          <img style={styles.hotspotTick} src={C.assetsDir + '/icons/hotspot-tick.svg'} alt="hotspot-tick" />
+        }
       </div>
     )
   }

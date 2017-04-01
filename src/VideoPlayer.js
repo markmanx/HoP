@@ -52,6 +52,8 @@ class VideoPlayer extends Component {
         initFov: 100,
         VREnable: false,
         clickAndDrag: true,
+        backToVerticalCenter: false,
+        backToHorizonCenter: false,
         NoticeMessage: '',
         callback: () => {
           this.canvas = this.player.getChild('Canvas');

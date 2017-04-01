@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router';
 import C from './Constants.js';
 import Utils from './Utils.js';
 import NavItem from './NavItem.js';
@@ -156,7 +157,9 @@ class PrimaryNav extends Component {
     return (
       <div>
 
-        <img style={styles.logo} src={C.assetsDir + '/images/logo.png'} alt="CNN Logo" />
+        <a href="http://www.cnn.com" target="about:blank">
+          <img style={styles.logo} src={C.assetsDir + '/images/logo.png'} alt="CNN Logo" />
+        </a>
 
         <NavItem
           commonProps={this.getCommonProps(C.navItems.ROOM_INFO)}

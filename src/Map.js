@@ -24,8 +24,7 @@ const styles = {
     width: '100%',
     height: C.mapImgHeight + 'px',
     top: '50%',
-    marginTop: - (C.mapImgHeight * .5) + 'px',
-    overflow: 'scroll'
+    marginTop: - (C.mapImgHeight * .5) + 'px'
   },
   mapWrapperInner: {
     position: 'absolute',
@@ -57,7 +56,7 @@ const styles = {
 
 class Map extends Component {
   state = {
-    mapScaling: 1
+    enableClick: true
   }
 
   getHotspotCSS(coords) {
@@ -68,12 +67,20 @@ class Map extends Component {
     }
   }
 
+  onPan() {
+    this.setState({ enableClick: false });
+
+    if (this.panTimer) clearTimeout(this.panTimer);
+    this.panTimer = setTimeout(() => this.setState({ enableClick: true }), 250);
+  }
+
   componentDidMount() {
     this.onResize();
     window.addEventListener('resize', () => this.onResize());
   }
 
   componentWillUnmount() {
+    if (this.panTimer) this.clearTimeout(this.panTimer);
     window.removeEventListener('resize', () => this.onResize());
   }
 
@@ -84,7 +91,10 @@ class Map extends Component {
     return (
         <div style={styles.wrapper}>
 
-          <div style={styles.mapWrapperOuter}>
+          <ElementPan
+            style={styles.mapWrapperOuter}
+            onPan={() => this.onPan()}>
+
             <div style={styles.mapWrapperInner}>
               <img src={C.assetsDir + '/images/map.png'} style={styles.mapImg} alt='map'/>
               <div style={styles.hotspotWrapper}>
@@ -92,7 +102,11 @@ class Map extends Component {
                   if (item.mapCoords) {
                     return (
                       <div id="hotspotwrapper" style={this.getHotspotCSS(item.mapCoords)} key={index}>
-                        <Hotspot text={item.title} onClick={this.props.onRoomClicked.bind(this, item)} expandable={true} isHotspot={true} ></Hotspot>
+                        <Hotspot
+                          text={item.title}
+                          onClick={this.props.onRoomClicked.bind(this, item)}
+                          visited={this.props.roomsVisited.indexOf(index) !== -1}
+                          enableClick={this.state.enableClick} />
                       </div>
                     )
                   } else {
@@ -102,7 +116,7 @@ class Map extends Component {
                 }
               </div>
             </div>
-          </div>
+          </ElementPan>
 
           <div style={ Utils.mergeStyles(styles.progressWrapper, this.props.panelWidth) }>
             {this.props.roomsVisited.length + '/' + this.props.totalRooms + ' rooms discovered!'}
