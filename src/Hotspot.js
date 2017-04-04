@@ -67,8 +67,8 @@ class Hotspot extends Component {
   }
 
   onClick(e) {
-    let now = Date.now(),
-        this.lastClick = this.lastClick || now;
+    let now = Date.now();
+    this.lastClick = this.lastClick || now;
 
     if (!this.props.enableClick || now - this.lastClick < 50) return;
 

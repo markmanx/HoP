@@ -187,7 +187,7 @@ const RoomData = [
     videoSettings: {
       is360: true,
       sources: [
-        {src: C.assetsDir + '/video/WestminsterBridge.mp4', type: "video/mp4" }
+        {src: C.assetsDir + '/video/WestminsterBridge-hires.mp4', type: "video/mp4" }
       ]
     },
     audioSettings: {
