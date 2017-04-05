@@ -4,7 +4,7 @@ import { TimelineMax, TweenMax, Linear } from 'gsap';
 
 const styles = {
   wrapper: {
-    position: 'absolute',
+    position: 'relative',
     width: (C.navItemSize * 1.5) + 'px',
     height: (C.navItemSize * 1.5) + 'px'
   },

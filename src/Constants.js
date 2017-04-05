@@ -10,9 +10,15 @@ module.exports = {
   navItemSpacing: 20,
   mapImgWidth: 700,
   mapImgHeight: 381,
+  mapPaddingL: 100,
+  mapPaddingR: 50,
   hotspotPadding: 12,
   hotspotInitialWidth: 50,
   hotspotInitialHeight: 50,
+
+  // Social URLS
+  twitterUrl: "https://twitter.com/intent/tweet?url=http%3A%2F%2Fcnn.com%2Fparliament&text=Explore%20the%20home%20of%20British%20government%20in%20this%20360%20interactive%20of%20the%20Houses%20of%20Parliament%20at%20",
+  facebookUrl: "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcnn.com%2Fparliament",
 
   // Colors
   color1: '#F6A623',
@@ -72,6 +78,17 @@ module.exports = {
     MsTransform: 'translate3d(0, 0, 0.0001)',
     OTransform: 'translate3d(0, 0, 0.0001)',
     transform: 'translate3d(0, 0, 0.0001)'
+  },
+  borderBox: {
+    WebkitBoxSizing: 'border-box',
+    MozBoxSizing: 'border-box',
+    boxSizing: 'border-box'
+  },
+  flexBox: {
+    display: '-webkit-box',
+    display: '-webkit-flex',
+    display: '-ms-flexbox',
+    display: 'flex'
   },
 
   // Nav Items

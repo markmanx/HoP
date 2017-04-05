@@ -116,7 +116,7 @@ class NavItem extends Component {
           style={ Utils.mergeStyles(styles.innerContent, styles.circle) }
           ref={(el) => this.innerContent = el}>
 
-          <div style={ Utils.mergeStyles(styles.content, this.props.commonProps.expandedStyle) } ref={el => this.content = el}>
+          <div style={ Utils.mergeStyles(styles.content, {width: this.props.commonProps.expandedStyle.width, height: this.props.commonProps.expandedStyle.height}) } ref={el => this.content = el}>
             {this.props.children}
           </div>
 

@@ -101,12 +101,14 @@ class PrimaryNav extends Component {
       css = {
         top: offset + centeringOffset,
         right: (itemIndex === -1) ? -C.navItemSize : C.pagePadding,
+        left: 'auto',
         bottom: 'auto'
       }
     } else {
       css = {
         top: 'auto',
-        right: offset + centeringOffset,
+        left: offset + centeringOffset,
+        right: 'auto',
         bottom: (itemIndex === -1) ? -C.navItemSize : C.pagePadding
       }
     }
@@ -116,11 +118,25 @@ class PrimaryNav extends Component {
 
   getCommonProps(navItemId) {
     let expandedStyle = {
-      height: this.state.winInfo.height - C.pagePadding + 'px'
+      height: this.state.winInfo.height - C.pagePadding + 'px',
+      top: (C.pagePadding * 0.5) + 'px',
+      bottom: 'auto'
     };
 
     if (this.state.winInfo.isLandscape) {
-      expandedStyle.width = this.state.winInfo.width * 0.36;
+      Object.assign(expandedStyle, {
+        right: (C.pagePadding * 0.5) + 'px',
+        left: 'auto'
+      });
+    } else {
+      Object.assign(expandedStyle, {
+        left: (C.pagePadding * 0.5) + 'px',
+        right: 'auto'
+      });
+    }
+
+    if (this.state.winInfo.isLandscape) {
+      expandedStyle.width = 500;
     } else {
       expandedStyle.width = this.state.winInfo.width - C.pagePadding + 'px';
     }
@@ -210,8 +226,8 @@ class PrimaryNav extends Component {
               </div>
               <div style={styles.socialIcons}>
                 <div style={styles.spacer}></div>
-                <div style={ Utils.mergeStyles(styles.facebook, styles.socialIcon) }></div>
-                <div style={ Utils.mergeStyles(styles.twitter, styles.socialIcon) }></div>
+                <a href={C.facebookUrl} target="_blank"> <div style={ Utils.mergeStyles(styles.facebook, styles.socialIcon) }></div> </a>
+                <a href={C.twitterUrl} target="_blank"> <div style={ Utils.mergeStyles(styles.twitter, styles.socialIcon) }></div> </a>
               </div>
             </div>
           }/>

@@ -28,21 +28,20 @@ const styles = {
   },
   mapWrapperInner: {
     position: 'absolute',
-    width: C.mapImgWidth + 'px',
+    width: C.mapImgWidth + C.mapPaddingL + C.mapPaddingR + 'px',
     height: C.mapImgHeight + 'px'
   },
   mapImg: {
     position: 'absolute',
-    left: 0,
+    left: C.mapPaddingL + 'px',
     top: 0,
-    width: '100%',
-    height: '100%'
+    width: C.mapImgWidth + 'px'
   },
   hotspotWrapper: {
     position: 'absolute',
     top: 0,
-    left: 0,
-    width: '100%',
+    left: C.mapPaddingL + 'px',
+    width: C.mapImgWidth + 'px',
     height: '100%',
     opacity: 0.9
   },
@@ -85,14 +84,18 @@ class Map extends Component {
   }
 
   onResize() {
+
   }
 
   render() {
+    let progressBarWidth = parseInt(this.props.panelWidth) - (C.pagePadding * 2) + 'px';
+
     return (
         <div style={styles.wrapper}>
 
           <ElementPan
             style={styles.mapWrapperOuter}
+            startX={200}
             onPan={() => this.onPan()}>
 
             <div style={styles.mapWrapperInner}>
@@ -118,7 +121,7 @@ class Map extends Component {
             </div>
           </ElementPan>
 
-          <div style={ Utils.mergeStyles(styles.progressWrapper, this.props.panelWidth) }>
+          <div style={ Utils.mergeStyles(styles.progressWrapper, {width: progressBarWidth}) }>
             {this.props.roomsVisited.length + '/' + this.props.totalRooms + ' rooms discovered!'}
             <Line
               containerStyle={styles.progressBar}

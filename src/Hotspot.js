@@ -9,31 +9,32 @@ const styles = {
     position: 'absolute',
     width: C.hotspotInitialWidth + 'px',
     height: C.hotspotInitialHeight + 'px',
-    color: C.textLight,
     backgroundColor: C.color1,
     cursor: 'pointer'
   },
-  box: {
+  box: Utils.mergeStyles({
     position: 'absolute',
     width: '100%',
     height: '100%',
-    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     top: 0,
     left: 0,
     backgroundColor: C.color1,
     overflow: 'hidden'
-  },
+  }, C.flexBox),
   hotspotTextWrapper: {
     position: 'absolute',
+    top: 0,
     paddingLeft: C.hotspotPadding + 'px',
     width: '500px', // large value to make sure the text within it sits on one line
+    height: '100%',
     opacity: 0
   },
   hotspotText: {
     position: 'relative',
-    display: 'inline'
+    display: 'inline',
+    lineHeight: C.hotspotInitialHeight + 'px'
   },
   plusIcon: {
     position: 'absolute',
@@ -52,23 +53,33 @@ const styles = {
   },
   hotspotPointer: {
     position: 'absolute',
-    width: '16px',
-    fill: C.color1,
-    bottom: '-27px',
+    width: '0',
+    height: '0',
+    borderStyle: 'solid',
+    borderWidth: '28px 8px 0 8px',
+    borderColor: 'transparent',
     left: '50%',
-    marginLeft: '-8px'
+    marginLeft: '-8px',
+    bottom: '-22px'
+  },
+  clickCatcher: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    background: 'url(about:blank)'
   }
 }
 
 class Hotspot extends Component {
   state = {
-    isDesktop: false,
-    isExpanded: false
+    winInfo: Utils.getWinInfo(),
+    isExpanded: false,
+    hover: false
   }
 
   onClick(e) {
     let now = Date.now();
-    this.lastClick = this.lastClick || now;
+    this.lastClick = this.lastClick || 0;
 
     if (!this.props.enableClick || now - this.lastClick < 50) return;
 
@@ -81,10 +92,18 @@ class Hotspot extends Component {
     this.lastClick = now;
   }
 
+  onMouseOver() {
+    this.setState({ hover: true });
+  }
+
+  onMouseOut() {
+    this.setState({ hover: false });
+  }
+
   expand() {
     this.expandAnim.play();
 
-    if (!this.state.isDesktop) {
+    if (!this.state.winInfo.isDesktop) {
       if (this.expandTimer) clearTimeout(this.expandTimer);
       this.expandTimer = setTimeout(() => this.setState({ isExpanded: false }), 3000);
     }
@@ -100,15 +119,17 @@ class Hotspot extends Component {
   }
 
   componentDidMount() {
-    let textWidth = this.text.offsetWidth,
-        textHeight = this.text.offsetHeight
+    let browserInfo = Utils.getBrowserInfo(),
+        isChrome = browserInfo.name == 'chrome',
+        textWidth = this.text.getBoundingClientRect().width,
+        textHeight = this.text.getBoundingClientRect().height
 
     this.expandAnim = new TimelineMax({ paused: true })
       .to(this.wrapper, 0.001, {zIndex: 10})
       .appendMultiple([
         TweenMax.to(this.plusIcon, 0.2, {opacity: 0}),
         TweenMax.to(this.textWrapper, 0.2, {opacity: 1, delay: 0.1}),
-        TweenMax.to(this.wrapper, 0.5, {width: textWidth + (C.hotspotPadding * 3), left: -(textWidth / 2), ease: Expo.easeInOut})
+        TweenMax.to(this.wrapper, 0.5, {width: textWidth + (C.hotspotPadding * (isChrome ? 3 : 2)), left: -((textWidth * 0.5) - C.hotspotPadding), ease: Expo.easeInOut})
       ])
 
     this.onResize();
@@ -120,11 +141,11 @@ class Hotspot extends Component {
   }
 
   onResize() {
-    let isDesktop = Utils.getWinInfo().isDesktop;
+    let winInfo = Utils.getWinInfo();
 
     this.setState({
-      isDesktop: isDesktop,
-      isExpanded: isDesktop
+      winInfo: winInfo,
+      isExpanded: winInfo.isDesktop
     });
   }
 
@@ -135,18 +156,19 @@ class Hotspot extends Component {
   }
 
   render() {
+    let bgColor = this.state.winInfo.isDesktop && this.state.hover ? C.color2 : C.color1,
+        textColor = {color: this.state.winInfo.isDesktop && this.state.hover ? C.textDark : C.textLight};
+
     return (
       <div
         style={styles.wrapper}
-        onMouseUp={(e) => this.onClick(e)}
-        onTouchEnd={(e) => this.onClick(e)}
         ref={el => this.wrapper = el} >
 
-        <img style={styles.hotspotPointer} src={C.assetsDir + '/images/hotspot-pointer.svg'} />
+        <div style={ Utils.mergeStyles(styles.hotspotPointer, {borderTopColor: bgColor}) }></div>
 
-        <div style={styles.box}>
+        <div style={ Utils.mergeStyles(styles.box, {backgroundColor: bgColor}) }>
           <div style={styles.hotspotTextWrapper} ref={el => this.textWrapper = el}>
-            <div style={ Utils.mergeStyles(styles.hotspotText, C.h4) } ref={el => this.text = el}>{this.props.text}</div>
+            <div style={ Utils.mergeStyles(C.h4, styles.hotspotText, textColor) } ref={el => this.text = el}>{this.props.text}</div>
           </div>
           <img style={styles.plusIcon} src={C.assetsDir + '/icons/hotspot-plus.svg'} ref={el => this.plusIcon = el}/>
         </div>
@@ -154,6 +176,14 @@ class Hotspot extends Component {
         {this.props.visited &&
           <img style={styles.hotspotTick} src={C.assetsDir + '/icons/hotspot-tick.svg'} alt="hotspot-tick" />
         }
+
+        <div
+          style={styles.clickCatcher}
+          onMouseOver={(e) => this.onMouseOver()}
+          onMouseOut={(e) => this.onMouseOut()}
+          onMouseUp={(e) => this.onClick(e)}
+          onTouchEnd={(e) => this.onClick(e)}>
+        </div>
       </div>
     )
   }

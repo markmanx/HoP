@@ -1,3 +1,5 @@
+import browser from 'detect-browser';
+
 module.exports = {
 
   mergeStyles: function() {
@@ -17,5 +19,9 @@ module.exports = {
       isLandscape: (window.innerWidth > window.innerHeight) ? 1 : 0,
       isDesktop: (window.innerWidth > 800) ? 1 : 0
     }
+  },
+
+  getBrowserInfo: function() {
+    return browser;
   }
 }

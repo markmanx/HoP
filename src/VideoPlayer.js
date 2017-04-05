@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
 import C from './Constants.js'
+import Utils from './Utils.js';
 import 'video.js/dist/video-js.css'
 import videojs from 'video.js';
 import VideoPanorama from 'videojs-panorama';
 
 const styles = {
-  vidWrapper: {
+  vidWrapper: Utils.mergeStyles({
     position: 'absolute',
     left: 0,
     top: 0,
     width: '100%',
     height: '100%',
-    display: '-webkit-box',
-    display: '-ms-flexbox',
-    display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  }, C.flexBox)
 }
 
 class VideoPlayer extends Component {
@@ -81,15 +79,15 @@ class VideoPlayer extends Component {
 
   componentDidMount() {
     this.timer = setTimeout(() => this.initializePlayer(), 500);
+    this.onResize();
+    window.addEventListener('resize', () => this.onResize());
   }
 
   componentWillUnmount() {
     this.timer && clearTimeout(this.timer);
-
-    if (!this.player) return;
-
     this.canvas && this.canvas.destroy();
-    this.player.dispose();
+    this.player && this.player.dispose();
+    window.removeEventListener('resize', () => this.onResize());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -106,7 +104,7 @@ class VideoPlayer extends Component {
 
   render() {
     const videoHtml = `
-      <video id="${this.state.videoId}" class="video-js vjs-default-skin" preload="auto" playsInline muted>
+      <video id="${this.state.videoId}" class="video-js vjs-default-skin" preload="auto" playsInline muted loop>
       </video>
     `
 

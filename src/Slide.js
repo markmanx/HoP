@@ -24,23 +24,22 @@ const styles = {
     overflow: 'hidden',
     backgroundColor: 'black'
   },
-  titleWrapper: {
+  titleWrapper: Utils.mergeStyles({
     position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
-    display: 'flex',
     flexDirection: 'column',
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     pointerEvents: 'none',
     backgroundColor: C.color1
-  },
+  }, C.flexBox),
   title: {
-    position: 'absolute',
-    marginTop: '-80px'
+    position: 'relative',
+    marginBottom: '40px'
   },
   splashScreenWrapper: {
     position: 'absolute',
@@ -49,20 +48,17 @@ const styles = {
     top: 0,
     left: 0
   },
-  centeredText: {
+  centeredText: Utils.mergeStyles({
     position: 'absolute',
     width: '100%',
     height: '100%',
     top: 0,
     left: 0,
-    display: '-webkit-box',
-    display: '-ms-flexbox',
-    display: 'flex',
     flexDirection: 'column',
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center'
-  },
+  }, C.flexBox),
   headphonesText: {
     position: 'absolute',
     width: '100%',
