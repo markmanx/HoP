@@ -213,7 +213,7 @@ class PrimaryNav extends Component {
           children={
             <div style={ Utils.mergeStyles(styles.contentWrapper) }>
               <div style={styles.contentHeader}>
-                <div style={C.h6}>Credits</div>
+                <div style={C.h6}>About this interactive</div>
                 <div style={styles.spacer}></div>
               </div>
               <div style={styles.contentOuter}>

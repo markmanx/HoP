@@ -6,9 +6,14 @@ const RoomData = [
     videoSettings: {
       aspectRatio: 9 / 16,
       is360: false,
-      sources: [
-        {src: C.assetsDir + '/video/splash-screen.mp4', type: "video/mp4" }
-      ]
+      sources: {
+        desktop: [
+          {src: C.assetsDir + '/video/splash-hires.mp4', type: "video/mp4" }
+        ],
+        mobile: [
+          {src: C.assetsDir + '/video/splash-lowres.mp4', type: "video/mp4" }
+        ]
+      }
     }
   },
 
@@ -166,7 +171,7 @@ const RoomData = [
     slug: 'ActRoom',
     title: 'Act Room',
     description: "High up in the Victoria Tower, in a climate-controlled room, Parliament archivists keep careful watch over tens of thousands of parchment rolls containing the laws of Great Britain. The oldest dates back to 1497, and the largest is over 400 meters (1,300 feet) long when unfurled. They’re stored in this stone tower for safekeeping: After the previous Palace of Westminster burned down in 1834, Parliament wanted to be sure it had “fireproof repositories for books and documents.”",
-    mapCoords: [629, 0],
+    mapCoords: [629, 12],
     videoSettings: {
       is360: true,
       sources: [

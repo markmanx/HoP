@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import C from './Constants.js';
 import Utils from './Utils.js';
 import {Line} from 'react-progressbar.js';
+import { TimelineMax, TweenMax, Expo } from 'gsap';
 import ElementPan from 'react-element-pan';
 import Hotspot from './Hotspot.js';
 import RoomData from './RoomData.js';
@@ -50,12 +51,19 @@ const styles = {
     left: C.pagePadding + 'px',
     bottom: C.pagePadding + 'px',
     height: '30px'
+  },
+  instructions: {
+    position: 'absolute',
+    width: '70%',
+    top: C.pagePadding + 'px',
+    left: C.pagePadding + 'px'
   }
 }
 
 class Map extends Component {
   state = {
-    enableClick: true
+    enableClick: true,
+    winInfo: Utils.getWinInfo()
   }
 
   getHotspotCSS(coords) {
@@ -84,7 +92,7 @@ class Map extends Component {
   }
 
   onResize() {
-
+    this.setState({ winInfo: Utils.getWinInfo() });
   }
 
   render() {
@@ -92,6 +100,11 @@ class Map extends Component {
 
     return (
         <div style={styles.wrapper}>
+
+          <div style={ Utils.mergeStyles(styles.instructions, C.h5) }>
+            { this.state.winInfo.isDesktop ?
+              'Click a room to enter' : 'Double Tap a room to enter'}
+          </div>
 
           <ElementPan
             style={styles.mapWrapperOuter}

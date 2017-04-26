@@ -31,7 +31,13 @@ class VideoPlayer extends Component {
   }
 
   initializePlayer(){
-    this.player = videojs(this.state.videoId, {sources: this.state.videoSettings.sources},  () => {
+    let sources = this.state.videoSettings.sources;
+
+    if (Object.prototype.toString.call( sources ) !== '[object Array]') {
+      sources = Utils.getWinInfo().isDesktop ? sources.desktop : sources.mobile;
+    }
+
+    this.player = videojs(this.state.videoId, {sources: sources},  () => {
       (this.state.videoSettings.is360) ? this.initPanorama() : this.onReady();
     });
 
