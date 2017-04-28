@@ -31,43 +31,21 @@ const styles = {
     boxSizing: 'border-box',
     color: C.textDark
   },
-  contentHeader: {
-    padding: '45px 30px 0 30px'
-  },
   contentOuter: {
     alignSelf: 'stretch',
-    height: '100%',
     overflow: 'scroll'
   },
   contentInner: {
     padding: '17px 30px 45px 30px'
   },
-  creditsTitle: {
-    display: 'inline-block'
+  contentHeader: {
+    padding: '45px 30px 0 30px'
   },
   logo: {
     position: 'absolute',
     left: C.pagePadding + 'px',
     bottom: (C.pagePadding + 12) + 'px',
     width: '55px'
-  },
-  socialIcons: {
-    padding: '0 30px'
-  },
-  socialIcon: {
-    position: 'relative',
-    display: 'inline-block',
-    width: (C.navItemSize * .75) + 'px',
-    height: C.navItemSize + 'px',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundSize: '25px 25px'
-  },
-  twitter: {
-    backgroundImage: `url("${C.assetsDir + '/icons/twitter.svg'}")`,
-  },
-  facebook: {
-    backgroundImage: `url("${C.assetsDir + '/icons/facebook.svg'}")`,
   },
   spacer: {
     width: '100%',
@@ -204,31 +182,6 @@ class PrimaryNav extends Component {
                 roomsVisited={this.props.roomsVisited}
                 totalRooms={this.props.totalRooms}
                 />
-            </div>
-          }/>
-
-        <NavItem
-          commonProps={this.getCommonProps(C.navItems.SOCIAL)}
-          navIconUrl={C.assetsDir + '/icons/more.svg'}
-          children={
-            <div style={ Utils.mergeStyles(styles.contentWrapper) }>
-              <div style={styles.contentHeader}>
-                <div style={C.h6}>About this interactive</div>
-                <div style={styles.spacer}></div>
-              </div>
-              <div style={styles.contentOuter}>
-                <div style={ Utils.mergeStyles(styles.contentInner, C.h5) }>
-                  Editorial: Richard Allen Greene, Florence Davey-Attlee, Anastasia Anashkina, Toby Welham
-                  <p>Design: Sarah-Grace Mankarious</p>
-                  <p>Development: Mark Mankarious</p>
-                  <p>Camera: Chris Whyld</p>
-                </div>
-              </div>
-              <div style={styles.socialIcons}>
-                <div style={styles.spacer}></div>
-                <a href={C.facebookUrl} target="_blank"> <div style={ Utils.mergeStyles(styles.facebook, styles.socialIcon) }></div> </a>
-                <a href={C.twitterUrl} target="_blank"> <div style={ Utils.mergeStyles(styles.twitter, styles.socialIcon) }></div> </a>
-              </div>
             </div>
           }/>
 

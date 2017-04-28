@@ -5,7 +5,7 @@ module.exports = {
 
   // Sizes
   pagePadding: 15,
-  slidePadding: 30,
+  panelPadding: 25,
   navItemSize: 55,
   navItemSpacing: 20,
   mapImgWidth: 700,
@@ -94,8 +94,7 @@ module.exports = {
   // Nav Items
   navItems: {
     'ROOM_INFO': 0,
-    'MAP': 1,
-    'SOCIAL': 2
+    'MAP': 1
   },
 
   // Orientations

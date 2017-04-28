@@ -62,7 +62,6 @@ class App extends Component {
       default:
         newNavItems.push(C.navItems.ROOM_INFO);
         newNavItems.push(C.navItems.MAP);
-        newNavItems.push(C.navItems.SOCIAL);
         break;
     }
 
