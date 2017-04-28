@@ -6,7 +6,6 @@ import { TimelineMax, TweenMax, Expo } from 'gsap';
 import ElementPan from 'react-element-pan';
 import Hotspot from './Hotspot.js';
 import RoomData from './RoomData.js';
-import Clickable from './Clickable.js';
 
 const styles = {
   wrapper: {
