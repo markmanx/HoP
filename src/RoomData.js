@@ -20,14 +20,21 @@ const RoomData = [
   // 1: Elizabeth Tower Exterior
   {
     slug: 'ElizabethTowerExterior',
-    title: 'Elizabeth Tower Exterior',
-    description: "The ground floor of the Elizabeth Tower, home of Big Ben and the Great Clock. From here, it's 334 steps up to the belfry, where the tower's five bells hang. Then it's another 59 steps up to the very top, where you'll find a lantern called the Ayrton Light. It's lit when parliament holds a session at night. The tower was completed in 1859, and is built out of 30,000 cubic feet of stone and 92,000 cubic feet of brickwork.",
+    title: 'Elizabeth Tower',
+    description: "The Elizabeth Tower, home of the Great Clock and the bell called Big Ben. From here, it's 334 steps up to the belfry, where the tower's five bells hang. Then it's another 59 steps up to the very top, where you'll find a lantern called the Ayrton Light. It's lit when parliament holds a session at night. The tower was completed in 1859, and is built out of 30,000 cubic feet of stone and 92,000 cubic feet of brickwork.",
     mapCoords: [171, 17],
     videoSettings: {
       is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/ElizabethTowerExterior.mp4', type: "video/mp4" }
-      ]
+      sources: {
+        desktop: [
+          {src: C.assetsDir + '/video/ElizabethTowerExterior_hires.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/ElizabethTowerExterior_hires.ogv', type: "video/ogg" }
+        ],
+        mobile: [
+          {src: C.assetsDir + '/video/ElizabethTowerExterior.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/ElizabethTowerExterior_hires.ogv', type: "video/ogg" }
+        ]
+      }
     },
     audioSettings: {
       url: C.assetsDir + '/audio/ElizabethTowerExterior.mp3'
@@ -69,13 +76,21 @@ const RoomData = [
   // 4: Big Ben: Belfry
   {
     slug: 'BigBenBelfry',
-    title: 'Big Ben: Belfry',
+    title: 'The Belfry',
     description: "In the belfry hangs the enormous bell called Big Ben -- so famous that the tower itself is often referred to by that name. In fact, the tower was simply called the Clock Tower for most of its history before being renamed the Elizabeth Tower in 2012, when Queen Elizabeth celebrated 60 years on the throne. Big Ben chimes the hour, while the four smaller bells around it chime the quarter hours.",
+    mapCoords: [187, 108],
     videoSettings: {
       is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/BigBenBelfry.mp4', type: "video/mp4" }
-      ]
+      sources: {
+        desktop: [
+          {src: C.assetsDir + '/video/Belfry_hires.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/Belfry_hires.ogv', type: "video/ogg" }
+        ],
+        mobile: [
+          {src: C.assetsDir + '/video/Belfry.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/Belfry_hires.ogv', type: "video/ogg" }
+        ]
+      }
     },
     audioSettings: {
       url: C.assetsDir + '/audio/BigBenBelfry.mp3'
@@ -106,9 +121,16 @@ const RoomData = [
     mapCoords: [314, 172],
     videoSettings: {
       is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/HouseOfCommons.mp4', type: "video/mp4" }
-      ]
+      sources: {
+        desktop: [
+          {src: C.assetsDir + '/video/HouseOfCommons_hires.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/HouseOfCommons_hires.ogv', type: "video/ogg" }
+        ],
+        mobile: [
+          {src: C.assetsDir + '/video/HouseOfCommons.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/HouseOfCommons_hires.ogv', type: "video/ogg" }
+        ]
+      }
     },
     audioSettings: {
       url: C.assetsDir + '/audio/HouseOfCommons.mp3'
@@ -118,14 +140,21 @@ const RoomData = [
   // 7: Members Lobby
   {
     slug: 'MembersLobby',
-    title: 'Member\'s Lobby',
+    title: 'Members\' Lobby',
     description: "Directly outside the House of Commons, statues of four great 20th-Century prime ministers overlook the Members’ Lobby. David Lloyd George and Winston Churchill stand on either side of the arch into the House of Commons, while Clement Attlee and Margaret Thatcher face them. The entrance to the Commons is known as the Churchill Arch. Churchill proposed building it out of bomb-scarred stone after the room was damaged by bombs during the Second World War.",
     mapCoords: [402, 120],
     videoSettings: {
       is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/MembersLobby.mp4', type: "video/mp4" }
-      ]
+      sources: {
+        desktop: [
+          {src: C.assetsDir + '/video/MembersLobby_hires.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/MembersLobby_hires.ogv', type: "video/ogg" }
+        ],
+        mobile: [
+          {src: C.assetsDir + '/video/MembersLobby.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/MembersLobby_hires.ogv', type: "video/ogg" }
+        ]
+      }
     },
     audioSettings: {
       url: C.assetsDir + '/audio/MembersLobby.mp3'
@@ -140,9 +169,16 @@ const RoomData = [
     mapCoords: [538, 90],
     videoSettings: {
       is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/RobingRoom.mp4', type: "video/mp4" }
-      ]
+      sources: {
+        desktop: [
+          {src: C.assetsDir + '/video/RobingRoom_hires.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/RobingRoom_hires.ogv', type: "video/ogg" }
+        ],
+        mobile: [
+          {src: C.assetsDir + '/video/RobingRoom.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/RobingRoom_hires.ogv', type: "video/ogg" }
+        ]
+      }
     },
     audioSettings: {
       url: C.assetsDir + '/audio/RobingRoom.mp3'
@@ -157,9 +193,16 @@ const RoomData = [
     mapCoords: [439, 34],
     videoSettings: {
       is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/CentralLobby.mp4', type: "video/mp4" }
-      ]
+      sources: {
+        desktop: [
+          {src: C.assetsDir + '/video/CentralLobby_hires.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/CentralLobby_hires.ogv', type: "video/ogg" }
+        ],
+        mobile: [
+          {src: C.assetsDir + '/video/CentralLobby.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/CentralLobby_hires.ogv', type: "video/ogg" }
+        ]
+      }
     },
     audioSettings: {
       url: C.assetsDir + '/audio/CentralLobby.mp3'
@@ -171,12 +214,19 @@ const RoomData = [
     slug: 'ActRoom',
     title: 'Act Room',
     description: "High up in the Victoria Tower, in a climate-controlled room, Parliament archivists keep careful watch over tens of thousands of parchment rolls containing the laws of Great Britain. The oldest dates back to 1497, and the largest is over 400 meters (1,300 feet) long when unfurled. They’re stored in this stone tower for safekeeping: After the previous Palace of Westminster burned down in 1834, Parliament wanted to be sure it had “fireproof repositories for books and documents.”",
-    mapCoords: [629, 12],
+    mapCoords: [629, 0],
     videoSettings: {
       is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/ActRoom.mp4', type: "video/mp4" }
-      ]
+      sources: {
+        desktop: [
+          {src: C.assetsDir + '/video/ActRoom_hires.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/ActRoom_hires.ogv', type: "video/ogg" }
+        ],
+        mobile: [
+          {src: C.assetsDir + '/video/ActRoom.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/ActRoom_hires.ogv', type: "video/ogg" }
+        ]
+      }
     },
     audioSettings: {
       url: C.assetsDir + '/audio/ActRoom.mp3'
@@ -186,14 +236,21 @@ const RoomData = [
   // 10: View from Westminster Bridge
   {
     slug: 'WestminsterBridge',
-    title: 'View from Westminster Bridge',
+    title: 'Westminster Bridge',
     description: "Welcome to the Houses of Parliament, a link between old and new, royalty and democracy. There has been a royal palace on this site for more than 1,000 years, but the current Palace of Westminster is less than 200 years old. Designed in neo-Gothic style, it was built in the Victorian era, after a fire destroyed the previous building. Today's palace is the home of the House of Commons and the House of Lords, where British laws are made.",
     mapCoords: [31, 227],
     videoSettings: {
       is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/WestminsterBridge-hires.mp4', type: "video/mp4" }
-      ]
+      sources: {
+        desktop: [
+          {src: C.assetsDir + '/video/WestminsterBridge_hires.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/WestminsterBridge_hires.ogv', type: "video/ogg" }
+        ],
+        mobile: [
+          {src: C.assetsDir + '/video/WestminsterBridge.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/WestminsterBridge_hires.ogv', type: "video/ogg" }
+        ]
+      }
     },
     audioSettings: {
       url: C.assetsDir + '/audio/WestminsterBridge.mp3'
@@ -208,9 +265,16 @@ const RoomData = [
     mapCoords: [423, 220],
     videoSettings: {
       is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/Roof.mp4', type: "video/mp4" }
-      ]
+      sources: {
+        desktop: [
+          {src: C.assetsDir + '/video/Roof_hires.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/Roof_hires.ogv', type: "video/ogg" }
+        ],
+        mobile: [
+          {src: C.assetsDir + '/video/Roof.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/Roof_hires.ogv', type: "video/ogg" }
+        ]
+      }
     },
     audioSettings: {
       url: C.assetsDir + '/audio/Roof.mp3'
@@ -225,9 +289,16 @@ const RoomData = [
     mapCoords: [534, 220],
     videoSettings: {
       is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/Basement.mp4', type: "video/mp4" }
-      ]
+      sources: {
+        desktop: [
+          {src: C.assetsDir + '/video/Basement_hires.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/Basement_hires.ogv', type: "video/ogg" }
+        ],
+        mobile: [
+          {src: C.assetsDir + '/video/Basement.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/Basement_hires.ogv', type: "video/ogg" }
+        ]
+      }
     },
     audioSettings: {
       url: C.assetsDir + '/audio/Basement.mp3'

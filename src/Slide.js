@@ -134,7 +134,7 @@ class Slide extends Component {
               <div style={styles.splashScreenWrapper}>
                 <div style={styles.centeredText}>
                   <Text text="Houses of Parliament" textStyle={ Utils.mergeStyles(C.h1, C.textShadow) } color={C.textLight}></Text>
-                  <Text text="Explore this iconic seat of power" textStyle={ Utils.mergeStyles(C.h2, C.textShadow) } color={C.textLight}></Text>
+                  <Text text="Explore this historic British seat of power as CNN gains exclusive 360 access" textStyle={ Utils.mergeStyles(C.h2, C.textShadow) } color={C.textLight}></Text>
                 </div>
                 <div style={styles.headphonesText}>
                   <Text text="Best experienced with headphones" textStyle={ Utils.mergeStyles(C.h4, C.textShadow) } color={C.textLight}></Text>

@@ -84,14 +84,20 @@ class NavItem extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.commonProps.isExpanded !== nextProps.commonProps.isExpanded) {
+      if (nextProps.commonProps.isExpanded) {
+        TweenMax.to(this.navIconEl, 0.4, {autoAlpha: 0, ease: Expo.easeInOut});
+        TweenMax.to(this.innerContent, 0.5, {borderRadius: 0, ease: Expo.easeInOut});
+      } else {
+        TweenMax.to(this.navIconEl, 0.2, {autoAlpha: 1, delay: 0.2});
+        TweenMax.to(this.innerContent, 0.5, {borderRadius: 1000, ease: Expo.easeInOut});
+      }
+    }
+
     if (nextProps.commonProps.isExpanded) {
-      TweenMax.to(this.navIconEl, 0.4, {autoAlpha: 0, ease: Expo.easeInOut});
       TweenMax.to(this.wrapperEl, 0.5, Utils.mergeStyles(styles.wrapper, styles.expanded, this.props.commonProps.expandedStyle, {ease: Expo.easeInOut}))
-      TweenMax.to(this.innerContent, 0.5, {borderRadius: 0, ease: Expo.easeInOut});
     } else {
-      TweenMax.to(this.navIconEl, 0.2, {autoAlpha: 1, delay: 0.2});
-      TweenMax.to(this.wrapperEl, 0.5, Utils.mergeStyles(styles.wrapper, this.props.commonProps.posCss, {ease: Expo.easeInOut}))
-      TweenMax.to(this.innerContent, 0.5, {borderRadius: 1000, ease: Expo.easeInOut});
+      TweenMax.to(this.wrapperEl, 0.5, Utils.mergeStyles(styles.wrapper, this.props.commonProps.posCss, {ease: Expo.easeInOut}));
     }
 
     if (nextProps.commonProps.pulsate) {

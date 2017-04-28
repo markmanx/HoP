@@ -163,7 +163,7 @@ class Map extends Component {
           <div style={styles.wrapper} ref={(el) => this.mapEl = el}>
             <div style={ Utils.mergeStyles(styles.instructions, C.h5) }>
               { this.state.winInfo.isDesktop ?
-                'Click a room to enter' : 'Double Tap a room to enter'}
+                'Click a room to enter' : 'Double tap a room to enter'}
             </div>
 
             <ElementPan
@@ -206,10 +206,12 @@ class Map extends Component {
                 <img style={styles.maxfoster} src={C.assetsDir + '/images/MaxFoster.jpg'} />
                 Max Foster is a CNN anchor and correspondent based in the network's London bureau. He anchors the European edition of CNN Newsroom and is the network's London Correspondent.
                 <p>Tweet Max <a target="_blank" style={ Utils.mergeStyles(styles.tweetMax, {color: this.state.linkHover ? C.color1 : C.color3}) } onMouseOver={() => this.setState({linkHover: true})} onMouseOut={() => this.setState({linkHover: false})} href="https://twitter.com/MaxFosterCNN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">@MaxFosterCNN</a></p>
+                <p>&nbsp;</p>
                 <p>Editorial: Richard Allen Greene, Florence Davey-Attlee</p>
                 <p>Design: Sarah-Grace Mankarious</p>
                 <p>Development: Mark Mankarious</p>
-                <p>Camera: Chris Whyld</p>
+                <p>Video Editing: Toby Welham, Anastasia Anashkina</p>
+                <p>360 Camera: Chris Whyld</p>
               </div>
             </div>
           </div>

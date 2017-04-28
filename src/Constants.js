@@ -17,7 +17,7 @@ module.exports = {
   hotspotInitialHeight: 50,
 
   // Social URLS
-  twitterUrl: "https://twitter.com/intent/tweet?url=http%3A%2F%2Fcnn.com%2Fparliament&text=Explore%20the%20home%20of%20British%20government%20in%20this%20360%20interactive%20of%20the%20Houses%20of%20Parliament%20at%20",
+  twitterUrl: "https://twitter.com/intent/tweet?url=http%3A%2F%2Fcnn.com%2Fparliament&text=Take%20a%20360%20interactive%20tour%20of%20the%20British%20Houses%20of%20Parliament%20with%20CNN",
   facebookUrl: "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcnn.com%2Fparliament",
 
   // Colors
