@@ -58,7 +58,8 @@ const styles = {
 
 class PrimaryNav extends Component {
   state = {
-    winInfo: Utils.getWinInfo()
+    winInfo: Utils.getWinInfo(),
+    infoShowing: false
   }
 
   isCurrNavItem(id) {
@@ -124,7 +125,7 @@ class PrimaryNav extends Component {
       expandedStyle: expandedStyle,
       isExpanded: this.isCurrNavItem(navItemId),
       onOpen: (e) => this.props.onNavItemOpened(e, navItemId),
-      onClose: (e) => this.props.onNavItemClosed(e),
+      onClose: (e) => this.onNavItemClosed(e, navItemId),
       pulsate: this.isPulsating(navItemId)
     }
   }
@@ -145,6 +146,15 @@ class PrimaryNav extends Component {
 
   onResize() {
     this.setState({ winInfo: Utils.getWinInfo() });
+  }
+
+  onNavItemClosed(e, navItemId) {
+    if (navItemId === 1 && this.state.infoShowing) {
+      this.setState({infoShowing: false});
+      return;
+    }
+
+    this.props.onNavItemClosed(e, navItemId);
   }
 
   render() {
@@ -176,6 +186,8 @@ class PrimaryNav extends Component {
           children={
             <div>
               <Map
+                infoShowing={this.state.infoShowing}
+                onInfoClicked={ () => this.setState( {infoShowing: !this.state.infoShowing} )}
                 panelWidth={this.getCommonProps(C.navItems.MAP).expandedStyle.width}
                 panelHeight={this.getCommonProps(C.navItems.MAP).expandedStyle.height}
                 onRoomClicked={ (item, e) => this.props.onRoomClicked(item, e) }

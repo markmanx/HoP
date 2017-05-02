@@ -109,7 +109,6 @@ class Map extends Component {
   state = {
     enableClick: true,
     winInfo: Utils.getWinInfo(),
-    infoShowing: false,
     linkHover: false
   }
 
@@ -134,7 +133,7 @@ class Map extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (nextState.infoShowing) {
+    if (nextProps.infoShowing) {
       TweenMax.to(this.mapEl, 0.3, {autoAlpha: 0, top: -30});
       TweenMax.to(this.creditsEl, 0.3, {autoAlpha: 1, top: 0});
     } else {
@@ -202,16 +201,16 @@ class Map extends Component {
             </div>
             <div style={ Utils.mergeStyles(styles.contentOuter, {height: (panelHeight - 144) + 'px'}) }>
               <div style={ Utils.mergeStyles(styles.contentInner, C.h5) }>
-                <span style={C.h3}>Max Foster</span>
+                <span style={C.h3}>Narrator: Max Foster</span>
                 <img style={styles.maxfoster} src={C.assetsDir + '/images/MaxFoster.jpg'} />
-                Max Foster is a CNN anchor and correspondent based in the network's London bureau. He anchors the European edition of CNN Newsroom and is the network's London Correspondent.
+                Max is CNN's London correspondent, covering British politics and the Royal Family. When he was still a student, he scored an exclusive interview with Anthony Hopkins by leaving him a note at a restaurant - which convinced him to go into journalism professionally. Now he anchors CNN Newsroom's Europe edition. He's half Swedish and lives in the countryside near London.
                 <p>Tweet Max <a target="_blank" style={ Utils.mergeStyles(styles.tweetMax, {color: this.state.linkHover ? C.color1 : C.color3}) } onMouseOver={() => this.setState({linkHover: true})} onMouseOut={() => this.setState({linkHover: false})} href="https://twitter.com/MaxFosterCNN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">@MaxFosterCNN</a></p>
                 <p>&nbsp;</p>
                 <p>Editorial: Richard Allen Greene, Florence Davey-Attlee</p>
                 <p>Design: Sarah-Grace Mankarious</p>
                 <p>Development: Mark Mankarious</p>
                 <p>Video Editing: Toby Welham, Anastasia Anashkina</p>
-                <p>360 Camera: Chris Whyld</p>
+                <p>360 Camera: Lewis Whyld</p>
               </div>
             </div>
           </div>
@@ -220,7 +219,7 @@ class Map extends Component {
             <div style={styles.spacer}></div>
             <a href={C.facebookUrl} target="_blank"> <div style={ Utils.mergeStyles(styles.facebook, styles.footerIcon) }></div> </a>
             <a href={C.twitterUrl} target="_blank"> <div style={ Utils.mergeStyles(styles.twitter, styles.footerIcon) }></div> </a>
-            <div style={ Utils.mergeStyles(this.state.infoShowing ? styles.infoActive : styles.info, styles.footerIcon) } onClick={() => this.setState({ infoShowing: !this.state.infoShowing}) }></div>
+            <div style={ Utils.mergeStyles(this.props.infoShowing ? styles.infoActive : styles.info, styles.footerIcon) } onClick={() => this.props.onInfoClicked() }></div>
           </div>
 
         </div>

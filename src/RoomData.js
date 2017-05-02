@@ -8,10 +8,12 @@ const RoomData = [
       is360: false,
       sources: {
         desktop: [
-          {src: C.assetsDir + '/video/splash-hires.mp4', type: "video/mp4" }
+          {src: C.assetsDir + '/video/splash-hires.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/splash-hires.ogv', type: "video/ogg" }
         ],
         mobile: [
-          {src: C.assetsDir + '/video/splash-lowres.mp4', type: "video/mp4" }
+          {src: C.assetsDir + '/video/splash-lowres.mp4', type: "video/mp4" },
+          {src: C.assetsDir + '/video/splash-lowres.ogv', type: "video/ogg" }
         ]
       }
     }
@@ -75,8 +77,8 @@ const RoomData = [
 
   // 4: Big Ben: Belfry
   {
-    slug: 'BigBenBelfry',
-    title: 'The Belfry',
+    slug: 'BigBen',
+    title: 'Big Ben',
     description: "In the belfry hangs the enormous bell called Big Ben -- so famous that the tower itself is often referred to by that name. In fact, the tower was simply called the Clock Tower for most of its history before being renamed the Elizabeth Tower in 2012, when Queen Elizabeth celebrated 60 years on the throne. Big Ben chimes the hour, while the four smaller bells around it chime the quarter hours.",
     mapCoords: [187, 108],
     videoSettings: {
