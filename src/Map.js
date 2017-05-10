@@ -61,18 +61,18 @@ const styles = {
     cursor: 'pointer'
   },
   twitter: {
-    backgroundImage: `url("${C.assetsDir + '/icons/twitter.svg'}")`,
+    backgroundImage: `url("${C.assetsDir + '/icons/twitter.png'}")`,
   },
   facebook: {
-    backgroundImage: `url("${C.assetsDir + '/icons/facebook.svg'}")`,
+    backgroundImage: `url("${C.assetsDir + '/icons/facebook.png'}")`,
   },
   info: {
     float: 'right',
-    backgroundImage: `url("${C.assetsDir + '/icons/info.svg'}")`
+    backgroundImage: `url("${C.assetsDir + '/icons/info.png'}")`
   },
   infoActive: {
     float: 'right',
-    backgroundImage: `url("${C.assetsDir + '/icons/info-dark.svg'}")`
+    backgroundImage: `url("${C.assetsDir + '/icons/info-dark.png'}")`
   },
   spacer: {
     width: '100%',

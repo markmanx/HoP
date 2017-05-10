@@ -32,20 +32,25 @@ class App extends Component {
   }
 
   componentWillMount() {
-    if (this.props.params.slug) {
-      this.switchRoomBySlug(this.props.params.slug);
+    if (this.props.params.slug === 'undefined') {
+      this.switchRoomById(0, false);
     } else {
-      this.switchRoomById(0);
+      let roomId = this.getRoomIdBySlug(this.props.params.slug);
+      if (roomId === false) {
+        this.switchRoomById(0);
+      } else {
+        this.switchRoomById(roomId, false);
+      }
     }
   }
 
-  switchRoomById(roomId, updateLocation) {
+  switchRoomById(roomId, updateBrowserHistory = true) {
     let targetRoomId = roomId;
+
     if (typeof RoomData[targetRoomId] === 'undefined') targetRoomId = 0;
 
-    let room = RoomData[targetRoomId];
-
-    let updatedVisitedList = this.state.roomsVisited.slice();
+    let room = RoomData[targetRoomId],
+        updatedVisitedList = this.state.roomsVisited.slice();
 
     if (!this.state.roomsVisited.includes(targetRoomId)) {
       updatedVisitedList.push(targetRoomId);
@@ -73,19 +78,27 @@ class App extends Component {
       currNavId: undefined
     });
 
-    browserHistory.push('/room/' + room.slug);
+    if (updateBrowserHistory) {
+      if (targetRoomId === 0) {
+        browserHistory.push('/');
+      } else {
+        browserHistory.push('/room/' + room.slug);
+      }
+    }
   }
 
-  switchRoomBySlug(roomSlug) {
-    let targetId = 0;
+  getRoomIdBySlug(roomSlug) {
+    let targetId,
+        found = false;
 
     for (let [index, value] of RoomData.entries()) {
       if (value.slug === roomSlug) {
         targetId = index;
+        found = true;
       }
     }
 
-    this.switchRoomById(targetId);
+    return found ? targetId : false;
   }
 
   onRoomClicked(item, e) {

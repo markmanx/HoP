@@ -170,11 +170,11 @@ class Hotspot extends Component {
           <div style={styles.hotspotTextWrapper} ref={el => this.textWrapper = el}>
             <div style={ Utils.mergeStyles(C.h4, styles.hotspotText, textColor) } ref={el => this.text = el}>{this.props.text}</div>
           </div>
-          <img style={styles.plusIcon} src={C.assetsDir + '/icons/hotspot-plus.svg'} ref={el => this.plusIcon = el}/>
+          <img style={styles.plusIcon} src={C.assetsDir + '/icons/hotspot-plus.png'} ref={el => this.plusIcon = el}/>
         </div>
 
         {this.props.visited &&
-          <img style={styles.hotspotTick} src={C.assetsDir + '/icons/hotspot-tick.svg'} alt="hotspot-tick" />
+          <img style={styles.hotspotTick} src={C.assetsDir + '/icons/hotspot-tick.png'} alt="hotspot-tick" />
         }
 
         <div

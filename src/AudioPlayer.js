@@ -53,7 +53,7 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundImage: `url("${C.assetsDir}/icons/audio-play.svg")`,
+    backgroundImage: `url("${C.assetsDir}/icons/audio-play.png")`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: `${C.navItemSize * .5}px`,
