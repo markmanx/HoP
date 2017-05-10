@@ -104,7 +104,10 @@ class App extends Component {
   onRoomClicked(item, e) {
     this.delayedPlayMedia();
     this.setState({ currNavId: undefined });
-    this.switchRoomBySlug(item.slug)
+
+    let roomId = this.getRoomIdBySlug(item.slug);
+    if (roomId === false) roomId = 0;
+    this.switchRoomById(roomId);
   }
 
   delayedPlayMedia() {
