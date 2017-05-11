@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {browserHistory} from 'react-router';
 import C from './Constants.js';
+import Utils from './Utils.js';
 import RoomData from './RoomData.js';
 import PrimaryNav from './PrimaryNav.js';
+import Slide from './Slide';
 
 const styles = {
   wrapper: {
@@ -28,14 +30,17 @@ class App extends Component {
     roomData: undefined,
     roomsVisited: [],
     totalRooms: RoomData.length,
-    pauseMedia: false
+    pauseMedia: false,
+    slideKey: Date.now()
   }
 
   componentWillMount() {
-    if (this.props.params.slug === 'undefined') {
+    let roomSlug = Utils.getParamByName('room');
+
+    if (typeof roomSlug === null) {
       this.switchRoomById(0, false);
     } else {
-      let roomId = this.getRoomIdBySlug(this.props.params.slug);
+      let roomId = this.getRoomIdBySlug(roomSlug);
       if (roomId === false) {
         this.switchRoomById(0);
       } else {
@@ -75,14 +80,15 @@ class App extends Component {
       navItems: newNavItems,
       pulsatingNavItems: newPulsatingNavItems,
       roomData: room,
-      currNavId: undefined
+      currNavId: undefined,
+      slideKey: Date.now()
     });
 
     if (updateBrowserHistory) {
       if (targetRoomId === 0) {
         browserHistory.push('/');
       } else {
-        browserHistory.push('/room/' + room.slug);
+        browserHistory.push('/?room=' + room.slug);
       }
     }
   }
@@ -143,13 +149,13 @@ class App extends Component {
   render() {
     return (
         <div style={styles.wrapper}>
-          {this.props.children && React.cloneElement(this.props.children, {
-            key: this.props.location.key,
-            videoSettings: this.state.roomData.videoSettings,
-            audioSettings: this.state.roomData.audioSettings,
-            pauseMedia: this.state.pauseMedia,
-            slidePoster: this.state.roomData.title
-          })}
+          <Slide
+            key={this.state.slideKey}
+            videoSettings={this.state.roomData.videoSettings}
+            audioSettings={this.state.roomData.audioSettings}
+            pauseMedia={this.state.pauseMedia}
+            slidePoster={this.state.roomData.title}
+            />
 
           <PrimaryNav
             navItems={this.state.navItems}
