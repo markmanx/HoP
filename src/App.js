@@ -86,9 +86,9 @@ class App extends Component {
 
     if (updateBrowserHistory) {
       if (targetRoomId === 0) {
-        browserHistory.push('/');
+        browserHistory.push(process.env.PUBLIC_URL + '/');
       } else {
-        browserHistory.push('/?room=' + room.slug);
+        browserHistory.push(process.env.PUBLIC_URL + '/?room=' + room.slug);
       }
     }
   }
