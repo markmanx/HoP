@@ -147,7 +147,10 @@ class App extends Component {
   }
 
   render() {
-    return (
+    let els;
+
+    if (this.state.passwordEntered === 'robotsWithLasers') {
+      els = (
         <div style={styles.wrapper}>
           <Slide
             key={this.state.slideKey}
@@ -169,7 +172,16 @@ class App extends Component {
             pulsatingNavItems={this.state.pulsatingNavItems}
             />
         </div>
-    );
+      )
+    } else {
+      els = (
+        <div style={styles.wrapper}>
+          <input style={ {textAlign: 'center', position: 'absolute', width: '300px', height: '50px', left: '50%', top: '50%', marginLeft: '-150px', marginTop: '60px'} } type="text" onChange={ (e) => this.setState({passwordEntered: e.target.value}) } />
+        </div>
+      )
+    }
+
+    return els;
   }
 }
 
