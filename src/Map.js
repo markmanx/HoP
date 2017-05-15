@@ -5,7 +5,7 @@ import {Line} from 'react-progressbar.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 import ElementPan from 'react-element-pan';
 import Hotspot from './Hotspot.js';
-import RoomData from './RoomData.js';
+import Rooms from './data/Rooms.js';
 
 const styles = {
   wrapper: {
@@ -173,14 +173,14 @@ class Map extends Component {
               <div style={styles.mapWrapperInner}>
                 <img src={C.assetsDir + '/images/map.png'} style={styles.mapImg} alt='map'/>
                 <div style={styles.hotspotWrapper}>
-                  {RoomData.map((item, index) => {
+                  {Rooms.map((item, index) => {
                     if (item.mapCoords) {
                       return (
-                        <div id="hotspotwrapper" style={this.getHotspotCSS(item.mapCoords)} key={index}>
+                        <div style={this.getHotspotCSS(item.mapCoords)} key={index}>
                           <Hotspot
                             text={item.title}
                             onClick={this.props.onRoomClicked.bind(this, item)}
-                            visited={this.props.roomsVisited.indexOf(index) !== -1}
+                            visited={this.props.roomsVisited.indexOf(item.id) !== -1}
                             enableClick={this.state.enableClick} />
                         </div>
                       )

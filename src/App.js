@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {browserHistory} from 'react-router';
 import C from './Constants.js';
 import Utils from './Utils.js';
-import RoomData from './RoomData.js';
+import Rooms from './data/Rooms.js';
+import RoomHotspots from './data/RoomHotspots.js';
 import PrimaryNav from './PrimaryNav.js';
 import Slide from './Slide';
 
@@ -28,44 +29,43 @@ class App extends Component {
     currNavId: -1,
     isMobile: true,
     roomData: undefined,
+    roomHotspots: [],
     roomsVisited: [],
-    totalRooms: RoomData.length,
+    totalRooms: Rooms.length,
     pauseMedia: false,
     slideKey: Date.now()
   }
 
   componentWillMount() {
-    let roomSlug = Utils.getParamByName('room');
+    let roomId = Utils.getParamByName('roomId');
 
-    if (typeof roomSlug === null) {
-      this.switchRoomById(0, false);
+    if (typeof roomId === null) {
+      this.switchRoomById('Splash', false);
     } else {
-      let roomId = this.getRoomIdBySlug(roomSlug);
-      if (roomId === false) {
-        this.switchRoomById(0);
-      } else {
-        this.switchRoomById(roomId, false);
-      }
+      this.switchRoomById(roomId, false);
     }
   }
 
   switchRoomById(roomId, updateBrowserHistory = true) {
-    let targetRoomId = roomId;
+    let roomData;
 
-    if (typeof RoomData[targetRoomId] === 'undefined') targetRoomId = 0;
+    if (Utils.filterItemsByVal(Rooms, 'id', roomId) === null) {
+      roomData = Utils.filterItemsByVal(Rooms, 'id', 'Splash')[0];
+    } else {
+      roomData = Utils.filterItemsByVal(Rooms, 'id', roomId)[0];
+    }
 
-    let room = RoomData[targetRoomId],
-        updatedVisitedList = this.state.roomsVisited.slice();
+    let updatedVisitedList = this.state.roomsVisited.slice();
 
-    if (!this.state.roomsVisited.includes(targetRoomId)) {
-      updatedVisitedList.push(targetRoomId);
+    if (!this.state.roomsVisited.includes(roomData.id)) {
+      updatedVisitedList.push(roomData.id);
     };
 
     let newNavItems = [],
         newPulsatingNavItems = [];
 
-    switch (targetRoomId) {
-      case 0:
+    switch (roomData.id) {
+      case 'Splash':
         newNavItems.push(C.navItems.MAP);
         newPulsatingNavItems.push(C.navItems.MAP);
         break;
@@ -79,41 +79,23 @@ class App extends Component {
       roomsVisited: updatedVisitedList,
       navItems: newNavItems,
       pulsatingNavItems: newPulsatingNavItems,
-      roomData: room,
+      roomData: roomData,
+      roomHotspots: Utils.filterItemsByVal(RoomHotspots, 'roomId', roomData.id) || [],
       currNavId: undefined,
       slideKey: Date.now()
     });
 
-    if (updateBrowserHistory) {
-      if (targetRoomId === 0) {
-        browserHistory.push(process.env.PUBLIC_URL + '/');
-      } else {
-        browserHistory.push(process.env.PUBLIC_URL + '/?room=' + room.slug);
-      }
+    if (roomData.id == 'Splash') {
+      browserHistory.push(process.env.PUBLIC_URL + '/');
+    } else if (updateBrowserHistory){
+      browserHistory.push(process.env.PUBLIC_URL + '/?roomId=' + roomData.id);
     }
-  }
-
-  getRoomIdBySlug(roomSlug) {
-    let targetId,
-        found = false;
-
-    for (let [index, value] of RoomData.entries()) {
-      if (value.slug === roomSlug) {
-        targetId = index;
-        found = true;
-      }
-    }
-
-    return found ? targetId : false;
   }
 
   onRoomClicked(item, e) {
     this.delayedPlayMedia();
     this.setState({ currNavId: undefined });
-
-    let roomId = this.getRoomIdBySlug(item.slug);
-    if (roomId === false) roomId = 0;
-    this.switchRoomById(roomId);
+    this.switchRoomById(item.id);
   }
 
   delayedPlayMedia() {
@@ -155,6 +137,7 @@ class App extends Component {
             audioSettings={this.state.roomData.audioSettings}
             pauseMedia={this.state.pauseMedia}
             slidePoster={this.state.roomData.title}
+            roomHotspots={this.state.roomHotspots}
             />
 
           <PrimaryNav

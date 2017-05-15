@@ -33,5 +33,17 @@ module.exports = {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
+  },
+
+  filterItemsByVal(obj, key, val) {
+    let results = [];
+
+    for (let [index, value] of obj.entries()) {
+      if (value[key] === val) {
+        results.push(value);
+      }
+    }
+
+    return results.length == 0 ? null : results;
   }
 }

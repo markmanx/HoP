@@ -112,6 +112,7 @@ class Slide extends Component {
               <VideoPlayer
                 videoSettings={this.props.videoSettings}
                 onVideoReady={ () => this.onVideoReady() }
+                roomHotspots={this.props.roomHotspots}
                 pauseMedia={this.props.pauseMedia} />
             }
 

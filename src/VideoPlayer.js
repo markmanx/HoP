@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import C from './Constants.js'
 import Utils from './Utils.js';
+import Hotspot from './Hotspot.js';
 import 'video.js/dist/video-js.css'
 import videojs from 'video.js';
 import VideoPanorama from 'videojs-panorama';
 
 const styles = {
-  vidWrapper: Utils.mergeStyles({
+  vidWrapper: {
+    position: 'absolute',
+    left: 0,
+    top: 0
+  },
+  hotspotWrapper: {
     position: 'absolute',
     left: 0,
     top: 0,
     width: '100%',
     height: '100%',
-    flexDirection: 'row',
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }, C.flexBox)
+  }
 }
 
 class VideoPlayer extends Component {
@@ -26,7 +28,8 @@ class VideoPlayer extends Component {
     this.state = {
       videoId: 'video',
       videoSettings: this.props.videoSettings,
-      isFirstPlay: true
+      isFirstPlay: true,
+      canvasOffset: {left: 0, top: 0}
     }
   }
 
@@ -40,13 +43,12 @@ class VideoPlayer extends Component {
     this.player = videojs(this.state.videoId, {sources: sources},  () => {
       (this.state.videoSettings.is360) ? this.initPanorama() : this.onReady();
     });
-
-    this.onResize();
   }
 
   onReady() {
     this.props.onVideoReady && this.props.onVideoReady();
     this.player.play();
+    this.onResize();
   }
 
   initPanorama() {
@@ -59,6 +61,12 @@ class VideoPlayer extends Component {
         backToVerticalCenter: false,
         backToHorizonCenter: false,
         NoticeMessage: '',
+        hotspots: this.props.roomHotspots,
+        onMove: (e) => {
+          this.setState({
+            hotspotLocations: e.hotspots
+          });
+        },
         callback: () => {
           this.canvas = this.player.getChild('Canvas');
           this.onReady();
@@ -81,6 +89,16 @@ class VideoPlayer extends Component {
     }
 
     this.canvas && this.canvas.handleResize();
+
+    let canvasLeftOffset = -((parseInt(this.canvas.el_.style.width) - window.innerWidth) * 0.5),
+        canvasTopOffset = -((parseInt(this.canvas.el_.style.height) - window.innerHeight) * 0.5);
+
+    this.setState({
+      canvasOffset: {
+        left: canvasLeftOffset,
+        top: canvasTopOffset
+      }
+    });
   }
 
   componentDidMount() {
@@ -116,7 +134,33 @@ class VideoPlayer extends Component {
 
     // must use 'dangerouslySetInnerHTML' so videojs can autoplay on iOS (https://github.com/videojs/video.js/issues/3816)
     return (
-      <div style={styles.vidWrapper} dangerouslySetInnerHTML={{__html: videoHtml}}></div>
+      <div>
+        <div id="vidWrapper" style={ Utils.mergeStyles(styles.vidWrapper, {left: this.state.canvasOffset.left, top: this.state.canvasOffset.top}) } dangerouslySetInnerHTML={{__html: videoHtml}} ref={ (el) => this.vidWrapper = el }></div>
+        {this.props.roomHotspots.map((item, index) => {
+          let hotspotStyle = {
+                position: 'absolute',
+                opacity: 0
+              };
+
+          if (this.state.hotspotLocations) {
+            let hsLoc = this.state.hotspotLocations[index],
+                hsMovementScale = (1 / window.devicePixelRatio) || 1;
+                
+            hotspotStyle.left = ((hsLoc.x * hsMovementScale) + this.state.canvasOffset.left) - 30;
+            hotspotStyle.top = ((hsLoc.y * hsMovementScale) + this.state.canvasOffset.top) - 70;
+            hotspotStyle.display = hsLoc.inView ? 'inline' : 'none';
+            hotspotStyle.opacity = 1;
+          }
+
+          return (
+            <div style={hotspotStyle}>
+              <Hotspot
+                text={item.title}
+                enableClick={true} />
+            </div>
+          )
+        })}
+      </div>
     )
   }
 }
