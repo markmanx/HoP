@@ -72,7 +72,6 @@ const styles = {
 
 class Hotspot extends Component {
   state = {
-    winInfo: Utils.getWinInfo(),
     isExpanded: false,
     hover: false
   }
@@ -103,7 +102,7 @@ class Hotspot extends Component {
   expand() {
     this.expandAnim.play();
 
-    if (!this.state.winInfo.isDesktop) {
+    if (!this.props.winInfo.isDesktop) {
       if (this.expandTimer) clearTimeout(this.expandTimer);
       this.expandTimer = setTimeout(() => this.setState({ isExpanded: false }), 3000);
     }
@@ -112,6 +111,10 @@ class Hotspot extends Component {
   collapse() {
     if (this.expandTimer) clearTimeout(this.expandTimer);
     this.expandAnim.reverse();
+  }
+
+  onResize() {
+    this.setState({ isExpanded: this.props.winInfo.isDesktop });
   }
 
   willComponentUnmount() {
@@ -130,34 +133,30 @@ class Hotspot extends Component {
         TweenMax.to(this.plusIcon, 0.2, {opacity: 0}),
         TweenMax.to(this.textWrapper, 0.2, {opacity: 1, delay: 0.1}),
         TweenMax.to(this.wrapper, 0.5, {width: textWidth + (C.hotspotPadding * (isChrome ? 3 : 2)), left: -((textWidth * 0.5) - C.hotspotPadding), ease: Expo.easeInOut})
-      ])
+      ]);
 
     this.onResize();
-    window.addEventListener('resize', () => this.onResize());
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', () => this.onResize());
-  }
-
-  onResize() {
-    let winInfo = Utils.getWinInfo();
-
-    this.setState({
-      winInfo: winInfo,
-      isExpanded: winInfo.isDesktop
-    });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.isExpanded !== prevState.isExpanded) {
-      this.state.isExpanded ? this.expand() : this.collapse();
+    let hasSizeChanged = Utils.detectChanges(this.props.winInfo, prevProps.winInfo);
+
+    if ( hasSizeChanged['width'] || hasSizeChanged['height'] ) {
+      this.onResize();
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    let hasChanged = Utils.detectChanges(this.state, nextState);
+
+    if (hasChanged['isExpanded']) {
+      nextState.isExpanded ? this.expand() : this.collapse();
     }
   }
 
   render() {
-    let bgColor = this.state.winInfo.isDesktop && this.state.hover ? C.color2 : C.color1,
-        textColor = {color: this.state.winInfo.isDesktop && this.state.hover ? C.textDark : C.textLight};
+    let bgColor = this.props.winInfo.isDesktop && this.state.hover ? C.color2 : C.color1,
+        textColor = {color: this.props.winInfo.isDesktop && this.state.hover ? C.textDark : C.textLight};
 
     return (
       <div
@@ -170,11 +169,11 @@ class Hotspot extends Component {
           <div style={styles.hotspotTextWrapper} ref={el => this.textWrapper = el}>
             <div style={ Utils.mergeStyles(C.h4, styles.hotspotText, textColor) } ref={el => this.text = el}>{this.props.text}</div>
           </div>
-          <img style={styles.plusIcon} src={C.assetsDir + '/icons/hotspot-plus.png'} ref={el => this.plusIcon = el}/>
+          <img style={styles.plusIcon} src={C.dirs.icons + '/hotspot-plus.png'} ref={el => this.plusIcon = el}/>
         </div>
 
         {this.props.visited &&
-          <img style={styles.hotspotTick} src={C.assetsDir + '/icons/hotspot-tick.png'} alt="hotspot-tick" />
+          <img style={styles.hotspotTick} src={C.dirs.icons + '/hotspot-tick.png'} alt="hotspot-tick" />
         }
 
         <div

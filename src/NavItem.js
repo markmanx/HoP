@@ -84,7 +84,9 @@ class NavItem extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.commonProps.isExpanded !== nextProps.commonProps.isExpanded) {
+    let hasChanged = Utils.detectChanges(nextProps.commonProps, this.props.commonProps);
+
+    if (hasChanged['isExpanded']) {
       if (nextProps.commonProps.isExpanded) {
         TweenMax.to(this.navIconEl, 0.4, {autoAlpha: 0, ease: Expo.easeInOut});
         TweenMax.to(this.innerContent, 0.5, {borderRadius: 0, ease: Expo.easeInOut});
@@ -95,9 +97,9 @@ class NavItem extends Component {
     }
 
     if (nextProps.commonProps.isExpanded) {
-      TweenMax.to(this.wrapperEl, 0.5, Utils.mergeStyles(styles.wrapper, styles.expanded, this.props.commonProps.expandedStyle, {ease: Expo.easeInOut}))
+      TweenMax.to(this.wrapperEl, 0.5, Utils.mergeStyles(styles.wrapper, styles.expanded, nextProps.commonProps.expandedStyle, {ease: Expo.easeInOut}))
     } else {
-      TweenMax.to(this.wrapperEl, 0.5, Utils.mergeStyles(styles.wrapper, this.props.commonProps.posCss, {ease: Expo.easeInOut}));
+      TweenMax.to(this.wrapperEl, 0.5, Utils.mergeStyles(styles.wrapper, nextProps.commonProps.posCss, {ease: Expo.easeInOut}));
     }
 
     if (nextProps.commonProps.pulsate) {
@@ -127,7 +129,7 @@ class NavItem extends Component {
           </div>
 
           <div
-            style={ Utils.mergeStyles(styles.icon, styles.closeIcon, Utils.genBgImgStyle(C.assetsDir + '/icons/close.png')) }
+            style={ Utils.mergeStyles(styles.icon, styles.closeIcon, Utils.genBgImgStyle(C.dirs.icons + '/close.png')) }
             onClick={(e) => this.onClose(e)}>
           </div>
         </div>

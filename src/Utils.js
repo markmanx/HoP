@@ -1,6 +1,7 @@
 import browser from 'detect-browser';
+import C from './Constants.js';
 
-module.exports = {
+let utils = {
 
   mergeStyles: function() {
     let arr = Array.prototype.slice.call(arguments);
@@ -35,15 +36,43 @@ module.exports = {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
   },
 
-  filterItemsByVal(obj, key, val) {
+  filterItemsByVal: function(obj, key, val) {
     let results = [];
 
-    for (let [index, value] of obj.entries()) {
+    for (let [k, value] of Object.entries(obj)) {
       if (value[key] === val) {
         results.push(value);
       }
     }
 
     return results.length == 0 ? null : results;
+  },
+
+  detectChanges: function(ob1, ob2) {
+    let changes = {};
+
+    for (let [k, value] of Object.entries(ob1)) {
+      if (k in ob2) {
+        changes[k] = ob1[k] !== ob2[k];
+      }
+    }
+
+    return changes;
+  },
+
+  rnd(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
+
+utils.createVideoSourcesArray = function(filename, appendRes = true) {
+  let resString = utils.getWinInfo().isDesktop && appendRes ? '_hires' : '',
+      sources = [
+        { src: `${C.dirs.video}/${filename}${resString}.mp4`, type: 'video/mp4' },
+        { src: `${C.dirs.video}/${filename}${resString}.ogv`, type: 'video/ogg' }
+      ];
+
+  return sources;
+}
+
+module.exports = utils;

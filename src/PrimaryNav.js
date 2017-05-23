@@ -58,7 +58,6 @@ const styles = {
 
 class PrimaryNav extends Component {
   state = {
-    winInfo: Utils.getWinInfo(),
     infoShowing: false
   }
 
@@ -74,9 +73,9 @@ class PrimaryNav extends Component {
         itemIndex = this.props.navItems.indexOf(id),
         numItems = this.props.navItems.length,
         offset = (itemIndex * C.navItemSize) + (itemIndex * C.navItemSpacing),
-        centeringOffset = (Math.min(this.state.winInfo.width, this.state.winInfo.height) * .5) - ((numItems * C.navItemSize) * .5);
+        centeringOffset = (Math.min(this.props.winInfo.width, this.props.winInfo.height) * .5) - ((numItems * C.navItemSize) * .5);
 
-    if (this.state.winInfo.isLandscape) {
+    if (this.props.winInfo.isLandscape) {
       css = {
         top: offset + centeringOffset,
         right: (itemIndex === -1) ? -C.navItemSize : C.pagePadding,
@@ -97,12 +96,12 @@ class PrimaryNav extends Component {
 
   getCommonProps(navItemId) {
     let expandedStyle = {
-      height: this.state.winInfo.height - C.pagePadding + 'px',
+      height: this.props.winInfo.height - C.pagePadding + 'px',
       top: (C.pagePadding * 0.5) + 'px',
       bottom: 'auto'
     };
 
-    if (this.state.winInfo.isLandscape) {
+    if (this.props.winInfo.isLandscape) {
       Object.assign(expandedStyle, {
         right: (C.pagePadding * 0.5) + 'px',
         left: 'auto'
@@ -114,10 +113,10 @@ class PrimaryNav extends Component {
       });
     }
 
-    if (this.state.winInfo.isLandscape) {
+    if (this.props.winInfo.isLandscape) {
       expandedStyle.width = 500;
     } else {
-      expandedStyle.width = this.state.winInfo.width - C.pagePadding + 'px';
+      expandedStyle.width = this.props.winInfo.width - C.pagePadding + 'px';
     }
 
     return {
@@ -135,19 +134,6 @@ class PrimaryNav extends Component {
     return (itemIndex !== -1);
   }
 
-  componentDidMount() {
-    this.onResize();
-    window.addEventListener('resize', () => this.onResize());
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', () => this.onResize());
-  }
-
-  onResize() {
-    this.setState({ winInfo: Utils.getWinInfo() });
-  }
-
   onNavItemClosed(e, navItemId) {
     if (navItemId === 1 && this.state.infoShowing) {
       this.setState({infoShowing: false});
@@ -162,16 +148,16 @@ class PrimaryNav extends Component {
       <div>
 
         <a href="http://www.cnn.com" target="about:blank">
-          <img style={styles.logo} src={C.assetsDir + '/images/logo.png'} alt="CNN Logo" />
+          <img style={styles.logo} src={C.dirs.images + '/logo.png'} alt="CNN Logo" />
         </a>
 
         <NavItem
           commonProps={this.getCommonProps(C.navItems.ROOM_INFO)}
-          navIconUrl={C.assetsDir + '/icons/text.png'}
+          navIconUrl={C.dirs.icons + '/text.png'}
           children={
             <div style={styles.contentWrapper}>
               <div style={styles.contentHeader}>
-                <div style={C.h3}>{this.props.roomData.title}</div>
+                <div style={C.h3}>{this.props.roomData.name}</div>
                 <div style={styles.spacer}></div>
               </div>
               <div style={styles.contentOuter}>
@@ -182,7 +168,7 @@ class PrimaryNav extends Component {
 
         <NavItem
           commonProps={this.getCommonProps(C.navItems.MAP)}
-          navIconUrl={C.assetsDir + '/icons/map.png'}
+          navIconUrl={C.dirs.icons + '/map.png'}
           children={
             <div>
               <Map
@@ -193,6 +179,7 @@ class PrimaryNav extends Component {
                 onRoomClicked={ (item, e) => this.props.onRoomClicked(item, e) }
                 roomsVisited={this.props.roomsVisited}
                 totalRooms={this.props.totalRooms}
+                winInfo={this.props.winInfo}
                 />
             </div>
           }/>

@@ -51,7 +51,7 @@ class Loader extends Component {
           ref={el => this.iconOuter = el}>
           <img
             style={styles.iconOuter}
-            src={C.assetsDir + '/icons/loadingIconOuter.png'} />
+            src={C.dirs.icons + '/loadingIconOuter.png'} />
         </div>
 
         <div
@@ -59,7 +59,7 @@ class Loader extends Component {
           ref={el => this.iconInner = el}>
           <img
             style={styles.iconInner}
-            src={C.assetsDir + '/icons/loadingIconInner.png'} />
+            src={C.dirs.icons + '/loadingIconInner.png'} />
         </div>
 
       </div>

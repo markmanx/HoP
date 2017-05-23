@@ -4,308 +4,124 @@ const Rooms = [
 
   {
     id: 'Splash',
-    videoSettings: {
-      aspectRatio: 9 / 16,
-      is360: false,
-      sources: {
-        desktop: [
-          {src: C.assetsDir + '/video/splash-hires.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/splash-hires.ogv', type: "video/ogg" }
-        ],
-        mobile: [
-          {src: C.assetsDir + '/video/splash-lowres.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/splash-lowres.ogv', type: "video/ogg" }
-        ]
-      }
-    }
+    type: C.mediaTypes.VIDEO,
+    hasAudio: false
   },
 
-  // 1: Elizabeth Tower Exterior
   {
     id: 'ElizabethTowerExterior',
-    title: 'Elizabeth Tower',
+    name: 'Elizabeth Tower',
     description: "The Elizabeth Tower, home of the Great Clock and the bell called Big Ben. From here, it's 334 steps up to the belfry, where the tower's five bells hang. Then it's another 59 steps up to the very top, where you'll find a lantern called the Ayrton Light. It's lit when parliament holds a session at night. The tower was completed in 1859, and is built out of 30,000 cubic feet of stone and 92,000 cubic feet of brickwork.",
-    mapCoords: [171, 17],
-    videoSettings: {
-      is360: true,
-      sources: {
-        desktop: [
-          {src: C.assetsDir + '/video/ElizabethTowerExterior_hires.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/ElizabethTowerExterior_hires.ogv', type: "video/ogg" }
-        ],
-        mobile: [
-          {src: C.assetsDir + '/video/ElizabethTowerExterior.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/ElizabethTowerExterior_hires.ogv', type: "video/ogg" }
-        ]
-      }
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/ElizabethTowerExterior.mp3'
-    }
+    mapCoords: [ 171, 17 ],
+    type: C.mediaTypes.IMAGE_PANORAMA,
+    hasAudio: true
   },
 
-  // 2: Big Ben: Mechanism Floor
   {
     id: 'BigBenMechanismFloor',
-    title: 'Big Ben: Mechanism Floor',
+    name: 'Big Ben: Mechanism Floor',
     description: "One elaborate clock mechanism runs the Great Clock, Big Ben and the four bells that chime the quarter hours. Made of iron, steel and brass, it's 15 and a half feet long, and nearly five feet high. It has three separate sets of gears. Originally, all three sets were wound by hand, but since 1913, two of them have been powered by electricity. The third set of gears still has to be wound by hand three times a week.",
-    videoSettings: {
-      is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/BigBenMechanismFloor.mp4', type: "video/mp4" }
-      ]
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/BigBenMechanismFloor.mp3'
-    }
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 
   // 3: Big Ben: Clock Dial
   {
     id: 'BigBenClockDial',
-    title: 'Big Ben: Clock Dial',
+    name: 'Big Ben: Clock Dial',
     description: "Four huge clock dials face north, south, east and west from near the top of the Elizabeth Tower. Each one is made up of 312 individual pieces of glass, and measures seven meters (23 feet) across. They're cleaned on the outside roughly every five years, with workers abseiling down from the belfry. The clock is stopped twice a year to change from Greenwich Mean Time to British Summer Time and back again.",
-    videoSettings: {
-      is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/BigBenClockDial.mp4', type: "video/mp4" }
-      ]
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/BigBenClockDial.mp3'
-    }
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 
-  // 4: Big Ben: Belfry
   {
     id: 'BigBen',
-    title: 'Big Ben',
+    name: 'Big Ben',
     description: "In the belfry hangs the enormous bell called Big Ben -- so famous that the tower itself is often referred to by that name. In fact, the tower was simply called the Clock Tower for most of its history before being renamed the Elizabeth Tower in 2012, when Queen Elizabeth celebrated 60 years on the throne. Big Ben chimes the hour, while the four smaller bells around it chime the quarter hours.",
     mapCoords: [187, 108],
-    videoSettings: {
-      is360: true,
-      sources: {
-        desktop: [
-          {src: C.assetsDir + '/video/Belfry_hires.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/Belfry_hires.ogv', type: "video/ogg" }
-        ],
-        mobile: [
-          {src: C.assetsDir + '/video/Belfry.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/Belfry_hires.ogv', type: "video/ogg" }
-        ]
-      }
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/BigBenBelfry.mp3'
-    }
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 
   // 5: Big Ben: Clock Support
   {
     id: 'BigBenClockSupport',
-    title: 'Big Ben: Clock Support',
+    name: 'Big Ben: Clock Support',
     description: "The second-highest level of the tower contains the support structures for the five bells in the belfry below. The bells were winched up through the tower's central shaft. The shaft now contains the weights that run the clock.",
-    videoSettings: {
-      is360: true,
-      sources: [
-        {src: C.assetsDir + '/video/BigBenClockSupport.mp4', type: "video/mp4" }
-      ]
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/BigBenClockSupport.mp3'
-    }
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 
-  // 6: House of Commons
   {
     id: 'HouseOfCommons',
-    title: 'House of Commons',
+    name: 'House of Commons',
     description: "The raucous chamber where members of parliament debate, question, argue, heckle and harangue in a rowdy display of democracy. Once a week when Parliament is in session, the Prime Minister stands at the despatch box to answer questions from both sides of the house. No less a figure than Winston Churchill pressed for the chamber to keep its adversarial architecture after the building was bombed during World War II. “We shape our buildings and afterwards our buildings shape us,” the wartime prime minister argued.",
-    mapCoords: [314, 172],
-    videoSettings: {
-      is360: true,
-      sources: {
-        desktop: [
-          {src: C.assetsDir + '/video/HouseOfCommons_hires.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/HouseOfCommons_hires.ogv', type: "video/ogg" }
-        ],
-        mobile: [
-          {src: C.assetsDir + '/video/HouseOfCommons.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/HouseOfCommons_hires.ogv', type: "video/ogg" }
-        ]
-      }
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/HouseOfCommons.mp3'
-    }
+    mapCoords: [ 314, 172 ],
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 
-  // 7: Members Lobby
   {
     id: 'MembersLobby',
-    title: 'Members\' Lobby',
+    name: 'Members\' Lobby',
     description: "Directly outside the House of Commons, statues of four great 20th-Century prime ministers overlook the Members’ Lobby. David Lloyd George and Winston Churchill stand on either side of the arch into the House of Commons, while Clement Attlee and Margaret Thatcher face them. The entrance to the Commons is known as the Churchill Arch. Churchill proposed building it out of bomb-scarred stone after the room was damaged by bombs during the Second World War.",
-    mapCoords: [402, 120],
-    videoSettings: {
-      is360: true,
-      sources: {
-        desktop: [
-          {src: C.assetsDir + '/video/MembersLobby_hires.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/MembersLobby_hires.ogv', type: "video/ogg" }
-        ],
-        mobile: [
-          {src: C.assetsDir + '/video/MembersLobby.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/MembersLobby_hires.ogv', type: "video/ogg" }
-        ]
-      }
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/MembersLobby.mp3'
-    }
+    mapCoords: [ 402, 120 ],
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 
-  // 8: Robing Room
   {
     id: 'RobingRoom',
-    title: 'Robing Room',
+    name: 'Robing Room',
     description: "As its name suggests, this is where the Queen puts on her robes and crown before she delivers the Queen's Speech, laying out the government’s plans for the coming year. Politicians write the speech for her to read, but they make it sound like she is giving them instructions about what to do. The event, called the State Opening of Parliament, is the only time when the monarch, the House of Lords and the House of Commons all meet together.",
     mapCoords: [538, 90],
-    videoSettings: {
-      is360: true,
-      sources: {
-        desktop: [
-          {src: C.assetsDir + '/video/RobingRoom_hires.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/RobingRoom_hires.ogv', type: "video/ogg" }
-        ],
-        mobile: [
-          {src: C.assetsDir + '/video/RobingRoom.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/RobingRoom_hires.ogv', type: "video/ogg" }
-        ]
-      }
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/RobingRoom.mp3'
-    }
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 
-  // 8: Central Lobby
   {
     id: 'CentralLobby',
-    title: 'Central Lobby',
+    name: 'Central Lobby',
     description: "The heart of the building, where members of the Commons and the Lords can meet each other and the public. Central Lobby now contains an important reminder of the women's suffrage movement: the grilles that used to cover the windows of the Ladies' Gallery overlooking the House of Commons. They were supposed to keep MPs - all male in the 19th century - from being distracted by women watching proceedings. They were moved here after women campaigning for the right to vote chained themselves to the grilles in protest.",
     mapCoords: [439, 34],
-    videoSettings: {
-      is360: true,
-      sources: {
-        desktop: [
-          {src: C.assetsDir + '/video/CentralLobby_hires.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/CentralLobby_hires.ogv', type: "video/ogg" }
-        ],
-        mobile: [
-          {src: C.assetsDir + '/video/CentralLobby.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/CentralLobby_hires.ogv', type: "video/ogg" }
-        ]
-      }
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/CentralLobby.mp3'
-    }
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 
-  // 9: Act Room
   {
     id: 'ActRoom',
-    title: 'Act Room',
+    name: 'Act Room',
     description: "High up in the Victoria Tower, in a climate-controlled room, Parliament archivists keep careful watch over tens of thousands of parchment rolls containing the laws of Great Britain. The oldest dates back to 1497, and the largest is over 400 meters (1,300 feet) long when unfurled. They’re stored in this stone tower for safekeeping: After the previous Palace of Westminster burned down in 1834, Parliament wanted to be sure it had “fireproof repositories for books and documents.”",
     mapCoords: [629, 0],
-    videoSettings: {
-      is360: true,
-      sources: {
-        desktop: [
-          {src: C.assetsDir + '/video/ActRoom_hires.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/ActRoom_hires.ogv', type: "video/ogg" }
-        ],
-        mobile: [
-          {src: C.assetsDir + '/video/ActRoom.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/ActRoom_hires.ogv', type: "video/ogg" }
-        ]
-      }
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/ActRoom.mp3'
-    }
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 
-  // 10: View from Westminster Bridge
   {
     id: 'WestminsterBridge',
-    title: 'Westminster Bridge',
+    name: 'Westminster Bridge',
     description: "Welcome to the Houses of Parliament, a link between old and new, royalty and democracy. There has been a royal palace on this site for more than 1,000 years, but the current Palace of Westminster is less than 200 years old. Designed in neo-Gothic style, it was built in the Victorian era, after a fire destroyed the previous building. Today's palace is the home of the House of Commons and the House of Lords, where British laws are made.",
     mapCoords: [31, 227],
-    videoSettings: {
-      is360: true,
-      sources: {
-        desktop: [
-          {src: C.assetsDir + '/video/WestminsterBridge_hires.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/WestminsterBridge_hires.ogv', type: "video/ogg" }
-        ],
-        mobile: [
-          {src: C.assetsDir + '/video/WestminsterBridge.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/WestminsterBridge_hires.ogv', type: "video/ogg" }
-        ]
-      }
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/WestminsterBridge.mp3'
-    }
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 
-  // 11: Roof
   {
     id: 'Roof',
-    title: 'Roof',
+    name: 'Roof',
     description: "Up on the roof, you’ll get a remarkable view of London: The 19th-century clock tower of Big Ben, framed by the London Eye and Portcullis House, a modern building housing offices for lawmakers and staff. But the roof is in need of major repairs. It leaks, and water is damaging the building underneath. Repairs will be no small job – there are about 7,000 tiles on the sloping roofs below this one, each weighing 75kg (165 lbs.)",
     mapCoords: [423, 220],
-    videoSettings: {
-      is360: true,
-      sources: {
-        desktop: [
-          {src: C.assetsDir + '/video/Roof_hires.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/Roof_hires.ogv', type: "video/ogg" }
-        ],
-        mobile: [
-          {src: C.assetsDir + '/video/Roof.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/Roof_hires.ogv', type: "video/ogg" }
-        ]
-      }
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/Roof.mp3'
-    }
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 
-  // 12: Basement
   {
     id: 'Basement',
-    title: 'Basement',
+    name: 'Basement',
     description: "Perhaps the most famous basement in Britain, this is where Guy Fawkes placed barrels of gunpowder in order to blow up Parliament and kill the king in 1605. (The Gunpowder Plot was discovered in time to stop it.) Today, by contrast, the basement is a mass of twisted wires and cables and leaking pipes in need of repair. The building hasn’t ever had a major electrical renovation since it was completed in 1870.",
     mapCoords: [534, 220],
-    videoSettings: {
-      is360: true,
-      sources: {
-        desktop: [
-          {src: C.assetsDir + '/video/Basement_hires.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/Basement_hires.ogv', type: "video/ogg" }
-        ],
-        mobile: [
-          {src: C.assetsDir + '/video/Basement.mp4', type: "video/mp4" },
-          {src: C.assetsDir + '/video/Basement_hires.ogv', type: "video/ogg" }
-        ]
-      }
-    },
-    audioSettings: {
-      url: C.assetsDir + '/audio/Basement.mp3'
-    }
+    type: C.mediaTypes.VIDEO_PANORAMA,
+    hasAudio: true
   },
 ]
 

@@ -1,7 +1,21 @@
+const ASSETS_DIR = process.env.PUBLIC_URL + '/assets';
+
 module.exports = {
+  // Media Types
+  mediaTypes: {
+    VIDEO_PANORAMA:   0,
+    IMAGE_PANORAMA:   1,
+    VIDEO:            2
+  },
 
   // Directory refs
-  assetsDir: process.env.PUBLIC_URL + '/assets',
+  dirs: {
+    assets:   ASSETS_DIR,
+    images:   ASSETS_DIR + '/images',
+    video:    ASSETS_DIR + '/video',
+    audio:    ASSETS_DIR + '/audio',
+    icons:    ASSETS_DIR + '/icons'
+  },
 
   // Sizes
   pagePadding: 15,

@@ -16,7 +16,7 @@ const styles = {
     height: '100%',
     overflow: 'hidden',
     backgroundColor: C.color3,
-    backgroundImage: 'url(' + C.assetsDir + '/images/logo.png' + ')',
+    backgroundImage: 'url(' + C.dirs.images + '/images/logo.png' + ')',
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat'
   }
@@ -32,8 +32,17 @@ class App extends Component {
     roomHotspots: [],
     roomsVisited: [],
     totalRooms: Rooms.length,
-    pauseMedia: false,
-    slideKey: Date.now()
+    globalPauseMedia: false,
+    winInfo: Utils.getWinInfo()
+  }
+
+  onResize() {
+    if (this.resizeTimer) clearTimeout('resizetimer');
+    this.resizeTimer = setTimeout( () => {
+      this.setState({
+        winInfo: Utils.getWinInfo()
+      });
+    }, 250);
   }
 
   componentWillMount() {
@@ -44,6 +53,15 @@ class App extends Component {
     } else {
       this.switchRoomById(roomId, false);
     }
+
+    this.onResize();
+    window.addEventListener('resize', () => this.onResize());
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.onResize());
+
+    if (this.resizeTimer) clearTimeout('resizetimer');
   }
 
   switchRoomById(roomId, updateBrowserHistory = true) {
@@ -81,8 +99,7 @@ class App extends Component {
       pulsatingNavItems: newPulsatingNavItems,
       roomData: roomData,
       roomHotspots: Utils.filterItemsByVal(RoomHotspots, 'roomId', roomData.id) || [],
-      currNavId: undefined,
-      slideKey: Date.now()
+      currNavId: undefined
     });
 
     if (roomData.id == 'Splash') {
@@ -102,7 +119,7 @@ class App extends Component {
     this.timer && clearTimeout(this.timer);
 
     this.timer = setTimeout(() => {
-      this.setState({ pauseMedia: false });
+      this.setState({ globalPauseMedia: false });
     }, 500);
   }
 
@@ -117,7 +134,7 @@ class App extends Component {
 
     this.setState({
       currNavId: targetNavId,
-      pauseMedia: true,
+      globalPauseMedia: true,
       pulsatingNavItems: []
     });
   }
@@ -132,12 +149,11 @@ class App extends Component {
     return (
         <div style={styles.wrapper}>
           <Slide
-            key={this.state.slideKey}
-            videoSettings={this.state.roomData.videoSettings}
-            audioSettings={this.state.roomData.audioSettings}
-            pauseMedia={this.state.pauseMedia}
-            slidePoster={this.state.roomData.title}
+            key={this.state.roomData.id}
+            roomData={this.state.roomData}
             roomHotspots={this.state.roomHotspots}
+            globalPauseMedia={this.state.globalPauseMedia}
+            winInfo={this.state.winInfo}
             />
 
           <PrimaryNav
@@ -150,6 +166,7 @@ class App extends Component {
             currNavId={this.state.currNavId}
             totalRooms={this.state.totalRooms}
             pulsatingNavItems={this.state.pulsatingNavItems}
+            winInfo={this.state.winInfo}
             />
         </div>
     );

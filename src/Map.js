@@ -61,18 +61,18 @@ const styles = {
     cursor: 'pointer'
   },
   twitter: {
-    backgroundImage: `url("${C.assetsDir + '/icons/twitter.png'}")`,
+    backgroundImage: `url("${C.dirs.icons + '/twitter.png'}")`,
   },
   facebook: {
-    backgroundImage: `url("${C.assetsDir + '/icons/facebook.png'}")`,
+    backgroundImage: `url("${C.dirs.icons + '/facebook.png'}")`,
   },
   info: {
     float: 'right',
-    backgroundImage: `url("${C.assetsDir + '/icons/info.png'}")`
+    backgroundImage: `url("${C.dirs.icons + '/info.png'}")`
   },
   infoActive: {
     float: 'right',
-    backgroundImage: `url("${C.assetsDir + '/icons/info-dark.png'}")`
+    backgroundImage: `url("${C.dirs.icons + '/info-dark.png'}")`
   },
   spacer: {
     width: '100%',
@@ -127,11 +127,6 @@ class Map extends Component {
     this.panTimer = setTimeout(() => this.setState({ enableClick: true }), 250);
   }
 
-  componentDidMount() {
-    this.onResize();
-    window.addEventListener('resize', () => this.onResize());
-  }
-
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.infoShowing) {
       TweenMax.to(this.mapEl, 0.3, {autoAlpha: 0, top: -30});
@@ -144,11 +139,6 @@ class Map extends Component {
 
   componentWillUnmount() {
     if (this.panTimer) clearTimeout(this.panTimer);
-    window.removeEventListener('resize', () => this.onResize());
-  }
-
-  onResize() {
-    this.setState({ winInfo: Utils.getWinInfo() });
   }
 
   render() {
@@ -161,7 +151,7 @@ class Map extends Component {
 
           <div style={styles.wrapper} ref={(el) => this.mapEl = el}>
             <div style={ Utils.mergeStyles(styles.instructions, C.h5) }>
-              { this.state.winInfo.isDesktop ?
+              { this.props.winInfo.isDesktop ?
                 'Click a room to enter' : 'Double tap a room to enter'}
             </div>
 
@@ -171,16 +161,17 @@ class Map extends Component {
               onPan={() => this.onPan()}>
 
               <div style={styles.mapWrapperInner}>
-                <img src={C.assetsDir + '/images/map.png'} style={styles.mapImg} alt='map'/>
+                <img src={C.dirs.images + '/map.png'} style={styles.mapImg} alt='map'/>
                 <div style={styles.hotspotWrapper}>
                   {Rooms.map((item, index) => {
                     if (item.mapCoords) {
                       return (
                         <div style={this.getHotspotCSS(item.mapCoords)} key={index}>
                           <Hotspot
-                            text={item.title}
+                            text={item.name}
                             onClick={this.props.onRoomClicked.bind(this, item)}
                             visited={this.props.roomsVisited.indexOf(item.id) !== -1}
+                            winInfo={this.props.winInfo}
                             enableClick={this.state.enableClick} />
                         </div>
                       )
@@ -202,7 +193,7 @@ class Map extends Component {
             <div style={ Utils.mergeStyles(styles.contentOuter, {height: (panelHeight - 144) + 'px'}) }>
               <div style={ Utils.mergeStyles(styles.contentInner, C.h5) }>
                 <span style={C.h3}>Narrator: Max Foster</span>
-                <img style={styles.maxfoster} src={C.assetsDir + '/images/MaxFoster.jpg'} />
+                <img style={styles.maxfoster} src={C.dirs.images + '/MaxFoster.jpg'} />
                 Max is CNN's London correspondent, covering British politics and the Royal Family. When he was still a student, he scored an exclusive interview with Anthony Hopkins by leaving him a note at a restaurant - which convinced him to go into journalism professionally. Now he anchors CNN Newsroom's Europe edition. He's half Swedish and lives in the countryside near London.
                 <p>Tweet Max <a target="_blank" style={ Utils.mergeStyles(styles.tweetMax, {color: this.state.linkHover ? C.color1 : C.color3}) } onMouseOver={() => this.setState({linkHover: true})} onMouseOut={() => this.setState({linkHover: false})} href="https://twitter.com/MaxFosterCNN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">@MaxFosterCNN</a></p>
                 <p>&nbsp;</p>

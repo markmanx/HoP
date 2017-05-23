@@ -53,7 +53,7 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundImage: `url("${C.assetsDir}/icons/audio-play.png")`,
+    backgroundImage: `url("${C.dirs.icons}/audio-play.png")`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: `${C.navItemSize * .5}px`,
@@ -73,13 +73,20 @@ const styles = {
 }
 
 class AudioPlayer extends Component {
-  state = {
-    progress: 0,
-    playStatus: Sound.status.PLAYING
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      progress: 0,
+      playStatus: Sound.status.PLAYING
+    }
+
+    this.state.resumeAfterGlobalPause = (this.state.playStatus === Sound.status.PLAYING);
   }
 
-  historySpan = 2;
-  statusHistory = [];
+  onReady(e) {
+    this.props.onReady && this.props.onReady();
+  }
 
   onAudioPlaying(e) {
     this.setState({ progress: e.position / e.duration });
@@ -89,40 +96,40 @@ class AudioPlayer extends Component {
     this.setState({ playing: false });
   }
 
-  onControlClicked(e) {
-    (this.state.playStatus === Sound.status.PLAYING) ? this.playing(false) : this.playing(true);
-  }
-
-  addToHistory(status) {
-    this.statusHistory.unshift(status);
-
-    if (this.statusHistory.length > this.historySpan) this.statusHistory.splice(this.historySpan, this.statusHistory.length - this.historySpan);
-  }
-
-  playing(state, navTriggered) {
-    let status = state ? Sound.status.PLAYING : Sound.status.PAUSED;
-
-    state ? this.playIconAnim.play() : this.playIconAnim.reverse();
-
-    if (!navTriggered) this.addToHistory(status);
-    this.setState({ playStatus: status });
+  onPlayClicked(e) {
+    this.setState({
+      playStatus: (this.state.playStatus === Sound.status.PLAYING) ? Sound.status.PAUSED : Sound.status.PLAYING
+    });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.pauseMedia !== this.props.pauseMedia) {
-      if (nextProps.pauseMedia) {
-        this.playing(false, true);
-      } else if (this.statusHistory[0] === Sound.status.PLAYING) {
-        this.playing(true, true);
+    let hasChanged = Utils.detectChanges(nextProps, this.props);
+
+    // Return the play status back to its original value after a global pause
+    // (global pause is initiated when the user opens a nav item)
+    if (hasChanged['globalPauseMedia']) {
+      if (nextProps.globalPauseMedia) {
+        this.setState({
+          playStatus: Sound.status.PAUSED,
+          resumeAfterGlobalPause: (this.state.playStatus === Sound.status.PLAYING)
+        });
+      } else if (this.state.resumeAfterGlobalPause) {
+        this.setState({ playStatus: Sound.status.PLAYING });
       }
     }
   }
 
-  componentDidMount() {
-    this.playIconAnim = new TimelineMax({paused: true})
-      .to(this.playIcon, 0.5, {scale: 1.5, opacity: 0, ease: Expo.easeInOut})
+  componentDidUpdate(prevProps, prevState) {
+    let hasChanged = Utils.detectChanges(prevState, this.state);
 
-    this.playing(true);
+    if (hasChanged['playStatus']) {
+      (this.state.playStatus === Sound.status.PLAYING) ? this.playIconAnim.play() : this.playIconAnim.reverse();
+    }
+  }
+
+  componentDidMount() {
+    this.playIconAnim = new TimelineMax({ paused: (this.state.playStatus === Sound.status.PAUSED) })
+      .to(this.playIcon, 0.5, {scale: 1.5, opacity: 0, ease: Expo.easeInOut});
   }
 
   render() {
@@ -130,14 +137,15 @@ class AudioPlayer extends Component {
       <div style={styles.audioWrapper}>
 
         <Sound
-          url={this.props.audioSettings.url}
+          url={this.props.sources}
           playStatus={this.state.playStatus}
+          onReady={ () => this.onReady() }
           onPlaying={(e) => this.onAudioPlaying(e)}
           onFinishedPlaying={(e) => this.onAudioFinished(e)}/>
 
-        <div style={styles.progressWrapper} onClick={(e) => this.onControlClicked(e)} >
+        <div style={styles.progressWrapper} onClick={(e) => this.onPlayClicked(e)} >
           <div style={styles.audioUiInner}>
-            <img style={styles.reporterThumb} src={C.assetsDir + '/icons/Max-Foster_270px.png'} alt='reporter-thumb'/>
+            <img style={styles.reporterThumb} src={C.dirs.icons + '/Max-Foster_270px.png'} alt='reporter-thumb'/>
             <div style={styles.playIcon} ref={el => this.playIcon = el}></div>
           </div>
 
@@ -149,7 +157,7 @@ class AudioPlayer extends Component {
         </div>
 
         <div style={styles.slidePoster}>
-          {this.props.title}
+          {this.props.trackTitle}
         </div>
 
       </div>
