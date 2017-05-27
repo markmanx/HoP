@@ -15,16 +15,20 @@ const progressBarOptions = {
 let progressWrapperDiam = (progressBarOptions.strokeWidth * 2) + C.navItemSize;
 
 const styles = {
-  audioWrapper: {
+  wrapper: {
     position: 'absolute',
-    display: 'flex',
+    width: '100%',
+    height: progressWrapperDiam + 'px',
+    top: C.pagePadding + 'px',
+  },
+  playerWrapper: Utils.mergeStyles({
+    position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    height: progressWrapperDiam + 'px',
-    marginTop: C.pagePadding + 'px',
+    height: '100%',
     overflow: 'hidden'
-  },
+  }, C.flexBox),
   progressWrapper: {
     width: progressWrapperDiam + 'px',
     height: progressWrapperDiam + 'px',
@@ -134,7 +138,7 @@ class AudioPlayer extends Component {
 
   render() {
     return (
-      <div style={styles.audioWrapper}>
+      <div style={styles.wrapper}>
 
         <Sound
           url={this.props.sources}
@@ -143,21 +147,23 @@ class AudioPlayer extends Component {
           onPlaying={(e) => this.onAudioPlaying(e)}
           onFinishedPlaying={(e) => this.onAudioFinished(e)}/>
 
-        <div style={styles.progressWrapper} onClick={(e) => this.onPlayClicked(e)} >
-          <div style={styles.audioUiInner}>
-            <img style={styles.reporterThumb} src={C.dirs.icons + '/Max-Foster_270px.png'} alt='reporter-thumb'/>
-            <div style={styles.playIcon} ref={el => this.playIcon = el}></div>
+        <div style={ Utils.mergeStyles(styles.playerWrapper, this.props.hideAudioPlayer ? {display: 'none'} : {} ) }>
+          <div style={styles.progressWrapper} onClick={(e) => this.onPlayClicked(e)} >
+            <div style={styles.audioUiInner}>
+              <img style={styles.reporterThumb} src={C.dirs.icons + '/Max-Foster_270px.png'} alt='reporter-thumb'/>
+              <div style={styles.playIcon} ref={el => this.playIcon = el}></div>
+            </div>
+
+            <Circle
+              containerStyle={styles.progressBar}
+              options={progressBarOptions}
+              initialAnimate={false}
+              progress={this.state.progress}/>
           </div>
 
-          <Circle
-            containerStyle={styles.progressBar}
-            options={progressBarOptions}
-            initialAnimate={false}
-            progress={this.state.progress}/>
-        </div>
-
-        <div style={styles.slidePoster}>
-          {this.props.trackTitle}
+          <div style={styles.slidePoster}>
+            {this.props.trackTitle}
+          </div>
         </div>
 
       </div>

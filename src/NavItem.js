@@ -22,7 +22,7 @@ const styles = {
   content: {
     position: 'absolute',
     left: 0,
-    top: 0
+    top: 0,
   },
   expanded: {
     right: (C.pagePadding * 0.5) + 'px',
@@ -55,8 +55,10 @@ const styles = {
     backgroundColor: C.color1,
   },
   closeIcon: {
-    width: C.navItemSize + 'px',
-    height: C.navItemSize + 'px',
+    width: 20,
+    height: 20,
+    marginTop: 7,
+    marginRight: 7,
     right: '5px',
     top: '5px',
     backgroundColor: 'white'

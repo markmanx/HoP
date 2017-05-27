@@ -20,6 +20,7 @@ module.exports = {
   // Sizes
   pagePadding: 15,
   panelPadding: 25,
+  panelWidth: 800,
   navItemSize: 55,
   navItemSpacing: 20,
   mapImgWidth: 700,
@@ -103,6 +104,12 @@ module.exports = {
     display: '-webkit-flex',
     display: '-ms-flexbox',
     display: 'flex'
+  },
+  inlineFlex: {
+    display: '-webkit-inline-box',
+    display: '-webkit-inline-flex',
+    display: '-ms-inline-flexbox',
+    display: 'inline-flex'
   },
 
   // Nav Items

@@ -204,6 +204,7 @@ class Slide extends Component {
             {this.props.roomData.hasAudio &&
               <AudioPlayer
                 trackTitle={this.props.roomData.name}
+                hideAudioPlayer={this.props.roomData.hideAudioPlayer}
                 sources={`${C.dirs.audio}/${this.props.roomData.id}.mp3`}
                 onReady={ () => this.onAudioReady() }
                 globalPauseMedia={!this.state.audioReady || !this.state.videoReady || this.props.globalPauseMedia}

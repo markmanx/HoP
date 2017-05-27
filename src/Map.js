@@ -17,8 +17,7 @@ const styles = {
     position: 'absolute',
     width: '100%',
     height: C.mapImgHeight + 'px',
-    top: '50%',
-    marginTop: - (C.mapImgHeight * .5) + 'px'
+    marginTop: 50
   },
   mapWrapperInner: {
     position: 'absolute',
@@ -38,48 +37,6 @@ const styles = {
     width: C.mapImgWidth + 'px',
     height: '100%',
     opacity: 0.9
-  },
-  instructions: {
-    position: 'absolute',
-    width: '70%',
-    top: C.pagePadding + 'px',
-    left: C.pagePadding + 'px'
-  },
-  footerIcons: {
-    position: 'absolute',
-    bottom: 0,
-    left: C.panelPadding + 'px'
-  },
-  footerIcon: {
-    position: 'relative',
-    display: 'inline-block',
-    width: (C.navItemSize * .75) + 'px',
-    height: C.navItemSize + 'px',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundSize: '25px 25px',
-    cursor: 'pointer'
-  },
-  twitter: {
-    backgroundImage: `url("${C.dirs.icons + '/twitter.png'}")`,
-  },
-  facebook: {
-    backgroundImage: `url("${C.dirs.icons + '/facebook.png'}")`,
-  },
-  info: {
-    float: 'right',
-    backgroundImage: `url("${C.dirs.icons + '/info.png'}")`
-  },
-  infoActive: {
-    float: 'right',
-    backgroundImage: `url("${C.dirs.icons + '/info-dark.png'}")`
-  },
-  spacer: {
-    width: '100%',
-    height: '1px',
-    left: 0,
-    backgroundColor: C.color1,
-    marginTop: '15px'
   },
   contentHeader: {
     padding: '45px 30px 0 30px'
@@ -108,7 +65,6 @@ const styles = {
 class Map extends Component {
   state = {
     enableClick: true,
-    winInfo: Utils.getWinInfo(),
     linkHover: false
   }
 
@@ -150,11 +106,6 @@ class Map extends Component {
         <div style={styles.wrapper}>
 
           <div style={styles.wrapper} ref={(el) => this.mapEl = el}>
-            <div style={ Utils.mergeStyles(styles.instructions, C.h5) }>
-              { this.props.winInfo.isDesktop ?
-                'Click a room to enter' : 'Double tap a room to enter'}
-            </div>
-
             <ElementPan
               style={styles.mapWrapperOuter}
               startX={200}
@@ -204,13 +155,6 @@ class Map extends Component {
                 <p>360 Camera: Lewis Whyld</p>
               </div>
             </div>
-          </div>
-
-          <div style={ Utils.mergeStyles(styles.footerIcons, {width: contentWidth}) }>
-            <div style={styles.spacer}></div>
-            <a href={C.facebookUrl} target="_blank"> <div style={ Utils.mergeStyles(styles.facebook, styles.footerIcon) }></div> </a>
-            <a href={C.twitterUrl} target="_blank"> <div style={ Utils.mergeStyles(styles.twitter, styles.footerIcon) }></div> </a>
-            <div style={ Utils.mergeStyles(this.props.infoShowing ? styles.infoActive : styles.info, styles.footerIcon) } onClick={() => this.props.onInfoClicked() }></div>
           </div>
 
         </div>

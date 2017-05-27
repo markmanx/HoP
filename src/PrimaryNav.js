@@ -4,6 +4,7 @@ import C from './Constants.js';
 import Utils from './Utils.js';
 import NavItem from './NavItem.js';
 import Map from './Map.js';
+import Footer from './Footer.js';
 
 const styles = {
   wrapper: {
@@ -114,7 +115,7 @@ class PrimaryNav extends Component {
     }
 
     if (this.props.winInfo.isLandscape) {
-      expandedStyle.width = 500;
+      expandedStyle.width = C.panelWidth;
     } else {
       expandedStyle.width = this.props.winInfo.width - C.pagePadding + 'px';
     }
@@ -170,17 +171,27 @@ class PrimaryNav extends Component {
           commonProps={this.getCommonProps(C.navItems.MAP)}
           navIconUrl={C.dirs.icons + '/map.png'}
           children={
-            <div>
-              <Map
-                infoShowing={this.state.infoShowing}
-                onInfoClicked={ () => this.setState( {infoShowing: !this.state.infoShowing} )}
-                panelWidth={this.getCommonProps(C.navItems.MAP).expandedStyle.width}
-                panelHeight={this.getCommonProps(C.navItems.MAP).expandedStyle.height}
-                onRoomClicked={ (item, e) => this.props.onRoomClicked(item, e) }
-                roomsVisited={this.props.roomsVisited}
-                totalRooms={this.props.totalRooms}
-                winInfo={this.props.winInfo}
-                />
+            <div style={styles.contentWrapper}>
+              <div style={styles.contentHeader}>
+                { this.props.winInfo.isDesktop ?
+                  'Click a room to enter' : 'Double tap a room to enter'}
+                <div style={styles.spacer}></div>
+              </div>
+              <div style={styles.contentOuter}>
+                <Map
+                  panelWidth={this.getCommonProps(C.navItems.MAP).expandedStyle.width}
+                  panelHeight={this.getCommonProps(C.navItems.MAP).expandedStyle.height}
+                  onRoomClicked={ (item, e) => this.props.onRoomClicked(item, e) }
+                  roomsVisited={this.props.roomsVisited}
+                  totalRooms={this.props.totalRooms}
+                  winInfo={this.props.winInfo}
+                  />
+              </div>
+              {1 !== 1 &&
+                <div style={styles.contentOuter}>
+                  <Footer infoShowing={this.state.infoShowing} onInfoClicked={ () => this.setState({infoShowing: !this.state.infoShowing}) } />
+                </div>
+              }
             </div>
           }/>
 
