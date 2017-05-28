@@ -4,29 +4,28 @@ import Utils from './Utils.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 
 const styles = {
-  wrapper: {
+  wrapper: Utils.mergeStyles({
     position: 'absolute',
-    width: C.navItemSize + 'px',
-    height: C.navItemSize + 'px',
-    bottom: C.pagePadding + 'px',
-    zIndex: 1
-  },
+    width: C.navItemSize,
+    height: C.navItemSize,
+    zIndex: 1,
+    overflow: 'hidden',
+    backgroundColor: 'white'
+  }, C.roundedCorners),
   innerContent: {
     position: 'absolute',
     width: '100%',
     height: '100%',
-    backgroundColor: 'white',
-    overflow: 'hidden',
     zIndex: 1
   },
-  content: {
+  content: {  // size is set dynamically
     position: 'absolute',
-    left: 0,
-    top: 0,
+    left: C.panelPadding,
+    top: C.panelPadding
   },
   expanded: {
-    right: (C.pagePadding * 0.5) + 'px',
-    top: (C.pagePadding * 0.5) + 'px',
+    right: C.pagePadding * 0.5,
+    top: C.pagePadding * 0.5,
     WebkitBorderRadius: 0,
     MozBorderRadius: 0,
     borderRadius: 0,
@@ -37,8 +36,8 @@ const styles = {
   },
   pulse: {
     position: 'absolute',
-    width: C.navItemSize + 'px',
-    height: C.navItemSize + 'px',
+    width: C.navItemSize,
+    height: C.navItemSize,
     backgroundColor: 'white',
     display: 'none'
   },
@@ -46,7 +45,7 @@ const styles = {
     position: 'absolute',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-    backgroundSize: (C.navItemSize * .5) + 'px ',
+    backgroundSize: C.navItemSize * .5,
     zIndex: 2
   },
   navIcon: {
@@ -59,14 +58,9 @@ const styles = {
     height: 20,
     marginTop: 7,
     marginRight: 7,
-    right: '5px',
-    top: '5px',
+    right: 5,
+    top: 5,
     backgroundColor: 'white'
-  },
-  circle: {
-    WebkitBorderRadius: '1000px',
-    MozBorderRadius: '1000px',
-    borderRadius: '1000px'
   }
 }
 
@@ -118,15 +112,15 @@ class NavItem extends Component {
         style={ Utils.mergeStyles(styles.wrapper, C.enableGPU, this.props.commonProps.posCss) }>
 
         <div
-          style={ Utils.mergeStyles(styles.pulse, styles.circle) }
+          style={ Utils.mergeStyles(styles.pulse, C.roundedCorners) }
           ref={(el) => this.pulseEl = el}>
         </div>
 
         <div
-          style={ Utils.mergeStyles(styles.innerContent, styles.circle) }
+          style={ Utils.mergeStyles(styles.innerContent, C.roundedCorners) }
           ref={(el) => this.innerContent = el}>
 
-          <div style={ Utils.mergeStyles(styles.content, {width: this.props.commonProps.expandedStyle.width, height: this.props.commonProps.expandedStyle.height}) } ref={el => this.content = el}>
+          <div style={ Utils.mergeStyles(styles.content, {width: this.props.commonProps.expandedStyle.width - (C.panelPadding * 2), height: this.props.commonProps.expandedStyle.height - C.panelPadding * 2 }) } ref={el => this.content = el}>
             {this.props.children}
           </div>
 

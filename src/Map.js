@@ -10,13 +10,14 @@ import Rooms from './data/Rooms.js';
 const styles = {
   wrapper: {
     position: 'absolute',
-    width: '100%',
+    left: -C.panelPadding,
+    right: -C.panelPadding,
     height: '100%'
   },
   mapWrapperOuter: {
     position: 'absolute',
     width: '100%',
-    height: C.mapImgHeight + 'px',
+    height: '100%',
     marginTop: 50
   },
   mapWrapperInner: {
@@ -37,28 +38,6 @@ const styles = {
     width: C.mapImgWidth + 'px',
     height: '100%',
     opacity: 0.9
-  },
-  contentHeader: {
-    padding: '45px 30px 0 30px'
-  },
-  contentOuter: {
-    alignSelf: 'stretch',
-    overflow: 'scroll'
-  },
-  contentInner: {
-    padding: '17px 30px 45px 30px'
-  },
-  creditsTitle: {
-    display: 'inline-block'
-  },
-  maxfoster: {
-    display: 'block',
-    width: '100%',
-    margin: '5px 0'
-  },
-  tweetMax: {
-    fontFamily: 'CNNSans-Bold',
-    textDecoration: 'none'
   }
 }
 
@@ -81,16 +60,6 @@ class Map extends Component {
 
     if (this.panTimer) clearTimeout(this.panTimer);
     this.panTimer = setTimeout(() => this.setState({ enableClick: true }), 250);
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.infoShowing) {
-      TweenMax.to(this.mapEl, 0.3, {autoAlpha: 0, top: -30});
-      TweenMax.to(this.creditsEl, 0.3, {autoAlpha: 1, top: 0});
-    } else {
-      TweenMax.to(this.mapEl, 0.3, {autoAlpha: 1, top: 0});
-      TweenMax.to(this.creditsEl, 0.3, {autoAlpha: 0, top: 30});
-    }
   }
 
   componentWillUnmount() {
@@ -134,27 +103,6 @@ class Map extends Component {
                 </div>
               </div>
             </ElementPan>
-          </div>
-
-          <div style={ Utils.mergeStyles(styles.wrapper, {opacity: 0}) } ref={(el) => this.creditsEl = el}>
-            <div style={styles.contentHeader}>
-              <div style={C.h6}>Credits</div>
-              <div style={styles.spacer}></div>
-            </div>
-            <div style={ Utils.mergeStyles(styles.contentOuter, {height: (panelHeight - 144) + 'px'}) }>
-              <div style={ Utils.mergeStyles(styles.contentInner, C.h5) }>
-                <span style={C.h3}>Narrator: Max Foster</span>
-                <img style={styles.maxfoster} src={C.dirs.images + '/MaxFoster.jpg'} />
-                Max is CNN's London correspondent, covering British politics and the Royal Family. When he was still a student, he scored an exclusive interview with Anthony Hopkins by leaving him a note at a restaurant - which convinced him to go into journalism professionally. Now he anchors CNN Newsroom's Europe edition. He's half Swedish and lives in the countryside near London.
-                <p>Tweet Max <a target="_blank" style={ Utils.mergeStyles(styles.tweetMax, {color: this.state.linkHover ? C.color1 : C.color3}) } onMouseOver={() => this.setState({linkHover: true})} onMouseOut={() => this.setState({linkHover: false})} href="https://twitter.com/MaxFosterCNN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">@MaxFosterCNN</a></p>
-                <p>&nbsp;</p>
-                <p>Editorial: Richard Allen Greene, Florence Davey-Attlee</p>
-                <p>Design: Sarah-Grace Mankarious</p>
-                <p>Development: Mark Mankarious</p>
-                <p>Video Editing: Toby Welham, Anastasia Anashkina</p>
-                <p>360 Camera: Lewis Whyld</p>
-              </div>
-            </div>
           </div>
 
         </div>

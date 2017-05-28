@@ -20,7 +20,8 @@ module.exports = {
   // Sizes
   pagePadding: 15,
   panelPadding: 25,
-  panelWidth: 800,
+  panelMargin: 7,
+  maxPanelWidth: 800,
   navItemSize: 55,
   navItemSpacing: 20,
   mapImgWidth: 700,
@@ -110,6 +111,11 @@ module.exports = {
     display: '-webkit-inline-flex',
     display: '-ms-inline-flexbox',
     display: 'inline-flex'
+  },
+  roundedCorners: {
+    WebkitBorderRadius: 1000,
+    MozBorderRadius: 1000,
+    borderRadius: 1000
   },
 
   // Nav Items

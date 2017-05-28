@@ -5,61 +5,66 @@ import Utils from './Utils.js';
 import NavItem from './NavItem.js';
 import Map from './Map.js';
 import Footer from './Footer.js';
+import { TimelineMax, TweenMax, Expo } from 'gsap';
 
 const styles = {
-  wrapper: {
+  contentWrapper: Utils.mergeStyles({
     position: 'absolute',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 0,
-    width: '100%',
-    height: C.navItemSize + 'px',
-    bottom: C.pagePadding + 'px'
-  },
-  contentWrapper: {
-    position: 'absolute',
-    display: 'flex',
     alignItems: 'stretch',
     flexDirection: 'column',
     width: '100%',
     height: '100%',
     top: 0,
     bottom: 0,
-    WebkitBoxSizing: 'border-box',
-    MozBoxSizing: 'border-box',
-    boxSizing: 'border-box',
     color: C.textDark
-  },
-  contentOuter: {
-    alignSelf: 'stretch',
-    overflow: 'scroll'
-  },
-  contentInner: {
-    padding: '17px 30px 45px 30px'
-  },
+  }, C.flexBox, C.borderBox),
   contentHeader: {
-    padding: '45px 30px 0 30px'
+    padding: '45px 0 0 0'
+  },
+  contentScrollableContainer: {
+    overflow: 'scroll',
+    flex: 1
+  },
+  contentScrollableContainerInner: {
+    padding: '17px 0 45px 0'
+  },
+  mapContainer: {
+    width: '100%',
+    height: C.mapImgHeight,
+    flex: 1
+  },
+  contentFooter: {
+    height: 40,
+    width: '100%',
+    alignSelf: 'flex-end'
   },
   logo: {
     position: 'absolute',
-    left: C.pagePadding + 'px',
-    bottom: (C.pagePadding + 12) + 'px',
-    width: '55px'
+    left: C.pagePadding,
+    bottom: C.pagePadding + 12,
+    width: 55
   },
   spacer: {
     width: '100%',
-    height: '1px',
+    height: 1,
     left: 0,
     backgroundColor: C.color1,
-    marginTop: '15px'
+    marginTop: 15
+  },
+  maxfoster: {
+    display: 'block',
+    width: '100%',
+    margin: '5px 0'
+  },
+  tweetMax: {
+    fontFamily: 'CNNSans-Bold',
+    textDecoration: 'none'
   }
 }
 
 class PrimaryNav extends Component {
   state = {
-    infoShowing: false
+    creditsShowing: false
   }
 
   isCurrNavItem(id) {
@@ -97,27 +102,27 @@ class PrimaryNav extends Component {
 
   getCommonProps(navItemId) {
     let expandedStyle = {
-      height: this.props.winInfo.height - C.pagePadding + 'px',
-      top: (C.pagePadding * 0.5) + 'px',
+      height: this.props.winInfo.height - (C.panelMargin * 2),
+      top: C.panelMargin,
       bottom: 'auto'
     };
 
     if (this.props.winInfo.isLandscape) {
       Object.assign(expandedStyle, {
-        right: (C.pagePadding * 0.5) + 'px',
+        right: C.panelMargin,
         left: 'auto'
       });
     } else {
       Object.assign(expandedStyle, {
-        left: (C.pagePadding * 0.5) + 'px',
+        left: C.panelMargin,
         right: 'auto'
       });
     }
 
     if (this.props.winInfo.isLandscape) {
-      expandedStyle.width = C.panelWidth;
+      expandedStyle.width = C.maxPanelWidth;
     } else {
-      expandedStyle.width = this.props.winInfo.width - C.pagePadding + 'px';
+      expandedStyle.width = this.props.winInfo.width - (C.panelMargin * 2);
     }
 
     return {
@@ -136,12 +141,25 @@ class PrimaryNav extends Component {
   }
 
   onNavItemClosed(e, navItemId) {
-    if (navItemId === 1 && this.state.infoShowing) {
-      this.setState({infoShowing: false});
+    if (navItemId === 1 && this.state.creditsShowing) {
+      this.setState({creditsShowing: false});
       return;
     }
 
     this.props.onNavItemClosed(e, navItemId);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (this.creditsAnim) {
+      nextState.creditsShowing ? this.creditsAnim.play() : this.creditsAnim.reverse();
+    }
+  }
+
+  componentDidMount() {
+    this.creditsAnim = new TimelineMax({ paused: this.state.creditsShowing })
+      .to(this.mapEl, 0.3, {autoAlpha: 0})
+      .to(this.mapEl, 0.05, {display: 'none'})
+      .from(this.creditsEl, 0.3, {autoAlpha: 0, top: 50, display: 'none'});
   }
 
   render() {
@@ -161,8 +179,11 @@ class PrimaryNav extends Component {
                 <div style={C.h3}>{this.props.roomData.name}</div>
                 <div style={styles.spacer}></div>
               </div>
-              <div style={styles.contentOuter}>
-                <div style={ Utils.mergeStyles(styles.contentInner, C.h5) }>{this.props.roomData.description}</div>
+              <div style={styles.contentScrollableContainer}>
+                <div style={ Utils.mergeStyles(styles.contentScrollableContainerInner, C.h5) }>{this.props.roomData.description}</div>
+              </div>
+              <div style={styles.contentFooter}>
+                <Footer />
               </div>
             </div>
           }/>
@@ -171,13 +192,17 @@ class PrimaryNav extends Component {
           commonProps={this.getCommonProps(C.navItems.MAP)}
           navIconUrl={C.dirs.icons + '/map.png'}
           children={
+
             <div style={styles.contentWrapper}>
               <div style={styles.contentHeader}>
-                { this.props.winInfo.isDesktop ?
-                  'Click a room to enter' : 'Double tap a room to enter'}
+                { !this.state.creditsShowing ?
+                  (this.props.winInfo.isDesktop ? 'Click a room to enter' : 'Double tap a room to enter')
+                :
+                  'Credits' }
                 <div style={styles.spacer}></div>
               </div>
-              <div style={styles.contentOuter}>
+
+              <div style={styles.mapContainer} ref={ (el) => this.mapEl = el } id="mapEl">
                 <Map
                   panelWidth={this.getCommonProps(C.navItems.MAP).expandedStyle.width}
                   panelHeight={this.getCommonProps(C.navItems.MAP).expandedStyle.height}
@@ -187,11 +212,26 @@ class PrimaryNav extends Component {
                   winInfo={this.props.winInfo}
                   />
               </div>
-              {1 !== 1 &&
-                <div style={styles.contentOuter}>
-                  <Footer infoShowing={this.state.infoShowing} onInfoClicked={ () => this.setState({infoShowing: !this.state.infoShowing}) } />
+
+              <div style={styles.contentScrollableContainer} ref={ (el) => this.creditsEl = el }>
+                <div style={styles.contentScrollableContainerInner}>
+                  <span style={C.h3}>Narrator: Max Foster</span>
+                  <img style={styles.maxfoster} src={C.dirs.images + '/MaxFoster.jpg'} />
+                  Max is CNN's London correspondent, covering British politics and the Royal Family. When he was still a student, he scored an exclusive interview with Anthony Hopkins by leaving him a note at a restaurant - which convinced him to go into journalism professionally. Now he anchors CNN Newsroom's Europe edition. He&apos;s half Swedish and lives in the countryside near London.
+                  <p>Tweet Max <a target="_blank" style={ Utils.mergeStyles(styles.tweetMax, {color: this.state.linkHover ? C.color1 : C.color3}) } onMouseOver={() => this.setState({linkHover: true})} onMouseOut={() => this.setState({linkHover: false})} href="https://twitter.com/MaxFosterCNN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">@MaxFosterCNN</a></p>
+                  <p>&nbsp;</p>
+                  <p>Editorial: Richard Allen Greene, Florence Davey-Attlee</p>
+                  <p>Design: Sarah-Grace Mankarious</p>
+                  <p>Development: Mark Mankarious</p>
+                  <p>Video Editing: Toby Welham, Anastasia Anashkina</p>
+                  <p>360 Camera: Lewis Whyld</p>
                 </div>
-              }
+              </div>
+
+              <div style={styles.contentFooter}>
+                <Footer creditsShowing={this.state.creditsShowing} onInfoClicked={ () => this.setState({creditsShowing: !this.state.creditsShowing}) } />
+              </div>
+
             </div>
           }/>
 

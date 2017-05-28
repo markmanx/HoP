@@ -5,11 +5,10 @@ import Icon from './Icon.js';
 
 const styles = {
   wrapper: {
-    position: 'relative',
-    display: 'inline-block',
-    marginTop: 10,
-    marginBottom: 10,
-    width: 300
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'white'
   },
   spacer: {
     width: '100%',
@@ -44,7 +43,7 @@ class Footer extends Component {
           </div>
           { this.props.onInfoClicked &&
             <div style={ Utils.mergeStyles(styles.alignmentWrapper, styles.rightAlign) }>
-              <Icon buttonStyle={'social'} iconRef='info' iconType='png' isActive={this.props.infoShowing} _onClick={ () => this.props.onInfoClicked() } />
+              <Icon buttonStyle={'social'} iconRef='info' iconType='png' isActive={this.props.creditsShowing} _onClick={ () => this.props.onInfoClicked() } />
             </div>
           }
         </div>
