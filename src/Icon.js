@@ -10,14 +10,25 @@ const styles = {
   social: {
     default: {
       position: 'relative',
-      width: '40px',
-      height: '40px',
+      width: 40,
+      height: 40,
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       backgroundSize: '25px 25px'
     },
     hover: {},
     active: {}
+  },
+  panelClose: {
+    default: {
+      position: 'absolute',
+      width: 50,
+      height: 50,
+      right: 10,
+      top: 10,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center'
+    }
   }
 }
 

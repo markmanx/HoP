@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import C from './Constants.js';
 import Utils from './Utils.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
+import Icon from './Icon.js';
 
 const styles = {
   wrapper: Utils.mergeStyles({
@@ -124,10 +125,7 @@ class NavItem extends Component {
             {this.props.children}
           </div>
 
-          <div
-            style={ Utils.mergeStyles(styles.icon, styles.closeIcon, Utils.genBgImgStyle(C.dirs.icons + '/close.png')) }
-            onClick={(e) => this.onClose(e)}>
-          </div>
+          <Icon _onClick={(e) => this.onClose(e)} buttonStyle='panelClose' iconRef='close' iconType='png' />
         </div>
 
         <div
