@@ -51,7 +51,7 @@ class PanoramaViewer extends VideoPlayer {
 
     this.canvas.handleResize();
   }
-
+  
   componentWillUnmount() {
     if (this.canvas) this.canvas.destroy();
     super.componentWillUnmount();
@@ -96,6 +96,7 @@ class PanoramaViewer extends VideoPlayer {
               <Hotspot
                 text={item.title}
                 enableClick={true}
+                onClick={ () => this.props.onPanoramaHotspotClicked(item.id) }
                 winInfo={this.props.winInfo} />
             </div>
           )

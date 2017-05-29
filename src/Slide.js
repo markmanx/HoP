@@ -182,6 +182,7 @@ class Slide extends Component {
                   bestFitProps={this.state.bestFitProps}
                   videoSources={ Utils.createVideoSourcesArray(this.props.roomData.id) }
                   roomHotspots={this.props.roomHotspots}
+                  onPanoramaHotspotClicked={ (index) => this.props.onPanoramaHotspotClicked(index) }
                   onVideoReady={ () => this.onVideoReady() }
                   globalPauseMedia={this.props.globalPauseMedia}
                   winInfo={this.props.winInfo} />
@@ -192,8 +193,9 @@ class Slide extends Component {
                   type={C.mediaTypes.IMAGE_PANORAMA}
                   bestFitProps={this.state.bestFitProps}
                   videoSources={ Utils.createVideoSourcesArray('blank', false) }
-                  imageSource={ `${C.dirs.images}/panoramas/${this.props.roomData.id}.jpg` }
+                  imageSource={ `${C.dirs.images}/image_panoramas/${this.props.roomData.id}.jpg` }
                   roomHotspots={this.props.roomHotspots}
+                  onPanoramaHotspotClicked={ (index) => this.props.onPanoramaHotspotClicked(index) }
                   onVideoReady={ () => this.onVideoReady() }
                   globalPauseMedia={this.props.globalPauseMedia}
                   winInfo={this.props.winInfo} />

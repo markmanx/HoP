@@ -30,6 +30,7 @@ class App extends Component {
     isMobile: true,
     roomData: undefined,
     roomHotspots: [],
+    selectedHotspotId: null,
     roomsVisited: [],
     totalRooms: Rooms.length,
     globalPauseMedia: false,
@@ -93,13 +94,23 @@ class App extends Component {
         break;
     }
 
+    let roomHotspots = Utils.filterItemsByVal(RoomHotspots, 'roomId', roomData.id) || [],
+        selectedHotspotId;
+        
+    try {
+      selectedHotspotId = Utils.filterItemsByVal(roomHotspots, 'isMain', true)[0].id;
+    } catch (e) {
+      selectedHotspotId = null;
+    }
+
     this.setState({
       roomsVisited: updatedVisitedList,
       navItems: newNavItems,
       pulsatingNavItems: newPulsatingNavItems,
       roomData: roomData,
-      roomHotspots: Utils.filterItemsByVal(RoomHotspots, 'roomId', roomData.id) || [],
-      currNavId: undefined
+      roomHotspots: roomHotspots,
+      currNavId: undefined,
+      selectedHotspotId: selectedHotspotId
     });
 
     if (roomData.id == 'Splash') {
@@ -115,12 +126,31 @@ class App extends Component {
     this.switchRoomById(item.id);
   }
 
+  onPanoramaHotspotClicked(index) {
+    let hotspot = Utils.filterItemsByVal(this.state.roomHotspots, 'id', index)[0];
+
+    if (!hotspot.roomLink) {
+      this.setState({ selectedHotspotId: index });
+      this.openNavItem(C.navItems['ROOM_INFO']);
+    } else {
+      this.switchRoomById( Utils.filterItemsByVal(Rooms, 'id', hotspot.roomLink)[0].id );
+    }
+  }
+
   delayedPlayMedia() {
     this.timer && clearTimeout(this.timer);
 
     this.timer = setTimeout(() => {
       this.setState({ globalPauseMedia: false });
     }, 500);
+  }
+
+  openNavItem(id) {
+    this.setState({
+      currNavId: id,
+      globalPauseMedia: true,
+      pulsatingNavItems: []
+    });
   }
 
   onNavItemOpened(e, id) {
@@ -132,17 +162,29 @@ class App extends Component {
       targetNavId = id;
     }
 
-    this.setState({
-      currNavId: targetNavId,
-      globalPauseMedia: true,
-      pulsatingNavItems: []
-    });
+    this.openNavItem(targetNavId);
   }
+  
 
   onNavItemClosed() {
     this.delayedPlayMedia();
 
-    this.setState({ currNavId: undefined });
+    // Display main hotspot content
+    if (this.state.currNavId == C.navItems['ROOM_INFO']) {
+      let mainHotspotId;
+
+      try {
+        mainHotspotId = Utils.filterItemsByVal(this.state.roomHotspots, 'isMain', true)[0].id;
+      } catch (e) {
+        mainHotspotId = null;
+      }
+
+      this.setState({ selectedHotspotId: mainHotspotId });
+    }
+
+    this.setState({ 
+      currNavId: undefined
+    });
   }
 
   render() {
@@ -154,6 +196,7 @@ class App extends Component {
             roomHotspots={this.state.roomHotspots}
             globalPauseMedia={this.state.globalPauseMedia}
             winInfo={this.state.winInfo}
+            onPanoramaHotspotClicked={ (index) => this.onPanoramaHotspotClicked(index) }
             />
 
           <PrimaryNav
@@ -166,6 +209,7 @@ class App extends Component {
             currNavId={this.state.currNavId}
             totalRooms={this.state.totalRooms}
             pulsatingNavItems={this.state.pulsatingNavItems}
+            selectedHotspot={this.state.roomHotspots[this.state.selectedHotspotId]}
             winInfo={this.state.winInfo}
             />
         </div>

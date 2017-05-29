@@ -174,18 +174,19 @@ class PrimaryNav extends Component {
           commonProps={this.getCommonProps(C.navItems.ROOM_INFO)}
           navIconUrl={C.dirs.icons + '/text.png'}
           children={
-            <div style={styles.contentWrapper}>
-              <div style={styles.contentHeader}>
-                <div style={C.h3}>{this.props.roomData.name}</div>
-                <div style={styles.spacer}></div>
+            this.props.selectedHotspot && 
+              <div style={styles.contentWrapper}>
+                <div style={styles.contentHeader}>
+                  <div style={C.h3}>{this.props.selectedHotspot['title']}</div>
+                  <div style={styles.spacer}></div>
+                </div>
+                <div style={styles.contentScrollableContainer}>
+                  <div style={ Utils.mergeStyles(styles.contentScrollableContainerInner, C.h5) }>{this.props.selectedHotspot['text']}</div>
+                </div>
+                <div style={styles.contentFooter}>
+                  <Footer />
+                </div>
               </div>
-              <div style={styles.contentScrollableContainer}>
-                <div style={ Utils.mergeStyles(styles.contentScrollableContainerInner, C.h5) }>{this.props.roomData.description}</div>
-              </div>
-              <div style={styles.contentFooter}>
-                <Footer />
-              </div>
-            </div>
           }/>
 
         <NavItem
