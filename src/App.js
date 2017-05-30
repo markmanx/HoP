@@ -69,7 +69,7 @@ class App extends Component {
   switchRoomById(roomId, updateBrowserHistory = true) {
     let roomData = this.getRoomData(roomId);
 
-    // Update rooms visited list
+    // Update visited list
     let updatedVisitedList = this.state.roomsVisited.slice();
 
     if (!this.state.roomsVisited.includes(roomData.id)) {

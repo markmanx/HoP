@@ -17,8 +17,7 @@ const styles = {
   mapWrapperOuter: {
     position: 'absolute',
     width: '100%',
-    height: '100%',
-    marginTop: 50
+    height: '100%'
   },
   mapWrapperInner: {
     position: 'absolute',
@@ -82,23 +81,26 @@ class Map extends Component {
               <div style={styles.mapWrapperInner}>
                 <img src={C.dirs.images + '/map.png'} style={styles.mapImg} alt='map'/>
                 <div style={styles.hotspotWrapper} id="hotspotWrapper">
-                  {Rooms.map((item, index) => {
-                    if (item.mapCoords) {
-                      return (
-                        <div style={this.getHotspotCSS(item.mapCoords)} key={index}>
-                          <Hotspot
-                            text={item.name}
-                            onClick={this.props.onRoomClicked.bind(this, item)}
-                            visited={this.props.roomsVisited.indexOf(item.id) !== -1}
-                            winInfo={this.props.winInfo}
-                            enableClick={this.state.enableClick} />
-                        </div>
-                      )
-                    } else {
-                      return false;
-                    }
+                  
+                  {
+                    Rooms.map((item, index) => {
+                      if (item.mapCoords) {
+                        return (
+                          <div style={this.getHotspotCSS(item.mapCoords)} key={index}>
+                            <Hotspot
+                              text={item.name}
+                              onClick={this.props.onRoomClicked.bind(this, item)}
+                              visited={this.props.roomsVisited.indexOf(item.id) !== -1}
+                              winInfo={this.props.winInfo}
+                              enableClick={this.state.enableClick} />
+                          </div>
+                        )
+                      } else {
+                        return false;
+                      }
                     })
                   }
+                  
                 </div>
               </div>
             </ElementPan>

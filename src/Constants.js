@@ -27,11 +27,12 @@ module.exports = {
   navItemSpacing: 20,
   mapImgWidth: 590,
   mapImgHeight: 381,
-  mapPaddingL: 50,
-  mapPaddingR: 50,
+  mapPaddingL: 0,
+  mapPaddingR: 0,
   hotspotPadding: 12,
   hotspotInitialWidth: 50,
   hotspotInitialHeight: 50,
+  footerHeight: 40,
 
   // Social URLS
   twitterUrl: "https://twitter.com/intent/tweet?url=http%3A%2F%2Fcnn.com%2Fparliament&text=Take%20a%20360%20interactive%20tour%20of%20the%20British%20Houses%20of%20Parliament%20with%20CNN",

@@ -5,6 +5,7 @@ import Utils from './Utils.js';
 import NavItem from './NavItem.js';
 import Map from './Map.js';
 import Footer from './Footer.js';
+import RoomDiscovery from './RoomDiscovery.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 
 const styles = {
@@ -34,7 +35,7 @@ const styles = {
     flex: 1
   },
   contentFooter: {
-    height: 40,
+    height: C.footerHeight,
     width: '100%',
     alignSelf: 'flex-end'
   },
@@ -244,6 +245,11 @@ class PrimaryNav extends Component {
                   roomsVisited={this.props.roomsVisited}
                   totalRooms={this.props.totalRooms}
                   winInfo={this.props.winInfo}
+                  />
+
+                <RoomDiscovery 
+                  roomsVisited={this.props.roomsVisited}
+                  availableHeight={this.props.winInfo.height - C.mapImgHeight - (C.panelPadding * 2) - (C.panelMargin * 2) - C.footerHeight - 79}
                   />
               </div>
 

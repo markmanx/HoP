@@ -29,6 +29,12 @@ const styles = {
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center'
     }
+  },
+  arrowButton: {
+    default: {
+      position: 'relative',
+      backgroundColor: C.color1
+    }
   }
 }
 
