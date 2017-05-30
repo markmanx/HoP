@@ -18,7 +18,7 @@ let utils = {
       width: window.innerWidth,
       height: window.innerHeight,
       isLandscape: (window.innerWidth > window.innerHeight) ? 1 : 0,
-      isDesktop: (window.innerWidth > 800) ? 1 : 0
+      isDesktop: (window.innerWidth > C.desktopBreakPoint) ? 1 : 0
     }
   },
 
@@ -40,12 +40,13 @@ let utils = {
     let results = [];
 
     for (let [k, value] of Object.entries(obj)) {
+
       if (value[key] === val) {
         results.push(value);
       }
     }
 
-    return results.length == 0 ? null : results;
+    return results;
   },
 
   detectChanges: function(ob1, ob2) {

@@ -44,6 +44,16 @@ const styles = {
     bottom: C.pagePadding + 12,
     width: 55
   },
+  hotspotImageWrapper: {
+    width: '100%',
+    marginTop: 35
+  },
+  hotspotImage: {
+    width: '100%'
+  },
+  hotspotImageCaption: {
+    marginTop: 5
+  },
   spacer: {
     width: '100%',
     height: 1,
@@ -119,7 +129,7 @@ class PrimaryNav extends Component {
       });
     }
 
-    if (this.props.winInfo.isLandscape) {
+    if (this.props.winInfo.isDesktop) {
       expandedStyle.width = C.maxPanelWidth;
     } else {
       expandedStyle.width = this.props.winInfo.width - (C.panelMargin * 2);
@@ -163,6 +173,13 @@ class PrimaryNav extends Component {
   }
 
   render() {
+    let selectedHotspotId = this.props.selectedHotspotId,
+        selectedHotspot;
+
+    if (selectedHotspotId !== null) {
+      selectedHotspot = Utils.filterItemsByVal(this.props.roomData.hotspots, 'id', selectedHotspotId)[0];
+    }
+
     return (
       <div>
 
@@ -174,14 +191,30 @@ class PrimaryNav extends Component {
           commonProps={this.getCommonProps(C.navItems.ROOM_INFO)}
           navIconUrl={C.dirs.icons + '/text.png'}
           children={
-            this.props.selectedHotspot && 
+            selectedHotspot && 
               <div style={styles.contentWrapper}>
                 <div style={styles.contentHeader}>
-                  <div style={C.h3}>{this.props.selectedHotspot['title']}</div>
+                  <div style={C.h3}>{ selectedHotspot['title'] }</div>
                   <div style={styles.spacer}></div>
                 </div>
                 <div style={styles.contentScrollableContainer}>
-                  <div style={ Utils.mergeStyles(styles.contentScrollableContainerInner, C.h5) }>{this.props.selectedHotspot['text']}</div>
+                  <div style={ Utils.mergeStyles(styles.contentScrollableContainerInner, C.h5) }>
+                    { selectedHotspot['text'] }
+                  
+                    {
+                      selectedHotspot['images'].map((item, index) => {
+                        return (
+                          <div style={styles.hotspotImageWrapper}>
+                            <img 
+                              src={`${C.dirs.images}/hotspot_images/hotspotImage_${item.id}.jpg`}
+                              style={styles.hotspotImage}
+                              key={item.id} />
+                            <div style={styles.hotspotImageCaption}>{item.caption}</div>
+                          </div>
+                        )
+                      })
+                    }
+                  </div>
                 </div>
                 <div style={styles.contentFooter}>
                   <Footer />

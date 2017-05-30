@@ -17,34 +17,7 @@ const RoomHotspots = [
         lon: 115.13,
         title: 'Test Link',
         roomLink: 'ElizabethTowerExterior'
-    },
-
-    {
-        id: 2,
-        roomId: 'TestRoom', 
-        lat: 30.23, 
-        lon: 115.13,
-        title: 'Test Link',
-        roomLink: 'ElizabethTowerExterior'
-    },
-
-    {
-        id: 3,
-        roomId: 'TestRoom', 
-        lat: 130.23, 
-        lon: 115.13,
-        title: 'Test Link',
-        roomLink: 'ElizabethTowerExterior'
-    },
-
-    {
-        id: 4,
-        roomId: 'TestRoom', 
-        lat: 30.23, 
-        lon: 115.13,
-        title: 'Test Link',
-        roomLink: 'ElizabethTowerExterior'
-    },
+    }
     // END OF TEST INPUT *************************
 
 ];

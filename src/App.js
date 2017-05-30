@@ -4,6 +4,7 @@ import C from './Constants.js';
 import Utils from './Utils.js';
 import Rooms from './data/Rooms.js';
 import RoomHotspots from './data/RoomHotspots.js';
+import HotspotImages from './data/HotspotImages.js';
 import PrimaryNav from './PrimaryNav.js';
 import Slide from './Slide';
 
@@ -66,20 +67,16 @@ class App extends Component {
   }
 
   switchRoomById(roomId, updateBrowserHistory = true) {
-    let roomData;
+    let roomData = this.getRoomData(roomId);
 
-    if (Utils.filterItemsByVal(Rooms, 'id', roomId) === null) {
-      roomData = Utils.filterItemsByVal(Rooms, 'id', 'Splash')[0];
-    } else {
-      roomData = Utils.filterItemsByVal(Rooms, 'id', roomId)[0];
-    }
-
+    // Update rooms visited list
     let updatedVisitedList = this.state.roomsVisited.slice();
 
     if (!this.state.roomsVisited.includes(roomData.id)) {
       updatedVisitedList.push(roomData.id);
     };
 
+    // Set nav up
     let newNavItems = [],
         newPulsatingNavItems = [];
 
@@ -94,30 +91,52 @@ class App extends Component {
         break;
     }
 
-    let roomHotspots = Utils.filterItemsByVal(RoomHotspots, 'roomId', roomData.id) || [],
+    // Populate the info panel with the relavent hotspot info
+    let mainHotspot = Utils.filterItemsByVal(roomData.hotspots, 'isMain', true),
         selectedHotspotId;
-        
-    try {
-      selectedHotspotId = Utils.filterItemsByVal(roomHotspots, 'isMain', true)[0].id;
-    } catch (e) {
+
+    if (mainHotspot.length > 0) {
+      selectedHotspotId = mainHotspot[0].id;
+    } else {
       selectedHotspotId = null;
     }
 
+    // Set the app's state
     this.setState({
       roomsVisited: updatedVisitedList,
       navItems: newNavItems,
       pulsatingNavItems: newPulsatingNavItems,
       roomData: roomData,
-      roomHotspots: roomHotspots,
       currNavId: undefined,
       selectedHotspotId: selectedHotspotId
     });
 
+    // Take care of routing
     if (roomData.id == 'Splash') {
       browserHistory.push(process.env.PUBLIC_URL + '/');
     } else if (updateBrowserHistory){
       browserHistory.push(process.env.PUBLIC_URL + '/?roomId=' + roomData.id);
     }
+  }
+
+  getRoomData(roomId) {
+    // Get initial room data
+    let roomData = Utils.filterItemsByVal(Rooms, 'id', roomId);
+    if (roomData.length > 0) {
+      roomData = roomData[0];
+    } else {
+      roomData = Utils.filterItemsByVal(Rooms, 'id', 'Splash')[0];
+    }
+    
+    // Get room hotspots
+    roomData.hotspots = Utils.filterItemsByVal(RoomHotspots, 'roomId', roomData.id);
+    
+    // Get hotspot images
+    for (const item of roomData.hotspots) {
+      item.images = Utils.filterItemsByVal(HotspotImages, 'hotspotId', item.id);
+    }
+
+    return roomData
   }
 
   onRoomClicked(item, e) {
@@ -127,7 +146,7 @@ class App extends Component {
   }
 
   onPanoramaHotspotClicked(index) {
-    let hotspot = Utils.filterItemsByVal(this.state.roomHotspots, 'id', index)[0];
+    let hotspot = Utils.filterItemsByVal(this.state.roomData.hotspots, 'id', index)[0];
 
     if (!hotspot.roomLink) {
       this.setState({ selectedHotspotId: index });
@@ -171,11 +190,10 @@ class App extends Component {
 
     // Display main hotspot content
     if (this.state.currNavId == C.navItems['ROOM_INFO']) {
-      let mainHotspotId;
-
-      try {
-        mainHotspotId = Utils.filterItemsByVal(this.state.roomHotspots, 'isMain', true)[0].id;
-      } catch (e) {
+      let mainHotspotId = Utils.filterItemsByVal(this.state.roomData.hotspots, 'isMain', true);
+      if (mainHotspotId.length > 0) {
+        mainHotspotId = mainHotspotId[0].id;
+      } else {
         mainHotspotId = null;
       }
 
@@ -193,7 +211,6 @@ class App extends Component {
           <Slide
             key={this.state.roomData.id}
             roomData={this.state.roomData}
-            roomHotspots={this.state.roomHotspots}
             globalPauseMedia={this.state.globalPauseMedia}
             winInfo={this.state.winInfo}
             onPanoramaHotspotClicked={ (index) => this.onPanoramaHotspotClicked(index) }
@@ -209,7 +226,7 @@ class App extends Component {
             currNavId={this.state.currNavId}
             totalRooms={this.state.totalRooms}
             pulsatingNavItems={this.state.pulsatingNavItems}
-            selectedHotspot={this.state.roomHotspots[this.state.selectedHotspotId]}
+            selectedHotspotId={this.state.selectedHotspotId}
             winInfo={this.state.winInfo}
             />
         </div>

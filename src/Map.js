@@ -22,22 +22,23 @@ const styles = {
   },
   mapWrapperInner: {
     position: 'absolute',
-    width: C.mapImgWidth + C.mapPaddingL + C.mapPaddingR + 'px',
-    height: C.mapImgHeight + 'px'
+    width: C.mapImgWidth + C.mapPaddingL + C.mapPaddingR,
+    height: C.mapImgHeight
   },
   mapImg: {
     position: 'absolute',
-    left: C.mapPaddingL + 'px',
+    left: C.mapPaddingL,
     top: 0,
-    width: C.mapImgWidth + 'px'
+    width: C.mapImgWidth
   },
   hotspotWrapper: {
     position: 'absolute',
     top: 0,
-    left: C.mapPaddingL + 'px',
-    width: C.mapImgWidth + 'px',
+    left: C.mapPaddingL,
+    width: C.mapImgWidth,
     height: '100%',
-    opacity: 0.9
+    opacity: 0.9,
+    overflow: 'hidden'
   }
 }
 
@@ -72,17 +73,15 @@ class Map extends Component {
         contentWidth = (panelWidth - (C.panelPadding * 2)) + 'px';
 
     return (
-        <div style={styles.wrapper}>
-
           <div style={styles.wrapper} ref={(el) => this.mapEl = el}>
             <ElementPan
               style={styles.mapWrapperOuter}
-              startX={200}
+              startX={50}
               onPan={() => this.onPan()}>
 
               <div style={styles.mapWrapperInner}>
                 <img src={C.dirs.images + '/map.png'} style={styles.mapImg} alt='map'/>
-                <div style={styles.hotspotWrapper}>
+                <div style={styles.hotspotWrapper} id="hotspotWrapper">
                   {Rooms.map((item, index) => {
                     if (item.mapCoords) {
                       return (
@@ -104,8 +103,6 @@ class Map extends Component {
               </div>
             </ElementPan>
           </div>
-
-        </div>
     )
   }
 }
