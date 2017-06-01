@@ -12,6 +12,7 @@ const styles = {
     position: 'absolute',
     left: -C.panelPadding,
     right: -C.panelPadding,
+    marginTop: C.mapPaddingT,
     height: '100%'
   },
   mapWrapperOuter: {
@@ -89,8 +90,8 @@ class Map extends Component {
                           <div style={this.getHotspotCSS(item.mapCoords)} key={index}>
                             <Hotspot
                               text={item.name}
-                              onClick={this.props.onRoomClicked.bind(this, item)}
-                              visited={this.props.roomsVisited.indexOf(item.id) !== -1}
+                              onClick={ () => this.props.onRoomClicked(item.id) }
+                              visited={this.props.roomsVisited.includes(item.id)}
                               winInfo={this.props.winInfo}
                               enableClick={this.state.enableClick} />
                           </div>

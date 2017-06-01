@@ -38,6 +38,20 @@ class App extends Component {
     winInfo: Utils.getWinInfo()
   }
 
+  getDiscoverMoreList() {
+    let roomsNotVisited = [];
+
+    for (const item of Rooms) {
+      if (!this.state.roomsVisited.includes(item.id)) {
+        roomsNotVisited.push(item);
+      }
+    }
+
+    let discoverMoreList = Utils.shuffleArray(roomsNotVisited);
+
+    return discoverMoreList;
+  }
+
   onResize() {
     if (this.resizeTimer) clearTimeout('resizetimer');
     this.resizeTimer = setTimeout( () => {
@@ -108,7 +122,8 @@ class App extends Component {
       pulsatingNavItems: newPulsatingNavItems,
       roomData: roomData,
       currNavId: undefined,
-      selectedHotspotId: selectedHotspotId
+      selectedHotspotId: selectedHotspotId,
+      discoverMoreList: this.getDiscoverMoreList()
     });
 
     // Take care of routing
@@ -139,10 +154,10 @@ class App extends Component {
     return roomData
   }
 
-  onRoomClicked(item, e) {
+  onRoomClicked(roomId) {
     this.delayedPlayMedia();
     this.setState({ currNavId: undefined });
-    this.switchRoomById(item.id);
+    this.switchRoomById(roomId);
   }
 
   onPanoramaHotspotClicked(index) {
@@ -223,6 +238,7 @@ class App extends Component {
             onRoomClicked={ (e) => this.onRoomClicked(e) }
             roomData={this.state.roomData}
             roomsVisited={this.state.roomsVisited}
+            discoverMoreList={this.state.discoverMoreList}
             currNavId={this.state.currNavId}
             totalRooms={this.state.totalRooms}
             pulsatingNavItems={this.state.pulsatingNavItems}

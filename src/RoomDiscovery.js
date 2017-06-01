@@ -6,13 +6,18 @@ import Icon from './Icon.js';
 
 const styles = {
   wrapper: {
+    position: 'absolute',
     width: '100%',
-    marginTop: C.mapImgHeight
+    marginTop: C.mapImgHeight + C.mapPaddingT + C.discoverMoreMarginT,
+    overflow: 'hidden'
+  },
+  title: {
+    display: 'block'
   },
   roomWrapper: Utils.mergeStyles({
     display: 'inline-block',
     width: '50%',
-    marginTop: 25
+    paddingTop: 25
   }, C.borderBox),
   leftCol: {
     paddingRight: 7
@@ -26,34 +31,57 @@ const styles = {
 }
 
 class RoomDiscovery extends Component {
-  componentDidUpdate(prevProps, prevState) {
-
+  state = {
+    wrapperHeight: 0
   }
 
-  getRoomsNotVisited() {
-    let roomsNotVisited = [];
+  refreshLayout() {
+    if (this.roomEls && this.roomEls.length > 0) {
+      let firstRoomEl = this.roomEls[0],
+          availableHeight = this.props.height,
+          tileHeight = firstRoomEl.clientHeight,
+          numRoomsToDisplay = Math.floor( availableHeight / tileHeight ),
+          roomsToDisplay = this.props.discoverMoreList.slice(0, numRoomsToDisplay);
+      
+      this.setState({ roomsToDisplay: roomsToDisplay });
+    }
+  }
 
-    for (const item of Rooms) {
-      if (this.props.roomsVisited.indexOf(item.id) === -1) {
-        roomsNotVisited.push(item);
+  componentWillReceiveProps(nextProps) {
+    let wrapperHeight;
+
+    if (this.firstRoomEl) {
+      let firstRoomElHeight = this.firstRoomEl.clientHeight,
+          titleHeight = this.titleEl ? this.titleEl.clientHeight : 0,
+          numRowsToDisplay = Math.floor((nextProps.height - (titleHeight + C.discoverMoreMarginT)) / firstRoomElHeight);
+      
+      if (numRowsToDisplay > 0) {
+        wrapperHeight = (numRowsToDisplay * firstRoomElHeight) + titleHeight;
+      } else {
+        wrapperHeight = 0;
       }
+      
+    } else {
+      wrapperHeight = 0;
     }
 
-    console.log(roomsNotVisited)
-
-    return roomsNotVisited;
+    this.setState({ wrapperHeight: wrapperHeight });
   }
   
   render() {
-    let roomsNotVisited = this.getRoomsNotVisited();
 
     return (
-      <div style={ Utils.mergeStyles(styles.wrapper, {height: this.props.availableHeight}) }>
+      <div style={ Utils.mergeStyles(styles.wrapper, {height: this.state.wrapperHeight}) } id="roomWrapper" >
+        <div style={styles.title} ref={ (el) => this.titleEl = el }>Rooms to discover</div>
 
         {
-          roomsNotVisited.map((item, index) => {
+          this.props.discoverMoreList.map((item, index) => {
+            
             return (
-              <div style={ Utils.mergeStyles(styles.roomWrapper, (index % 2 == 0) ? styles.leftCol : styles.rightCol ) }>
+              <div 
+                style={ Utils.mergeStyles(styles.roomWrapper, (index % 2 == 0) ? styles.leftCol : styles.rightCol ) }
+                ref={ index === 0 ? (el) => this.firstRoomEl = el : null }>
+
                 <img 
                   src={`${C.dirs.images}/discover_images/discover_${item.id}.jpg`}
                   style={styles.roomImage}
@@ -62,10 +90,13 @@ class RoomDiscovery extends Component {
                   {item.name}
                 </div>
                 <Icon 
-                  buttonStyle='arrowButton'
-                  children='Take me there' />
+                  buttonStyle={'arrowButton'}
+                  children='take me there'
+                  _onClick={ () => this.props.onRoomClicked(item.id) } />
+
               </div>
             )
+
           })
         }
 

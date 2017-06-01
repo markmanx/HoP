@@ -29,9 +29,11 @@ module.exports = {
   mapImgHeight: 381,
   mapPaddingL: 0,
   mapPaddingR: 0,
+  mapPaddingT: 30,
   hotspotPadding: 12,
   hotspotInitialWidth: 50,
   hotspotInitialHeight: 50,
+  discoverMoreMarginT: 30,
   footerHeight: 40,
 
   // Social URLS

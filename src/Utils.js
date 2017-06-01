@@ -76,4 +76,16 @@ utils.createVideoSourcesArray = function(filename, appendRes = true) {
   return sources;
 }
 
+utils.shuffleArray = function(arr) {
+  let newArray = [],
+      tempArray = arr.slice();
+
+  for (let i = 0; i < arr.length; i++) {
+    let randomIndex = utils.rnd(0, tempArray.length - 1);
+    newArray.push( tempArray.splice(randomIndex, 1)[0] );
+  }
+
+  return newArray;
+}
+
 module.exports = utils;

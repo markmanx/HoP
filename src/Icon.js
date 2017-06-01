@@ -33,7 +33,11 @@ const styles = {
   arrowButton: {
     default: {
       position: 'relative',
-      backgroundColor: C.color1
+      display: 'inline-block',
+      backgroundColor: C.color1,
+      padding: '10px 35px 10px 15px',
+      color: 'white',
+      marginTop: 20
     }
   }
 }
@@ -64,20 +68,18 @@ class Icon extends Component {
     let iconURL,
         wrapperStyle;
 
-    if (this.props.iconRef) {
-      if (this.props.isActive) {
-        iconURL = `${C.dirs.icons}/${this.props.iconRef}_active.${this.props.iconType}`;
-        wrapperStyle = Utils.mergeStyles(styles.defaults, styles[this.props.buttonStyle]['default'], styles[this.props.buttonStyle]['active']);
-      } else if (this.state.userHovering && !this.props.isActive) {
-        iconURL = `${C.dirs.icons}/${this.props.iconRef}_hover.${this.props.iconType}`;
-        wrapperStyle = Utils.mergeStyles(styles.defaults, styles[this.props.buttonStyle]['default'], styles[this.props.buttonStyle]['hover']);
-      } else {
-        iconURL = `${C.dirs.icons}/${this.props.iconRef}.${this.props.iconType}`;
-        wrapperStyle = Utils.mergeStyles(styles.defaults, styles[this.props.buttonStyle]['default']);
-      }
-
-      wrapperStyle = Utils.mergeStyles(wrapperStyle, iconURL ? { backgroundImage: `url(${iconURL})` } : {});
+    if (this.props.isActive) {
+      if (this.props.iconRef) iconURL = `${C.dirs.icons}/${this.props.iconRef}_active.${this.props.iconType}`;
+      wrapperStyle = Utils.mergeStyles(styles.defaults, styles[this.props.buttonStyle]['default'], styles[this.props.buttonStyle]['active']);
+    } else if (this.state.userHovering && !this.props.isActive) {
+      if (this.props.iconRef) iconURL = `${C.dirs.icons}/${this.props.iconRef}_hover.${this.props.iconType}`;
+      wrapperStyle = Utils.mergeStyles(styles.defaults, styles[this.props.buttonStyle]['default'], styles[this.props.buttonStyle]['hover']);
+    } else {
+      if (this.props.iconRef) iconURL = `${C.dirs.icons}/${this.props.iconRef}.${this.props.iconType}`;
+      wrapperStyle = Utils.mergeStyles(styles.defaults, styles[this.props.buttonStyle]['default']);
     }
+
+    wrapperStyle = Utils.mergeStyles(wrapperStyle, iconURL ? { backgroundImage: `url(${iconURL})` } : {});
 
     return (
       <div

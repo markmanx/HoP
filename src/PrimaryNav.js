@@ -31,7 +31,6 @@ const styles = {
   },
   mapContainer: {
     width: '100%',
-    height: C.mapImgHeight,
     flex: 1
   },
   contentFooter: {
@@ -166,6 +165,14 @@ class PrimaryNav extends Component {
     }
   }
 
+  componentWillReceiveProps() {
+    if (this.mapEl) {
+      this.setState({ 
+        discoverMoreHeight: this.mapEl.clientHeight - (C.mapImgHeight + C.mapPaddingT) 
+      });
+    }
+  }
+
   componentDidMount() {
     this.creditsAnim = new TimelineMax({ paused: this.state.creditsShowing })
       .to(this.mapEl, 0.3, {autoAlpha: 0})
@@ -237,19 +244,20 @@ class PrimaryNav extends Component {
                 <div style={styles.spacer}></div>
               </div>
 
-              <div style={styles.mapContainer} ref={ (el) => this.mapEl = el } id="mapEl">
+              <div style={styles.mapContainer} ref={ (el) => this.mapEl = el }>
                 <Map
                   panelWidth={this.getCommonProps(C.navItems.MAP).expandedStyle.width}
                   panelHeight={this.getCommonProps(C.navItems.MAP).expandedStyle.height}
-                  onRoomClicked={ (item, e) => this.props.onRoomClicked(item, e) }
+                  onRoomClicked={ (roomId) => this.props.onRoomClicked(roomId) }
                   roomsVisited={this.props.roomsVisited}
                   totalRooms={this.props.totalRooms}
                   winInfo={this.props.winInfo}
                   />
 
                 <RoomDiscovery 
-                  roomsVisited={this.props.roomsVisited}
-                  availableHeight={this.props.winInfo.height - C.mapImgHeight - (C.panelPadding * 2) - (C.panelMargin * 2) - C.footerHeight - 79}
+                  discoverMoreList={this.props.discoverMoreList}
+                  height={ this.state.discoverMoreHeight }
+                  onRoomClicked={ (roomId) => this.props.onRoomClicked(roomId) }
                   />
               </div>
 
