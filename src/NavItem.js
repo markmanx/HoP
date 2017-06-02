@@ -3,6 +3,7 @@ import C from './Constants.js';
 import Utils from './Utils.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 import Icon from './Icon.js';
+import Pulse from './Pulse.js';
 
 const styles = {
   wrapper: Utils.mergeStyles({
@@ -10,14 +11,14 @@ const styles = {
     width: C.navItemSize,
     height: C.navItemSize,
     zIndex: 1,
-    overflow: 'hidden',
     backgroundColor: 'white'
   }, C.roundedCorners),
   innerContent: {
     position: 'absolute',
     width: '100%',
     height: '100%',
-    zIndex: 1
+    zIndex: 1,
+    overflow: 'hidden'
   },
   content: {  // size is set dynamically
     position: 'absolute',
@@ -35,20 +36,14 @@ const styles = {
     boxShadow: 0,
     zIndex: 11
   },
-  pulse: {
-    position: 'absolute',
-    width: C.navItemSize,
-    height: C.navItemSize,
-    backgroundColor: 'white',
-    display: 'none'
-  },
-  icon: {
+  icon: Utils.mergeStyles({
     position: 'absolute',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: C.navItemSize * .5,
-    zIndex: 2
-  },
+    zIndex: 2,
+    cursor: 'pointer'
+  }, C.roundedCorners),
   navIcon: {
     width: '100%',
     height: '100%',
@@ -74,12 +69,6 @@ class NavItem extends Component {
     this.props.commonProps.onClose(e);
   }
 
-  componentDidMount() {
-    this.pulseAnim = new TimelineMax({paused: true, repeat: -1})
-      .to(this.pulseEl, 0.001, {display: 'block'})
-      .to(this.pulseEl, 1, {scale: 2.5, opacity: 0});
-  }
-
   componentWillReceiveProps(nextProps) {
     let hasChanged = Utils.detectChanges(nextProps.commonProps, this.props.commonProps);
 
@@ -98,12 +87,6 @@ class NavItem extends Component {
     } else {
       TweenMax.to(this.wrapperEl, 0.5, Utils.mergeStyles(styles.wrapper, nextProps.commonProps.posCss, {ease: Expo.easeInOut}));
     }
-
-    if (nextProps.commonProps.pulsate) {
-      this.pulseAnim.play(0);
-    } else {
-      this.pulseAnim.pause(0);
-    }
   }
 
   render() {
@@ -112,10 +95,8 @@ class NavItem extends Component {
         ref={(el) => this.wrapperEl = el}
         style={ Utils.mergeStyles(styles.wrapper, C.enableGPU, this.props.commonProps.posCss) }>
 
-        <div
-          style={ Utils.mergeStyles(styles.pulse, C.roundedCorners) }
-          ref={(el) => this.pulseEl = el}>
-        </div>
+        <Pulse 
+          pulsate={this.props.commonProps.pulsate} />
 
         <div
           style={ Utils.mergeStyles(styles.innerContent, C.roundedCorners) }

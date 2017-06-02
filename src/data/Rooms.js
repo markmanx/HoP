@@ -4,7 +4,6 @@ const Rooms = [
 
   {
     id: 'Splash',
-    name: 'Splash Screen',
     type: C.mediaTypes.VIDEO,
     hasAudio: true,
     hideAudioPlayer: true

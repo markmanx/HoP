@@ -7,6 +7,8 @@ import PanoramaViewer from './PanoramaViewer.js';
 import AudioPlayer from './AudioPlayer.js';
 import Loader from './Loader.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
+import Icon from './Icon.js';
+import Pulse from './Pulse.js';
 
 const styles = {
   outerWrapper: {
@@ -167,7 +169,7 @@ class Slide extends Component {
             style={styles.innerWrapper}
             ref={el => this.innerWrapper = el}>
 
-            <div style={ Utils.mergeStyles(styles.bestFitWrapper, this.state.bestFitProps) }>
+            <div style={ Utils.mergeStyles(styles.bestFitWrapper, this.state.bestFitProps) } key={this.props.videoKey}>
 
               {this.props.roomData.type === C.mediaTypes.VIDEO &&
                 <VideoPlayer
@@ -218,6 +220,21 @@ class Slide extends Component {
                 <div style={styles.centeredText}>
                   <Text text="Houses of Parliament" textStyle={ Utils.mergeStyles(C.h1, C.textShadow) } color={C.textLight}></Text>
                   <Text text="Explore this historic British seat of power as CNN gains exclusive 360 access" textStyle={ Utils.mergeStyles(C.h2, C.textShadow) } color={C.textLight}></Text>
+                  {
+                    this.props.winInfo.isDesktop &&
+                      <div>
+                        <Pulse 
+                          pulsate={true}
+                          extraCss={{left: '50%', marginLeft: -C.navItemSize * 0.5, marginTop: 40}} />
+                        <Icon 
+                          buttonStyle={'arrowButton'}
+                          iconRef={'arrowRight'}
+                          iconType={'png'}
+                          children={`Let's explore`}
+                          extraCss={{marginTop: 50, width: 250, paddingLeft: 0, paddingRight: 0}}
+                          _onClick={ () => this.props.onLetsExploreClicked() }/>
+                      </div>
+                  }
                 </div>
                 <div style={styles.headphonesText}>
                   <Text text="Best experienced with headphones" textStyle={ Utils.mergeStyles(C.h4, C.textShadow) } color={C.textLight}></Text>

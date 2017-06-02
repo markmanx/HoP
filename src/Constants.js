@@ -27,8 +27,8 @@ module.exports = {
   navItemSpacing: 20,
   mapImgWidth: 590,
   mapImgHeight: 381,
-  mapPaddingL: 0,
-  mapPaddingR: 0,
+  mapPaddingL: 50,
+  mapPaddingR: 50,
   mapPaddingT: 30,
   hotspotPadding: 12,
   hotspotInitialWidth: 50,
@@ -67,7 +67,7 @@ module.exports = {
   },
   h3: {
     fontFamily: 'CNNSans-Light',
-    fontSize: '28px'
+    fontSize: '24px'
   },
   h4: {
     fontFamily: 'CNNSans-Light',

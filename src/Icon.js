@@ -27,7 +27,8 @@ const styles = {
       right: 10,
       top: 10,
       backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center'
+      backgroundPosition: 'center',
+      backgroundSize: 20
     }
   },
   arrowButton: {
@@ -35,9 +36,18 @@ const styles = {
       position: 'relative',
       display: 'inline-block',
       backgroundColor: C.color1,
-      padding: '10px 35px 10px 15px',
+      padding: '11px 35px 11px 15px',
       color: 'white',
-      marginTop: 20
+      marginTop: 20,
+      textAlign: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'right 14px center',
+      backgroundSize: '11px 20px'
+    },
+    hover: {
+      backgroundColor: C.color2,
+      color: C.color3,
+
     }
   }
 }
@@ -79,7 +89,7 @@ class Icon extends Component {
       wrapperStyle = Utils.mergeStyles(styles.defaults, styles[this.props.buttonStyle]['default']);
     }
 
-    wrapperStyle = Utils.mergeStyles(wrapperStyle, iconURL ? { backgroundImage: `url(${iconURL})` } : {});
+    wrapperStyle = Utils.mergeStyles(wrapperStyle, iconURL ? { backgroundImage: `url(${iconURL})` } : {}, this.props.extraCss);
 
     return (
       <div

@@ -35,7 +35,8 @@ class App extends Component {
     roomsVisited: [],
     totalRooms: Rooms.length,
     globalPauseMedia: false,
-    winInfo: Utils.getWinInfo()
+    winInfo: Utils.getWinInfo(),
+    videoKey: Date.now()
   }
 
   getDiscoverMoreList() {
@@ -55,10 +56,36 @@ class App extends Component {
   onResize() {
     if (this.resizeTimer) clearTimeout('resizetimer');
     this.resizeTimer = setTimeout( () => {
-      this.setState({
-        winInfo: Utils.getWinInfo()
-      });
+      let newState = {
+            winInfo: Utils.getWinInfo()
+          },
+          hasPlatformChanged = this.state.winInfo.isDesktop !== newState.winInfo.isDesktop;
+
+      if (hasPlatformChanged) {
+        newState.videoKey = Date.now();
+        Object.assign(newState, this.getNavStateByRoomId(this.state.roomData.id, newState.winInfo.isDesktop));
+      }
+
+      this.setState(newState);
     }, 250);
+  }
+
+  getNavStateByRoomId(roomId, isDesktop) {
+    let navItems = [],
+        pulsatingNavItems = [];
+
+    if (roomId === 'Splash') {
+      if (!isDesktop) {
+        navItems.push(C.navItems.MAP);
+        pulsatingNavItems.push(C.navItems.MAP);
+      }
+    } else {
+      navItems.push(C.navItems.ROOM_INFO);
+      navItems.push(C.navItems.MAP);
+      if (this.triggeredByLetsExploreButton) pulsatingNavItems.push(C.navItems.MAP);
+    }
+
+    return { navItems: navItems, pulsatingNavItems: pulsatingNavItems };
   }
 
   componentWillMount() {
@@ -81,7 +108,8 @@ class App extends Component {
   }
 
   switchRoomById(roomId, updateBrowserHistory = true) {
-    let roomData = this.getRoomData(roomId);
+    let roomData = this.getRoomData(roomId),
+        newState = {};
 
     // Update visited list
     let updatedVisitedList = this.state.roomsVisited.slice();
@@ -89,21 +117,6 @@ class App extends Component {
     if (!this.state.roomsVisited.includes(roomData.id)) {
       updatedVisitedList.push(roomData.id);
     };
-
-    // Set nav up
-    let newNavItems = [],
-        newPulsatingNavItems = [];
-
-    switch (roomData.id) {
-      case 'Splash':
-        newNavItems.push(C.navItems.MAP);
-        newPulsatingNavItems.push(C.navItems.MAP);
-        break;
-      default:
-        newNavItems.push(C.navItems.ROOM_INFO);
-        newNavItems.push(C.navItems.MAP);
-        break;
-    }
 
     // Populate the info panel with the relavent hotspot info
     let mainHotspot = Utils.filterItemsByVal(roomData.hotspots, 'isMain', true),
@@ -115,16 +128,20 @@ class App extends Component {
       selectedHotspotId = null;
     }
 
-    // Set the app's state
-    this.setState({
+    Object.assign(newState, {
       roomsVisited: updatedVisitedList,
-      navItems: newNavItems,
-      pulsatingNavItems: newPulsatingNavItems,
       roomData: roomData,
       currNavId: undefined,
       selectedHotspotId: selectedHotspotId,
-      discoverMoreList: this.getDiscoverMoreList()
+      discoverMoreList: this.getDiscoverMoreList(),
+      videoKey: Date.now()
     });
+
+    // Update Nav
+    Object.assign(newState, this.getNavStateByRoomId(roomData.id, this.state.winInfo.isDesktop));
+
+    // Set the app's state
+    this.setState( newState );
 
     // Take care of routing
     if (roomData.id == 'Splash') {
@@ -132,6 +149,8 @@ class App extends Component {
     } else if (updateBrowserHistory){
       browserHistory.push(process.env.PUBLIC_URL + '/?roomId=' + roomData.id);
     }
+
+    this.triggeredByLetsExploreButton = false;
   }
 
   getRoomData(roomId) {
@@ -158,6 +177,11 @@ class App extends Component {
     this.delayedPlayMedia();
     this.setState({ currNavId: undefined });
     this.switchRoomById(roomId);
+  }
+
+  onLetsExploreClicked() {
+    this.triggeredByLetsExploreButton = true;
+    this.switchRoomById('WestminsterBridge');
   }
 
   onPanoramaHotspotClicked(index) {
@@ -225,17 +249,19 @@ class App extends Component {
         <div style={styles.wrapper}>
           <Slide
             key={this.state.roomData.id}
+            videoKey={this.state.videoKey}
             roomData={this.state.roomData}
             globalPauseMedia={this.state.globalPauseMedia}
             winInfo={this.state.winInfo}
             onPanoramaHotspotClicked={ (index) => this.onPanoramaHotspotClicked(index) }
+            onLetsExploreClicked={ () => this.onLetsExploreClicked() }
             />
 
           <PrimaryNav
             navItems={this.state.navItems}
             onNavItemOpened={ (e, index) => this.onNavItemOpened(e, index) }
             onNavItemClosed={ (e) => this.onNavItemClosed(e) }
-            onRoomClicked={ (e) => this.onRoomClicked(e) }
+            onRoomClicked={ (id) => this.onRoomClicked(id) }
             roomData={this.state.roomData}
             roomsVisited={this.state.roomsVisited}
             discoverMoreList={this.state.discoverMoreList}

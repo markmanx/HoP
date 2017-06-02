@@ -35,7 +35,8 @@ const styles = {
     marginLeft: C.pagePadding + 'px',
     WebkitBorderRadius: '400px',
     MozBorderRadius: '400px',
-    borderRadius: '400px'
+    borderRadius: '400px',
+    cursor: 'pointer'
   },
   audioUiInner: {
     position: 'absolute',

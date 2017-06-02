@@ -11,13 +11,17 @@ const styles = {
     marginTop: C.mapImgHeight + C.mapPaddingT + C.discoverMoreMarginT,
     overflow: 'hidden'
   },
-  title: {
+  wrapperTitle: Utils.mergeStyles({
     display: 'block'
-  },
+  }, C.h3),
+  roomTitle: Utils.mergeStyles({
+    display: 'block',
+    marginTop: 20
+  }, C.h6),
   roomWrapper: Utils.mergeStyles({
     display: 'inline-block',
     width: '50%',
-    paddingTop: 25
+    paddingTop: 15
   }, C.borderBox),
   leftCol: {
     paddingRight: 7
@@ -52,7 +56,7 @@ class RoomDiscovery extends Component {
 
     if (this.firstRoomEl) {
       let firstRoomElHeight = this.firstRoomEl.clientHeight,
-          titleHeight = this.titleEl ? this.titleEl.clientHeight : 0,
+          titleHeight = this.wrapperTitleEl ? this.wrapperTitleEl.clientHeight : 0,
           numRowsToDisplay = Math.floor((nextProps.height - (titleHeight + C.discoverMoreMarginT)) / firstRoomElHeight);
       
       if (numRowsToDisplay > 0) {
@@ -72,7 +76,7 @@ class RoomDiscovery extends Component {
 
     return (
       <div style={ Utils.mergeStyles(styles.wrapper, {height: this.state.wrapperHeight}) } id="roomWrapper" >
-        <div style={styles.title} ref={ (el) => this.titleEl = el }>Rooms to discover</div>
+        <div style={styles.wrapperTitle} ref={ (el) => this.wrapperTitleEl = el }>Rooms to discover</div>
 
         {
           this.props.discoverMoreList.map((item, index) => {
@@ -86,11 +90,13 @@ class RoomDiscovery extends Component {
                   src={`${C.dirs.images}/discover_images/discover_${item.id}.jpg`}
                   style={styles.roomImage}
                   />
-                <div style={styles.title}>
+                <div style={styles.roomTitle}>
                   {item.name}
                 </div>
                 <Icon 
                   buttonStyle={'arrowButton'}
+                  iconRef={'arrowRight'}
+                  iconType={'png'}
                   children='take me there'
                   _onClick={ () => this.props.onRoomClicked(item.id) } />
 
