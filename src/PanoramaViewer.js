@@ -35,8 +35,10 @@ class PanoramaViewer extends VideoPlayer {
     if (this.props.type === C.mediaTypes.IMAGE_PANORAMA) {
       this.panoramaSettings.sourceType = 'image';
       this.panoramaSettings.imageSource = props.imageSource;
+      this.panoramaSettings.sourceSize = { width: C.imagePanoramaW, height: C.imagePanoramaH };
     } else {
       this.panoramaSettings.sourceType = 'video';
+      this.panoramaSettings.sourceSize = { width: C.videoPanoramaW, height: C.videoPanoramaH };
     }
   }
 
@@ -75,32 +77,36 @@ class PanoramaViewer extends VideoPlayer {
     return (
       <div>
         {this.generateVideoHtml(this.state.canvasOffset)}
-        {this.props.roomHotspots.map((item, index) => {
-          let hotspotStyle = {
-                position: 'absolute',
-                opacity: 0
-              };
 
-          if (this.state.hotspotLocations && this.state.hotspotLocations[index]) {
-            let hsLoc = this.state.hotspotLocations[index],
-                hsMovementScale = (1 / window.devicePixelRatio) || 1;
+        {
+          this.props.roomHotspots.map((item, index) => {
+            let hotspotStyle = {
+                  position: 'absolute',
+                  opacity: 0
+                };
 
-            hotspotStyle.left = ((hsLoc.x * hsMovementScale) + this.props.bestFitProps.left) - 30;
-            hotspotStyle.top = ((hsLoc.y * hsMovementScale) + this.props.bestFitProps.top) - 70;
-            hotspotStyle.display = hsLoc.inView ? 'inline' : 'none';
-            hotspotStyle.opacity = 1;
-          }
+            if (this.state.hotspotLocations && this.state.hotspotLocations[index]) {
+              let hsLoc = this.state.hotspotLocations[index],
+                  hsMovementScale = (1 / window.devicePixelRatio) || 1;
+                  
+              hotspotStyle.left = ((hsLoc.x * hsMovementScale) + this.props.bestFitProps.left) - 30;
+              hotspotStyle.top = ((hsLoc.y * hsMovementScale) + this.props.bestFitProps.top) - 70;
+              hotspotStyle.display = hsLoc.inView ? 'inline' : 'none';
+              hotspotStyle.opacity = 1;
+            }
 
-          return (
-            <div style={hotspotStyle} key={`hotspot${index}`}>
-              <Hotspot
-                text={item.title}
-                enableClick={true}
-                onClick={ () => this.props.onPanoramaHotspotClicked(item.id) }
-                winInfo={this.props.winInfo} />
-            </div>
-          )
-        })}
+            return (
+              <div style={hotspotStyle} key={`hotspot${index}`}>
+                <Hotspot
+                  text={item.title}
+                  enableClick={true}
+                  onClick={ () => this.props.onPanoramaHotspotClicked(item.id) }
+                  winInfo={this.props.winInfo} />
+              </div>
+            )
+          })
+        }
+
       </div>
     )
   }

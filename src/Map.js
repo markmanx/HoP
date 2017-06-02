@@ -51,8 +51,8 @@ class Map extends Component {
   getHotspotCSS(coords) {
     return {
       position: 'absolute',
-      left: `${coords[0]}px`,
-      top: `${coords[1]}px`
+      left: `${coords[0] + C.mapHotspotsOffsetL}px`,
+      top: `${coords[1] + C.mapHotspotsOffsetT}px`
     }
   }
 

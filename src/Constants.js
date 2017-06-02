@@ -35,6 +35,12 @@ module.exports = {
   hotspotInitialHeight: 50,
   discoverMoreMarginT: 30,
   footerHeight: 40,
+  mapHotspotsOffsetL: -110,
+  mapHotspotsOffsetT: 0,
+  videoPanoramaW: 2000,
+  videoPanoramaH: 1000,
+  imagePanoramaW: 2048,
+  imagePanoramaH: 1024,
 
   // Social URLS
   twitterUrl: "https://twitter.com/intent/tweet?url=http%3A%2F%2Fcnn.com%2Fparliament&text=Take%20a%20360%20interactive%20tour%20of%20the%20British%20Houses%20of%20Parliament%20with%20CNN",
