@@ -18,7 +18,8 @@ let utils = {
       width: window.innerWidth,
       height: window.innerHeight,
       isLandscape: (window.innerWidth > window.innerHeight) ? 1 : 0,
-      isDesktop: (window.innerWidth > C.desktopBreakPoint) ? 1 : 0
+      isDesktop: (window.innerWidth > C.desktopBreakPoint) ? 1 : 0,
+      isIos: /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
     }
   },
 
@@ -39,12 +40,19 @@ let utils = {
   filterItemsByVal: function(obj, key, val) {
     let results = [];
 
+    Object.keys(obj).forEach(function(k, index) {
+      if (obj[k][key] === val) {
+        results.push(obj[k]);
+      }
+    });
+    /*
     for (let [k, value] of Object.entries(obj)) {
 
       if (value[key] === val) {
         results.push(value);
       }
     }
+    */
 
     return results;
   },
@@ -52,11 +60,11 @@ let utils = {
   detectChanges: function(ob1, ob2) {
     let changes = {};
 
-    for (let [k, value] of Object.entries(ob1)) {
+    Object.keys(ob1).forEach(function(k, index) {
       if (k in ob2) {
         changes[k] = ob1[k] !== ob2[k];
       }
-    }
+    });
 
     return changes;
   },

@@ -79,7 +79,7 @@ class Slide extends Component {
     super(props);
 
     this.state = {
-      audioReady: !!!this.props.roomData.hasAudio,
+      audioReady:  !!!this.props.roomData.hasAudio,
       videoReady: false
     }
   }

@@ -94,6 +94,7 @@ class AudioPlayer extends Component {
   }
 
   onAudioPlaying(e) {
+    if (this.playTimeout) clearTimeout(this.playTimeout);
     this.setState({ progress: e.position / e.duration });
   }
 
@@ -135,6 +136,15 @@ class AudioPlayer extends Component {
   componentDidMount() {
     this.playIconAnim = new TimelineMax({ paused: (this.state.playStatus === Sound.status.PAUSED) })
       .to(this.playIcon, 0.5, {scale: 1.5, opacity: 0, ease: Expo.easeInOut});
+
+    this.playTimeout = setTimeout(() => {
+      this.setState({ playStatus: Sound.status.PAUSED });
+      this.onReady();
+    }, 3500);
+  }
+
+  componentWillUnmount() {
+    if (this.playTimeout) clearTimeout(this.playTimeout);
   }
 
   render() {
