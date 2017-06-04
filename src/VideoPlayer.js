@@ -28,7 +28,7 @@ class VideoPlayer extends Component {
 
   onReady() {
     this.player.play();
-    this.props.onVideoReady && this.props.onVideoReady();
+    this.props.onVideoReady(this.player);
   }
 
   componentDidMount() {

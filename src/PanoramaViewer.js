@@ -3,80 +3,98 @@ import C from './Constants.js'
 import Utils from './Utils.js';
 import 'video.js/dist/video-js.css'
 import videojs from 'video.js';
-import VideoPanorama from 'videojs-panorama';
+import Panorama from 'videojs-panorama';
 import VideoPlayer from './VideoPlayer.js';
 import Hotspot from './Hotspot.js';
 
-class PanoramaViewer extends VideoPlayer {
-  panoramaSettings = {
-    clickToToggle: false,
-    autoMobileOrientation: true,
-    initFov: 100,
-    VREnable: false,
-    clickAndDrag: true,
-    backToVerticalCenter: false,
-    backToHorizonCenter: false,
-    NoticeMessage: '',
-    hotspots: this.props.roomHotspots,
-    onMove: (e) => {
-      this.setState({
-        hotspotLocations: e.hotspots
-      });
-    },
-    callback: () => {
-      this.canvas = this.player.getChild('Canvas');
-      this.onReady();
-    }
+const styles = {
+  canvas: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'green'
+  }
+}
+
+class PanoramaViewer extends Component {
+  state = {
+    hotspotLocations: []
   }
 
-  constructor(props) {
-    super(props);
+  initPanorama(_settings) {
+    let settings = Object.assign({
+      canvasEl: this.canvasEl,
+      hotspots: this.props.roomHotspots,
+      onMove: (e) => {
+        this.setState({ hotspotLocations: e.hotspots})
+      },
+      onReady: () => {
+        this.onReady();
+      }
+    }, _settings);
 
-    if (this.props.type === C.mediaTypes.IMAGE_PANORAMA) {
-      this.panoramaSettings.sourceType = 'image';
-      this.panoramaSettings.imageSource = props.imageSource;
-      this.panoramaSettings.sourceSize = { width: C.imagePanoramaW, height: C.imagePanoramaH };
-    } else {
-      this.panoramaSettings.sourceType = 'video';
-      this.panoramaSettings.sourceSize = { width: C.videoPanoramaW, height: C.videoPanoramaH };
-    }
-  }
-
-  initializePlayer() {
-    this.player = videojs(this.videoId, {sources: this.props.videoSources}, () => {
-      this.panorama = VideoPanorama(this.player, this.panoramaSettings);
-    });
+    this.panorama = new Panorama(settings);
+    this.onResize();
   }
 
   onResize() {
-    if (!this.canvas) return;
+    if (this.panorama) this.panorama.onResize();
+  }
 
-    this.canvas.handleResize();
+  onVideoReady(player) {
+    let videoEl = player.el_.getElementsByTagName('video')[0];
+
+    this.initPanorama({
+      sourceType: 'video',
+      texSource: videoEl,
+      sourceSize: { width: C.videoPanoramaW, height: C.videoPanoramaH }
+    });
+  }
+
+  onReady() {
+    this.props.onReady();
+  }
+
+  componentDidMount() {
+    if (this.props.type === C.mediaTypes.IMAGE_PANORAMA) {
+      this.initPanorama({
+        sourceType: 'image',
+        texSource: this.props.imageSource,
+        sourceSize: { width: C.imagePanoramaW, height: C.imagePanoramaH }
+      });
+    }
   }
   
   componentWillUnmount() {
-    if (this.canvas) this.canvas.destroy();
-    super.componentWillUnmount();
+    if (this.panorama) this.panorama.destroy();
   }
 
   componentWillReceiveProps(nextProps) {
-    super.componentWillReceiveProps(nextProps);
-
-    if (!this.canvas) return;
-
     let hasChanged = Utils.detectChanges(nextProps, this.props);
 
     if ( hasChanged['bestFitProps'] ) {
       this.onResize();
     }
 
-    nextProps.globalPauseMedia ? this.canvas._stop() : this.canvas._start();
+    if (nextProps.globalPauseMedia !== this.props.globalPauseMedia) {
+      if (this.panorama) {
+        nextProps.globalPauseMedia ? this.panorama.stopRendering() : this.panorama.startRendering();
+      }
+    }
   }
 
   render() {
+    
     return (
       <div>
-        {this.generateVideoHtml(this.state.canvasOffset)}
+        {this.props.type === C.mediaTypes.VIDEO_PANORAMA && 
+          <VideoPlayer
+            videoSources={this.props.videoSources}
+            onVideoReady={(player) => this.onVideoReady(player)}
+            globalPauseMedia={this.props.globalPauseMedia}
+            />}
+        
+        <canvas style={styles.canvas} ref={ (el) => this.canvasEl = el }></canvas>
 
         {
           this.props.roomHotspots.map((item, index) => {
