@@ -97,7 +97,7 @@ const RoomHotspots = [
         roomId: 'BigBen',
         coords: [ 1008, 491 ],
         title: `Big Ben`,
-        text: `When it was made in the middle of the 19th Century, Big Ben was the biggest bell ever cast in England. In fact, this Big Ben is the second one -- the first one cracked badly after 10 months of testing and was melted down. Big Ben doesn't swing in order to ring -- it's hit with an enormous hammer. The bell was named after Sir Benjamin Hall, a member of Parliament who oversaw the late stages of the building of the Palace of Westminster. Hall was tall and thin, so he was nicknamed &#x22;Big Ben&#x22; before the bell was!`
+        text: `When it was made in the middle of the 19th Century, Big Ben was the biggest bell ever cast in England. In fact, this Big Ben is the second one -- the first one cracked badly after 10 months of testing and was melted down. Big Ben doesn't swing in order to ring -- it's hit with an enormous hammer. The bell was named after Sir Benjamin Hall, a member of Parliament who oversaw the late stages of the building of the Palace of Westminster. Hall was tall and thin, so he was nicknamed "Big Ben" before the bell was!`
     },
 
     {

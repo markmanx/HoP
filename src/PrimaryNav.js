@@ -212,11 +212,10 @@ class PrimaryNav extends Component {
                     {
                       selectedHotspot['images'].map((item, index) => {
                         return (
-                          <div style={styles.hotspotImageWrapper}>
+                          <div style={styles.hotspotImageWrapper} key={item.id}>
                             <img 
                               src={`${C.dirs.images}/hotspot_images/hotspotImage_${item.id}.jpg`}
-                              style={styles.hotspotImage}
-                              key={item.id} />
+                              style={styles.hotspotImage}/>
                             <div style={styles.hotspotImageCaption}>{item.caption}</div>
                           </div>
                         )

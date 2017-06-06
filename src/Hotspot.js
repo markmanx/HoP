@@ -123,20 +123,17 @@ class Hotspot extends Component {
 
   componentDidMount() {
     let browserInfo = Utils.getBrowserInfo(),
-        isChrome = browserInfo.name == 'chrome';
+        isChrome = browserInfo.name == 'chrome',
+        textWidth = this.text.getBoundingClientRect().width,
+        textHeight = this.text.getBoundingClientRect().height;
 
-    setTimeout(() => {
-        let textWidth = this.text.getBoundingClientRect().width,
-            textHeight = this.text.getBoundingClientRect().height;
-
-        this.expandAnim = new TimelineMax({ paused: true })
-          .to(this.wrapper, 0.001, {zIndex: 10})
-          .appendMultiple([
-            TweenMax.to(this.plusIcon, 0.2, {opacity: 0}),
-            TweenMax.to(this.textWrapper, 0.2, {opacity: 1, delay: 0.1}),
-            TweenMax.to(this.wrapper, 0.5, {width: textWidth + (C.hotspotPadding * (isChrome ? 3 : 2)), left: -((textWidth * 0.5) - C.hotspotPadding), ease: Expo.easeInOut})
-          ]);
-    }, 250);
+    this.expandAnim = new TimelineMax({ paused: true })
+      .to(this.wrapper, 0.001, {zIndex: 10})
+      .appendMultiple([
+        TweenMax.to(this.plusIcon, 0.2, {opacity: 0}),
+        TweenMax.to(this.textWrapper, 0.2, {opacity: 1, delay: 0.1}),
+        TweenMax.to(this.wrapper, 0.5, {width: textWidth + (C.hotspotPadding * (isChrome ? 3 : 2)), left: -((textWidth * 0.5) - C.hotspotPadding), ease: Expo.easeInOut})
+      ]);
 
     this.onResize();
   }

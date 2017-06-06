@@ -84,7 +84,8 @@ class RoomDiscovery extends Component {
             return (
               <div 
                 style={ Utils.mergeStyles(styles.roomWrapper, (index % 2 == 0) ? styles.leftCol : styles.rightCol ) }
-                ref={ index === 0 ? (el) => this.firstRoomEl = el : null }>
+                ref={ index === 0 ? (el) => this.firstRoomEl = el : null }
+                key={item.id}>
 
                 <img 
                   src={`${C.dirs.images}/discover_images/discover_${item.id}.jpg`}

@@ -3,7 +3,7 @@ const HotspotImages = [
   {
     id: 'ElizabethTower',
     hotspotId: 0,
-    caption: `Call it what you like, the Elizabeth Tower has been one of London’s most recognizable symbols for a century and a half. Experts realized in 1965 that it leans very slightly, but said it would take 10,000 years to reach the angle of the Leaning Tower of Pisa. Extra concrete was poured in the 1990s to keep it stable. Photo credit: Justin Tallis/AFP/Getty Images)`
+    caption: `Call it what you like, the Elizabeth Tower has been one of London’s most recognizable symbols for a century and a half. Experts realized in 1965 that it leans very slightly, but said it would take 10,000 years to reach the angle of the Leaning Tower of Pisa. Extra concrete was poured in the 1990s to keep it stable. Photo credit: Justin Tallis/AFP/Getty Images`
   },
 
   {
@@ -15,7 +15,7 @@ const HotspotImages = [
   {
     id: 'KateandWill',  
     hotspotId: 2,
-    caption: `With this ring…. Prince William, the second in line to the throne, became the latest member of the royal family to get married in Westminster Abbey. Rowan Williams, then the Archbishop of Canterbury, officiated at his wedding to Catherine Middleton. Dominic Lipinski/AFP/Getty Images`
+    caption: `With this ring…. Prince William, the second in line to the throne, became the latest member of the royal family to get married in Westminster Abbey. Rowan Williams, then the Archbishop of Canterbury, officiated at his wedding to Catherine Middleton. Photo credit: Dominic Lipinski/AFP/Getty Images`
   },
 
   {
@@ -27,7 +27,7 @@ const HotspotImages = [
   {
     id: 'BigBen',  
     hotspotId: 5,
-    caption: `Big Ben marked its 100th birthday in 1959. Ministry of Works guide Arthur Lovering admired the bell a few months before the anniversary of the first time it rang. Photo Credit: Central Press/Getty Images)`
+    caption: `Big Ben marked its 100th birthday in 1959. Ministry of Works guide Arthur Lovering admired the bell a few months before the anniversary of the first time it rang. Photo Credit: Central Press/Getty Images`
   },
 
   {
@@ -39,7 +39,7 @@ const HotspotImages = [
   {
     id: 'Crack',  
     hotspotId: 9,
-    caption: `George Airy was the Astronomer Royal when the Houses of Parliament were designed and built, and was one of two men who decided who would build the Great Clock. (Edmund Dennison, a lawyer and talented amateur clockmaker, was the other.) His intervention got Big Ben chiming again after it cracked. Photo credit: Photo12/UIG via Getty Images)`
+    caption: `George Airy was the Astronomer Royal when the Houses of Parliament were designed and built, and was one of two men who decided who would build the Great Clock. (Edmund Dennison, a lawyer and talented amateur clockmaker, was the other.) His intervention got Big Ben chiming again after it cracked. Photo credit: Photo12/UIG via Getty Images`
   },
 
   {
@@ -63,13 +63,13 @@ const HotspotImages = [
   {
     id: 'SwordLines',  
     hotspotId: 15,
-    caption: `The red lines on the floor of the House of Commons may be called sword lines, but swords have never been allowed in the House. Photo credit: PA via AP)`
+    caption: `The red lines on the floor of the House of Commons may be called sword lines, but swords have never been allowed in the House. Photo credit: PA via AP`
   },
 
   {
     id: 'ChurchillArch',  
     hotspotId: 18,
-    caption: `The bombing of London during World War II was intense – and parliament was not spared. Photo credit: Planet News Archive/SSPL/Getty Images)`
+    caption: `The bombing of London during World War II was intense – and parliament was not spared. Photo credit: Planet News Archive/SSPL/Getty Images`
   },
 
   {
@@ -141,25 +141,25 @@ const HotspotImages = [
   {
     id: 'LondonEye',  
     hotspotId: 35,
-    caption: `Towering over the river and the London aquarium, the London Eye claims to be the country’s most popular paid-for tourist destination. Photo credit: ADEK BERRY/AFP/GettyImages`
+    caption: `Special occasions and events often take place in the capsules. Early in 2017, Princes William and Harry used a ride on the London Eye to promote a mental health charity they support. Photo credit: KGC-375/STAR MAX/IPx`
   },
 
   {
     id: 'LondonEye2',  
     hotspotId: 37,
-    caption: `Princes William and Harry used a ride on the London Eye to promote a mental health charity they support. Photo credit: KGC-375/STAR MAX/IPx`
+    caption: `Towering over the river and the London aquarium, the London Eye claims to be the country’s most popular paid-for tourist destination. Photo credit: Adek Berry/AFP/Getty Images`
   },
 
   {
     id: 'TheShard2',  
     hotspotId: 38,
-    caption: `The Shard dominates London’s skyline. Photo credit: Nicolò Campo/LightRocket via Getty Images`
+    caption: `There has been a bridge across this point in the river for about 2,000 years. The one there today is simply called London Bridge. Photo credit: Videologia/istockphoto/Getty Images`
   },
 
   {
     id: 'TheShard',  
     hotspotId: 38,
-    caption: `There has been a bridge across this point in the river for about 2,000 years. The one there today is simply called London Bridge. Photo credit: Videologia/istockphoto/Getty Images`
+    caption: `The Shard dominates London’s skyline. Photo credit: Nicolò Campo/LightRocket via Getty Images`
   },
 
   {
