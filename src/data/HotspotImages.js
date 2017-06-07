@@ -139,14 +139,14 @@ const HotspotImages = [
   },
 
   {
-    id: 'LondonEye',  
+    id: 'LondonEye',
     hotspotId: 35,
     caption: `Special occasions and events often take place in the capsules. Early in 2017, Princes William and Harry used a ride on the London Eye to promote a mental health charity they support. Photo credit: KGC-375/STAR MAX/IPx`
   },
 
   {
-    id: 'LondonEye2',  
-    hotspotId: 37,
+    id: 'LondonEye2',
+    hotspotId: 40,
     caption: `Towering over the river and the London aquarium, the London Eye claims to be the country’s most popular paid-for tourist destination. Photo credit: Adek Berry/AFP/Getty Images`
   },
 

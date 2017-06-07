@@ -177,7 +177,7 @@ const RoomHotspots = [
     {
         id: 15,
         roomId: 'HouseOfCommons',
-        coords: [ 1418, 900 ],
+        coords: [ 1306, 650 ],
         title: `Sword lines`,
         text: `Legend has it that the red lines on the floor of the House of Commons are two swords' lengths apart, and were supposed to keep members of different parties a safe distance from each other back in the days of duelling. Sadly, there's no evidence that's true, and swords have never been permitted in the Commons.`
     },
@@ -326,8 +326,8 @@ const RoomHotspots = [
         id: 33,
         roomId: 'WestminsterBridge',
         isMain: true,
-        coords: [ 1052, 804 ],
-        title: `About this room`,
+        coords: [ 167, 583 ],
+        title: `About Westminster Bridge`,
         text: `Welcome to the Houses of Parliament, a link between old and new, royalty and democracy. There has been a royal palace on this site for more than 1,000 years, but the current has been a royal palace on this site for more than 1,000 years, but the current Palace of Westminster is less than 200 years old. Designed in neo-Gothic style, it was built in the Victorian era, after a fire destroyed the previous building. Today's palace is the home of the House of Commons and the House of Lords, where British laws are made.`
     },
 

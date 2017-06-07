@@ -86,6 +86,13 @@ module.exports = {
     letterSpacing: '2px',
     textTransform: 'uppercase'
   },
+  h7: {  // Hotspot Image Captions
+    fontFamily: 'CNNSans-Light',
+    fontSize: '12px',
+    lineHeight: '15px',
+    letterSpacing: 1,
+    color: '#000000'
+  },
 
   // Shadows CSS
   textShadow: {
@@ -126,6 +133,11 @@ module.exports = {
     WebkitBorderRadius: 1000,
     MozBorderRadius: 1000,
     borderRadius: 1000
+  },
+  unroundedCorners: {
+    WebkitBorderRadius: 0,
+    MozBorderRadius: 0,
+    borderRadius: 0
   },
 
   // Nav Items

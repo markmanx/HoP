@@ -51,9 +51,9 @@ const styles = {
   hotspotImage: {
     width: '100%'
   },
-  hotspotImageCaption: {
+  hotspotImageCaption: Utils.mergeStyles({
     marginTop: 5
-  },
+  }, C.h7),
   spacer: {
     width: '100%',
     height: 1,
@@ -157,6 +157,8 @@ class PrimaryNav extends Component {
     }
 
     this.props.onNavItemClosed(e, navItemId);
+
+    if (this.roomInfoContentContainer) this.roomInfoContentContainer.scrollTop = 0;
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -205,7 +207,7 @@ class PrimaryNav extends Component {
                   <div style={C.h3}>{ selectedHotspot['title'] }</div>
                   <div style={styles.spacer}></div>
                 </div>
-                <div style={styles.contentScrollableContainer}>
+                <div style={styles.contentScrollableContainer} ref={ (el) => this.roomInfoContentContainer = el }>
                   <div style={ Utils.mergeStyles(styles.contentScrollableContainerInner, C.h5) }>
                     { selectedHotspot['text'] }
                   
