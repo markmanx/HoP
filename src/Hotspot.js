@@ -67,6 +67,9 @@ const styles = {
     width: '100%',
     height: '100%',
     background: 'url(about:blank)'
+  },
+  helperCanvas: {
+    display: 'none'
   }
 }
 
@@ -117,24 +120,42 @@ class Hotspot extends Component {
     this.setState({ isExpanded: this.props.winInfo.isDesktop });
   }
 
-  willComponentUnmount() {
+  setAnimation() {
+    if (this.helperCanvas) {
+      let ctx = this.helperCanvas.getContext('2d');
+      ctx.clearRect(0, 0, this.helperCanvas.width, this.helperCanvas.height);
+      ctx.font = `${this.text.style.fontSize} ${this.text.style.fontFamily}`;
+      ctx.textBaseline = 'top';
+      ctx.fillText(this.props.text, 0, 0);
+
+      let textWidth = ctx.measureText(this.props.text).width;
+      
+      if (textWidth !== this.textWidth) {
+        this.expandAnim = new TimelineMax({ paused: !this.state.isExpanded })
+        .to(this.wrapper, 0.001, {zIndex: 10})
+        .appendMultiple([
+          TweenMax.to(this.plusIcon, 0.2, {opacity: 0}),
+          TweenMax.to(this.textWrapper, 0.2, {opacity: 1, delay: 0.1}),
+          TweenMax.to(this.wrapper, 0.5, {width: textWidth + (C.hotspotPadding * 2), left: -((textWidth * 0.5) - C.hotspotPadding), ease: Expo.easeInOut})
+        ]);
+
+        this.textWidth = textWidth;
+      }
+    }
+  }
+
+  componentWillUnmount() {
     if (this.expandTimer) clearTimeout(this.expandTimer);
+    if (this.fontSizeTimer) clearInterval(this.fontSizeTimer);
   }
 
   componentDidMount() {
-    let browserInfo = Utils.getBrowserInfo(),
-        isChrome = browserInfo.name == 'chrome',
-        textWidth = this.text.getBoundingClientRect().width,
-        textHeight = this.text.getBoundingClientRect().height;
+    // We need to keep observing the font size so the hotspot takes the correct width
+    this.fontSizeTimer = setInterval( () => {
+      this.setAnimation();
+    }, 5000)
 
-    this.expandAnim = new TimelineMax({ paused: true })
-      .to(this.wrapper, 0.001, {zIndex: 10})
-      .appendMultiple([
-        TweenMax.to(this.plusIcon, 0.2, {opacity: 0}),
-        TweenMax.to(this.textWrapper, 0.2, {opacity: 1, delay: 0.1}),
-        TweenMax.to(this.wrapper, 0.5, {width: textWidth + (C.hotspotPadding * (isChrome ? 3 : 2)), left: -((textWidth * 0.5) - C.hotspotPadding), ease: Expo.easeInOut})
-      ]);
-
+    this.setAnimation();
     this.onResize();
   }
 
@@ -163,11 +184,15 @@ class Hotspot extends Component {
         style={styles.wrapper}
         ref={el => this.wrapper = el} >
 
+        <canvas ref={ (el) => this.helperCanvas = el } style={ styles.helperCanvas } ></canvas>
+
         <div style={ Utils.mergeStyles(styles.hotspotPointer, {borderTopColor: bgColor}) }></div>
 
         <div style={ Utils.mergeStyles(styles.box, {backgroundColor: bgColor}) }>
           <div style={styles.hotspotTextWrapper} ref={el => this.textWrapper = el}>
-            <div style={ Utils.mergeStyles(C.h4, styles.hotspotText, textColor) } ref={el => this.text = el}>{this.props.text}</div>
+            <div style={ Utils.mergeStyles(C.h4, styles.hotspotText, textColor) } ref={el => this.text = el}>
+              {this.props.text}
+            </div>
           </div>
           <img style={styles.plusIcon} src={C.dirs.icons + '/hotspot-plus.png'} ref={el => this.plusIcon = el}/>
         </div>
