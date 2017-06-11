@@ -278,7 +278,9 @@ class App extends Component {
         mainHotspotId = null;
       }
 
-      this.setState({ selectedHotspotId: mainHotspotId });
+      this.resetContentPanelTimer = setTimeout( () => {
+        this.setState({ selectedHotspotId: mainHotspotId });
+      }, 400);
     }
 
     this.setState({ 
