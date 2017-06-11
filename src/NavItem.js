@@ -67,14 +67,18 @@ class NavItem extends Component {
 
     if (hasChanged['isExpanded']) {
       if (nextProps.commonProps.isExpanded) {
-        TweenMax.to(this.wrapperEl, 0.6, Utils.mergeStyles(styles.wrapper, styles.expanded, nextProps.commonProps.expandedStyle, {ease: Expo.easeInOut}))
         TweenMax.set(this.navIconEl, {display: 'none', delay: 0.2});
         TweenMax.set(this.innerContentEl, {display: 'inline', delay: 0.2});
       } else {
-        TweenMax.to(this.wrapperEl, 0.6, Utils.mergeStyles(styles.wrapper, nextProps.commonProps.posCss, {ease: Expo.easeInOut}));
         TweenMax.set(this.navIconEl, {display: 'inline', delay: 0.4});
         TweenMax.set(this.innerContentEl, {display: 'none', delay: 0.4});
       }
+    }
+
+    if (nextProps.commonProps.isExpanded) {
+      TweenMax.to(this.wrapperEl, 0.6, Utils.mergeStyles(styles.wrapper, styles.expanded, nextProps.commonProps.expandedStyle, {ease: Expo.easeInOut}))
+    } else {
+      TweenMax.to(this.wrapperEl, 0.6, Utils.mergeStyles(styles.wrapper, nextProps.commonProps.posCss, {ease: Expo.easeInOut}));
     }
   }
 

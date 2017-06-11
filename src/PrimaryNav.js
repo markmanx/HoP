@@ -4,6 +4,7 @@ import C from './Constants.js';
 import Utils from './Utils.js';
 import NavItem from './NavItem.js';
 import Map from './Map.js';
+import HotspotImage from './HotspotImage.js';
 import Footer from './Footer.js';
 import RoomDiscovery from './RoomDiscovery.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
@@ -44,16 +45,6 @@ const styles = {
     bottom: C.pagePadding + 12,
     width: 55
   },
-  hotspotImageWrapper: {
-    width: '100%',
-    marginTop: 35
-  },
-  hotspotImage: {
-    width: '100%'
-  },
-  hotspotImageCaption: Utils.mergeStyles({
-    marginTop: 5
-  }, C.h7),
   spacer: {
     width: '100%',
     height: 1,
@@ -214,12 +205,10 @@ class PrimaryNav extends Component {
                     {
                       selectedHotspot['images'].map((item, index) => {
                         return (
-                          <div style={styles.hotspotImageWrapper} key={item.id}>
-                            <img 
-                              src={`${C.dirs.images}/hotspot_images/hotspotImage_${item.id}.jpg`}
-                              style={styles.hotspotImage}/>
-                            <div style={styles.hotspotImageCaption}>{item.caption}</div>
-                          </div>
+                          <HotspotImage 
+                            key={item.id}
+                            src={`${C.dirs.images}/hotspot_images/hotspotImage_${item.id}.jpg`}
+                            caption={item.caption} />
                         )
                       })
                     }

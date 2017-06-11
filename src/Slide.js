@@ -6,7 +6,6 @@ import VideoPlayer from './VideoPlayer.js';
 import PanoramaViewer from './PanoramaViewer.js';
 import AudioPlayer from './AudioPlayer.js';
 import Loader from './Loader.js';
-import { TimelineMax, TweenMax, Expo } from 'gsap';
 import Icon from './Icon.js';
 import Pulse from './Pulse.js';
 
@@ -27,23 +26,13 @@ const styles = {
     overflow: 'hidden',
     backgroundColor: 'black'
   },
-  loadingScreenWrapper: Utils.mergeStyles({
+  loaderWrapper: {
     position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
-    flexDirection: 'column',
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    pointerEvents: 'none',
-    backgroundColor: C.color1,
     zIndex: 1000
-  }, C.flexBox),
-  loadingMessage: {
-    position: 'relative',
-    marginBottom: '40px'
   },
   splashScreenWrapper: {
     position: 'absolute',
@@ -80,7 +69,8 @@ class Slide extends Component {
 
     this.state = {
       audioReady:  !!!this.props.roomData.hasAudio,
-      videoReady: false
+      videoReady: false,
+      loaderVisible: true
     }
   }
 
@@ -90,6 +80,10 @@ class Slide extends Component {
 
   onAudioReady() {
     this.setState({ audioReady: true });
+  }
+
+  onLoaderGone() {
+    this.setState({ loaderVisible: false });
   }
 
   onResize() {
@@ -124,25 +118,6 @@ class Slide extends Component {
     }
 
     this.setState({ bestFitProps: bestFitProps });
-  }
-
-  onContentReady() {
-    if (this.loadingScreenEl) {
-      new TimelineMax({delay: 1})
-        .append(TweenMax.to(this.loadingScreenEl, 0.5, {scale: 1.3, ease: Expo.easeIn}))
-        .append(TweenMax.to(this.loadingScreenEl, 0.3, {alpha: 0}), -0.2)
-        .append(TweenMax.to(this.loadingScreenEl, 0.01, {display: 'none'}))
-    }
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    let hasPropsChanged = Utils.detectChanges(this.state, nextState);
-
-    if ( hasPropsChanged['audioReady'] || hasPropsChanged['videoReady'] ) {
-      if (nextState.audioReady && nextState.videoReady) {
-        this.onContentReady();
-      }
-    }
   }
 
   componentDidUpdate (nextProps) {
@@ -245,12 +220,14 @@ class Slide extends Component {
               </div>
             }
 
-            <div style={styles.loadingScreenWrapper} ref={el => this.loadingScreenEl = el}>
-              <div style={styles.loadingMessage}>
-                <Text text={this.props.roomData.name ? this.props.roomData.name + ' loading...' : 'Loading...'} textStyle={C.h4} color={C.textLight}></Text>
+            { this.state.loaderVisible && 
+              <div style={styles.loaderWrapper} >
+                <Loader 
+                  text={this.props.roomData.name ? this.props.roomData.name + ' loading...' : 'Loading...'} 
+                  contentReady={ this.state.videoReady && this.state.audioReady } 
+                  onLoaderGone={ () => this.onLoaderGone() } />
               </div>
-              <Loader />
-            </div>
+            }
 
           </div>
 

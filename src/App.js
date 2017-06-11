@@ -280,7 +280,7 @@ class App extends Component {
 
       this.resetContentPanelTimer = setTimeout( () => {
         this.setState({ selectedHotspotId: mainHotspotId });
-      }, 400);
+      }, 500);
     }
 
     this.setState({ 
