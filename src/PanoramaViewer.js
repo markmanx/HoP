@@ -101,7 +101,7 @@ class PanoramaViewer extends Component {
         { isVideoNeeded &&
           <VideoPlayer
             videoSources={ Utils.createVideoSourcesArray(this.props.roomId) }
-            onVideoReady={(player) => this.onVideoReady(player)}
+            onReady={(player) => this.onVideoReady(player)}
             globalPauseMedia={this.props.globalPauseMedia}
             onPlayError={ () => this.onPlayError() }
             />}

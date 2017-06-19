@@ -29,14 +29,15 @@ class VideoPlayer extends Component {
 
   play() {
     if (this.playTimeout) clearTimeout(this.playTimeout);
-    if (!this.player) return;
+    
+    if (this.player) {
+      this.playTimeout = setTimeout( () => {
+        if (this.props.onPlayError) this.props.onPlayError();
+        this.stop();
+      }, C.mediaPlayTimeout);
 
-    this.playTimeout = setTimeout( () => {
-      if (this.props.onPlayError) this.props.onPlayError();
-      this.stop();
-    }, C.mediaPlayTimeout);
-
-    if (this.player) this.player.play();
+      this.player.play();
+    }
   }
 
   stop() {
