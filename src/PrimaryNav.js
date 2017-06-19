@@ -258,11 +258,12 @@ class PrimaryNav extends Component {
                   Max is CNN's London correspondent, covering British politics and the Royal Family. When he was still a student, he scored an exclusive interview with Anthony Hopkins by leaving him a note at a restaurant - which convinced him to go into journalism professionally. Now he anchors CNN Newsroom's Europe edition. He&apos;s half Swedish and lives in the countryside near London.
                   <p>Tweet Max <a target="_blank" style={ Utils.mergeStyles(styles.tweetMax, {color: this.state.linkHover ? C.color1 : C.color3}) } onMouseOver={() => this.setState({linkHover: true})} onMouseOut={() => this.setState({linkHover: false})} href="https://twitter.com/MaxFosterCNN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">@MaxFosterCNN</a></p>
                   <p>&nbsp;</p>
-                  <p>Editorial: Richard Allen Greene, Florence Davey-Attlee</p>
-                  <p>Design: Sarah-Grace Mankarious</p>
-                  <p>Development: Mark Mankarious</p>
-                  <p>Video Editing: Toby Welham, Anastasia Anashkina</p>
-                  <p>360 Camera: Lewis Whyld</p>
+                  <p><span style={C.bold}>Editorial: </span>Richard Allen Greene, Florence Davey-Attlee, James Frater, Nancy Leung, Travis Caldwell</p>
+                  <p><span style={C.bold}>Design: </span>Sarah-Grace Mankarious</p>
+                  <p><span style={C.bold}>Development: </span>Mark Mankarious</p>
+                  <p><span style={C.bold}>Video Editing: </span>Toby Welham, Anastasia Anashkina</p>
+                  <p><span style={C.bold}>360 Camera: </span>Lewis Whyld</p>
+                  <p><span style={C.bold}>Photo research: </span>Benazir Wehelie</p>
                 </div>
               </div>
 

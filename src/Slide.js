@@ -69,13 +69,13 @@ class Slide extends Component {
 
     this.state = {
       audioReady:  !!!this.props.roomData.hasAudio,
-      videoReady: false,
+      visualMediaReady: false,
       loaderVisible: true
     }
   }
 
-  onVideoReady() {
-    this.setState({ videoReady: true });
+  onVisualMediaReady() {
+    this.setState({ visualMediaReady: true });
   }
 
   onAudioReady() {
@@ -134,7 +134,8 @@ class Slide extends Component {
 
   render() {
 
-    let exploreButton; 
+    let exploreButton,
+        isPanorama = (this.props.roomData.type === C.mediaTypes.VIDEO_PANORAMA || this.props.roomData.type === C.mediaTypes.IMAGE_PANORAMA); 
     
     if (this.props.winInfo.isDesktop) {
       exploreButton =                  
@@ -153,7 +154,6 @@ class Slide extends Component {
     }
 
     return (
-
         <div
           style={ Utils.mergeStyles(styles.outerWrapper, C.enableGPU) }
           ref={el => this.outerWrapper = el}>
@@ -167,30 +167,18 @@ class Slide extends Component {
               {this.props.roomData.type === C.mediaTypes.VIDEO &&
                 <VideoPlayer
                   videoSources={ Utils.createVideoSourcesArray(this.props.roomData.id) }
-                  onVideoReady={ () => this.onVideoReady() }
+                  onReady={ () => this.onVisualMediaReady() }
                   globalPauseMedia={this.props.globalPauseMedia} />
               }
 
-              {this.props.roomData.type === C.mediaTypes.VIDEO_PANORAMA &&
+              {isPanorama &&
                 <PanoramaViewer
-                  type={C.mediaTypes.VIDEO_PANORAMA}
-                  bestFitProps={this.state.bestFitProps}
-                  videoSources={ Utils.createVideoSourcesArray(this.props.roomData.id) }
-                  roomHotspots={this.props.roomData.hotspots}
-                  onPanoramaHotspotClicked={ (index) => this.props.onPanoramaHotspotClicked(index) }
-                  onReady={ () => this.onVideoReady() }
-                  globalPauseMedia={this.props.globalPauseMedia}
-                  winInfo={this.props.winInfo} />
-              }
-
-              {this.props.roomData.type === C.mediaTypes.IMAGE_PANORAMA &&
-                <PanoramaViewer
-                  type={C.mediaTypes.IMAGE_PANORAMA}
+                  type={this.props.roomData.type}
                   bestFitProps={this.state.bestFitProps}
                   roomHotspots={this.props.roomData.hotspots}
-                  imageSource={ `${C.dirs.images}/image_panoramas/${this.props.roomData.id}.jpg` }
+                  roomId={this.props.roomData.id}
                   onPanoramaHotspotClicked={ (index) => this.props.onPanoramaHotspotClicked(index) }
-                  onReady={ () => this.onVideoReady() }
+                  onReady={ () => this.onVisualMediaReady() }
                   globalPauseMedia={this.props.globalPauseMedia}
                   winInfo={this.props.winInfo} />
               }
@@ -203,7 +191,7 @@ class Slide extends Component {
                 hideAudioPlayer={this.props.roomData.hideAudioPlayer}
                 sources={`${C.dirs.audio}/${this.props.roomData.id}.mp3`}
                 onReady={ () => this.onAudioReady() }
-                globalPauseMedia={!this.state.audioReady || !this.state.videoReady || this.props.globalPauseMedia}
+                globalPauseMedia={!this.state.audioReady || !this.state.visualMediaReady || this.props.globalPauseMedia}
                 winInfo={this.props.winInfo}/>
             }
 
@@ -211,7 +199,7 @@ class Slide extends Component {
               <div style={styles.splashScreenWrapper}>
                 <div style={styles.centeredText}>
                   <Text text="Houses of Parliament" textStyle={ Utils.mergeStyles(C.h1, C.textShadow) } color={C.textLight}></Text>
-                  <Text text="Explore this historic British seat of power as CNN gains exclusive 360 access" textStyle={ Utils.mergeStyles(C.h2, C.textShadow) } color={C.textLight}></Text>
+                  <Text text="Explore this historic British seat of power as CNN gains unique 360 access" textStyle={ Utils.mergeStyles(C.h2, C.textShadow) } color={C.textLight}></Text>
                   { exploreButton }
                 </div>
                 <div style={styles.headphonesText}>
@@ -224,7 +212,7 @@ class Slide extends Component {
               <div style={styles.loaderWrapper} >
                 <Loader 
                   text={this.props.roomData.name ? this.props.roomData.name + ' loading...' : 'Loading...'} 
-                  contentReady={ this.state.videoReady && this.state.audioReady } 
+                  contentReady={ this.state.visualMediaReady && this.state.audioReady } 
                   onLoaderGone={ () => this.onLoaderGone() } />
               </div>
             }

@@ -22,26 +22,49 @@ class VideoPlayer extends Component {
 
   initializePlayer(){
     this.player = videojs(this.videoId, {sources: this.props.videoSources}, () => {
-      this.onReady();
+      this.player.on('timeupdate', () => this.onTimeUpdate());
+      this.play();
     });
   }
 
-  onReady() {
-    this.player.play();
-    this.props.onVideoReady(this.player);
+  play() {
+    if (this.playTimeout) clearTimeout(this.playTimeout);
+    if (!this.player) return;
+
+    this.playTimeout = setTimeout( () => {
+      if (this.props.onPlayError) this.props.onPlayError();
+      this.stop();
+    }, C.mediaPlayTimeout);
+
+    if (this.player) this.player.play();
+  }
+
+  stop() {
+    if (this.playTimeout) clearTimeout(this.playTimeout);
+    if (this.player) this.player.pause();
+  }
+
+  onTimeUpdate() {
+    if (this.playTimeout) clearTimeout(this.playTimeout);
+    if (this.state.isFirstPlay) {
+      if (this.props.onReady) this.props.onReady(this.player);
+      this.setState({ isFirstPlay: false });
+    }
   }
 
   componentDidMount() {
-    this.timer = setTimeout(() => this.initializePlayer(), 500);
+    this.initTimeout = setTimeout(() => this.initializePlayer(), 500);
   }
 
   componentWillUnmount() {
-    this.timer && clearTimeout(this.timer);
-    this.player && this.player.dispose();
+    if (this.initTimeout) clearTimeout(this.initTimeout);
+    if (this.playTimeout) clearTimeout(this.playTimeout);
+    if (this.player) this.player.dispose();
+    this.player = undefined;
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.player) nextProps.globalPauseMedia ? this.player.pause() : this.player.play();
+    if (this.player) nextProps.globalPauseMedia ? this.stop() : this.play();
   }
 
   generateVideoHtml(offset = {left: 0, top: 0}) {

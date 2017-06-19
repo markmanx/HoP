@@ -89,23 +89,37 @@ class AudioPlayer extends Component {
     this.state.resumeAfterGlobalPause = (this.state.playStatus === Sound.status.PLAYING);
   }
 
-  onReady(e) {
-    this.props.onReady && this.props.onReady();
+  play() {
+    if (this.playTimeout !== 'undefined') clearTimeout(this.playTimeout);
+    this.playTimeout = setTimeout(() => {
+      this.stop();
+    }, C.mediaPlayTimeout);
+
+    this.setState({ playStatus: Sound.status.PLAYING });
+  }
+
+  stop() {
+    this.playIconAnim.reverse();
+    if (this.playTimeout !== 'undefined') clearTimeout(this.playTimeout);
+    this.setState({ playStatus: Sound.status.PAUSED });
   }
 
   onAudioPlaying(e) {
-    if (this.playTimeout) clearTimeout(this.playTimeout);
+    if (this.playTimeout !== 'undefined') clearTimeout(this.playTimeout);
+    if (this.playIconAnim.progress() < 1) this.playIconAnim.play();
     this.setState({ progress: e.position / e.duration });
   }
 
   onAudioFinished(e) {
-    this.setState({ playing: false });
+    this.play();
   }
 
   onPlayClicked(e) {
-    this.setState({
-      playStatus: (this.state.playStatus === Sound.status.PLAYING) ? Sound.status.PAUSED : Sound.status.PLAYING
-    });
+    if (this.state.playStatus === Sound.status.PLAYING) {
+      this.stop();
+    } else {
+      this.play();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -115,36 +129,24 @@ class AudioPlayer extends Component {
     // (global pause is initiated when the user opens a nav item)
     if (hasChanged['globalPauseMedia']) {
       if (nextProps.globalPauseMedia) {
-        this.setState({
-          playStatus: Sound.status.PAUSED,
-          resumeAfterGlobalPause: (this.state.playStatus === Sound.status.PLAYING)
-        });
+        this.setState({ resumeAfterGlobalPause: (this.state.playStatus === Sound.status.PLAYING) });
+        this.stop();
       } else if (this.state.resumeAfterGlobalPause) {
-        this.setState({ playStatus: Sound.status.PLAYING });
+        this.play();
       }
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    let hasChanged = Utils.detectChanges(prevState, this.state);
-
-    if (hasChanged['playStatus']) {
-      (this.state.playStatus === Sound.status.PLAYING) ? this.playIconAnim.play() : this.playIconAnim.reverse();
     }
   }
 
   componentDidMount() {
     this.playIconAnim = new TimelineMax({ paused: (this.state.playStatus === Sound.status.PAUSED) })
       .to(this.playIcon, 0.5, {scale: 1.5, opacity: 0, ease: Expo.easeInOut});
-
-    this.playTimeout = setTimeout(() => {
-      this.setState({ playStatus: Sound.status.PAUSED });
-      this.onReady();
-    }, 3500);
+    
+    this.play();
+    if (this.props.onReady) this.props.onReady();
   }
 
   componentWillUnmount() {
-    if (this.playTimeout) clearTimeout(this.playTimeout);
+    this.stop();
   }
 
   render() {
@@ -154,7 +156,7 @@ class AudioPlayer extends Component {
         <Sound
           url={this.props.sources}
           playStatus={this.state.playStatus}
-          onReady={ () => this.onReady() }
+          onReady={ () => {} }
           onPlaying={(e) => this.onAudioPlaying(e)}
           onFinishedPlaying={(e) => this.onAudioFinished(e)}/>
 

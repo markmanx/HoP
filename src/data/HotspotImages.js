@@ -158,14 +158,14 @@ const HotspotImages = [
 
   {
     id: 'TheShard',  
-    hotspotId: 38,
+    hotspotId: 34,
     caption: `The Shard dominates London’s skyline. Photo credit: Nicolò Campo/LightRocket via Getty Images`
   },
 
   {
     id: 'BTTower',  
     hotspotId: 39,
-    caption: `Originally called Post Office Tower, the building is cylindrical to keep it from shifting I high winds. It needs to be a stable as possible because of its aerials. Photo credit: View Pictures/UIG via Getty Images`
+    caption: `Originally called Post Office Tower, the building is cylindrical to keep it from shifting in high winds. It needs to be a stable as possible because of its aerials. Photo credit: View Pictures/UIG via Getty Images`
   },
 
   {

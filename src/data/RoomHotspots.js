@@ -155,7 +155,7 @@ const RoomHotspots = [
         isMain: true,
         coords: [ 870, 486 ],
         title: `About this room`,
-        text: `The raucous chamber where members of parliament debate, question, argue, heckle and harangue in a rowdy display of democracy. Once a week when Parliament is in session, the Prime Minister stands at the despatch box to answer questions from both sides of the house. No less a figure than Winston Churchill pressed for the chamber to keep its adversarial architecture after the building was bombed during World War II. "We shape our buildings and afterwards our buildings shape us", the wartime prime minister argued.`
+        text: `The raucous chamber where members of parliament debate, question, argue, heckle and harangue in a rowdy display of democracy. Once a week when Parliament is in session, the Prime Minister stands at the despatch box to answer questions from both sides of the house. No less a figure than Winston Churchill pressed for the chamber to keep its adversarial architecture after the building was bombed during World War II. "We shape our buildings and afterwards our buildings shape us," the wartime prime minister argued.`
     },
 
     {
@@ -303,7 +303,7 @@ const RoomHotspots = [
         roomId: 'ActRoom',
         coords: [ 748, 677 ],
         title: `European Communities Act`,
-        text: `This is the act of Parliament that made the United Kingdom a member of the European Economic Community, which became the European Union. The law declares that European Union law has supremacy over British laws -- a key reason why campaigners for Brexit said the UK had lost its sovreignty. After the 2016 Brexit referendum, the government announced it would repeal the 1972 act.`
+        text: `This is the act of Parliament that made the United Kingdom a member of the European Economic Community, which became the European Union. The law declares that European Union law has supremacy over British laws -- a key reason why campaigners for Brexit said the UK had lost its sovereignty. After the 2016 Brexit referendum, the government announced it would repeal the 1972 act.`
     },
 
     {
@@ -328,7 +328,7 @@ const RoomHotspots = [
         isMain: true,
         coords: [ 167, 583 ],
         title: `About Westminster Bridge`,
-        text: `Welcome to the Houses of Parliament, a link between old and new, royalty and democracy. There has been a royal palace on this site for more than 1,000 years, but the current has been a royal palace on this site for more than 1,000 years, but the current Palace of Westminster is less than 200 years old. Designed in neo-Gothic style, it was built in the Victorian era, after a fire destroyed the previous building. Today's palace is the home of the House of Commons and the House of Lords, where British laws are made.`
+        text: `Welcome to the Houses of Parliament, a link between old and new, royalty and democracy. There has been a royal palace on this site for more than 1,000 years, but the current Palace of Westminster is less than 200 years old. Designed in neo-Gothic style, it was built in the Victorian era, after a fire destroyed the previous building. Today's palace is the home of the House of Commons and the House of Lords, where British laws are made.`
     },
 
     {
@@ -385,7 +385,7 @@ const RoomHotspots = [
         roomId: 'Roof', 
         coords: [ 1230, 435 ],
         title: `London Eye`,
-        text: `Built in 2000 and originally intended to sit on the river for only five years, this giant observation wheel quickly became one of London's most recognizable monuments. At 135 meters (443 feet) tall, it's ONE OF the tallest structureS of its kind in the world. It has 32 capsules, one for each borough in London -- but there's no number 13 because the number is considered bad luck, so there's a capsule 33. The capsules travel at a leisurely 0.6 miles per hour (26 meters per second) so people can get on and off without stopping the wheel.`
+        text: `Built in 2000 and originally intended to sit on the river for only five years, this giant observation wheel quickly became one of London's most recognizable monuments. At 135 meters (443 feet) tall, it's one of the tallest structureS of its kind in the world. It has 32 capsules, one for each borough in London -- but there's no number 13 because the number is considered bad luck, so there's a capsule 33. The capsules travel at a leisurely 0.6 miles per hour (26 meters per second) so people can get on and off without stopping the wheel.`
     },
 
     {
@@ -409,7 +409,7 @@ const RoomHotspots = [
         id: 43,
         roomId: 'Basement', 
         coords: [ 1031, 564 ],
-        title: `Gunpowder plot`,
+        title: `Gunpowder Plot`,
         text: `Early in the 1600s, a small group of Catholic gentlemen hatched a plot to kill King James I, his son, and most of the Commons and the Lords by blowing up Parliament during the State Opening ceremony. The plot was born after Catholics and Protestants had waged a sometimes bloody generation-long struggle for control of the English throne and nation, and amid frustration that the Protestant king had not fulfilled promises to ease the persecution of Catholics. The plotters got as far as tunneling into the basement of parliament and planting dozens of barrels of gunpowder before one of them, Guy Fawkes, was caught red-handed on Nov. 4, 1605 -- the night before Parliament was due to open. Fawkes and other conspirators were executed, while two leaders of the group were killed in a small attempted uprising after the plot was discovered.`
     }
 ]

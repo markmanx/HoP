@@ -33,7 +33,7 @@ const Rooms = [
 
   {
     id: 'BigBen',
-    name: 'The Belfry',
+    name: 'Big Ben',
     mapCoords: [187, 108],
     type: C.mediaTypes.IMAGE_PANORAMA,
     hasAudio: true
