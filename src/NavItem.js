@@ -80,7 +80,7 @@ class NavItem extends Component {
         } else {
           TweenMax.set(this.navIconEl, {display: 'inline', delay: 0.4});
           TweenMax.set(this.innerContentEl, {display: 'none', delay: 0.4});
-          TweenMax.to(this.roundedWrapperEl, 0.2, {borderRadius: 1000} );
+          TweenMax.to(this.roundedWrapperEl, 0.2, {borderRadius: 1000, delay: 0.2} );
         }
       }
     }
