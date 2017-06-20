@@ -11,7 +11,6 @@ const styles = {
     width: C.navItemSize,
     height: C.navItemSize,
     zIndex: 1,
-    overflow: 'hidden',
     backgroundColor: 'white'
   }, C.roundedCorners),
   expanded: Utils.mergeStyles({
@@ -19,6 +18,13 @@ const styles = {
     top: C.pagePadding * 0.5,
     zIndex: 11
   }, C.unroundedCorners),
+  roundedWrapper: Utils.mergeStyles({
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden',
+    zIndex: 1
+  }, C.roundedCorners),
   innerContent: {
     position: 'absolute',
     width: '100%',
@@ -66,12 +72,16 @@ class NavItem extends Component {
     let hasChanged = Utils.detectChanges(nextProps.commonProps, this.props.commonProps);
 
     if (hasChanged['isExpanded']) {
-      if (nextProps.commonProps.isExpanded) {
-        TweenMax.set(this.navIconEl, {display: 'none', delay: 0.2});
-        TweenMax.set(this.innerContentEl, {display: 'inline', delay: 0.2});
-      } else {
-        TweenMax.set(this.navIconEl, {display: 'inline', delay: 0.4});
-        TweenMax.set(this.innerContentEl, {display: 'none', delay: 0.4});
+      if (this.navIconEl && this.innerContentEl && this.roundedWrapperEl) {
+        if (nextProps.commonProps.isExpanded) {
+          TweenMax.set(this.navIconEl, {display: 'none', delay: 0.2});
+          TweenMax.set(this.innerContentEl, {display: 'inline', delay: 0.2});
+          TweenMax.to(this.roundedWrapperEl, 0.2, {borderRadius: 0} );
+        } else {
+          TweenMax.set(this.navIconEl, {display: 'inline', delay: 0.4});
+          TweenMax.set(this.innerContentEl, {display: 'none', delay: 0.4});
+          TweenMax.to(this.roundedWrapperEl, 0.2, {borderRadius: 1000} );
+        }
       }
     }
 
@@ -87,25 +97,26 @@ class NavItem extends Component {
       <div
         ref={ (el) => this.wrapperEl = el }
         style={ Utils.mergeStyles(styles.wrapper, C.enableGPU, this.props.commonProps.posCss) }>
+        
+        <Pulse pulsate={this.props.commonProps.pulsate} />
+        
+        <div style={ styles.roundedWrapper } ref={ (el) => this.roundedWrapperEl = el }>
+          <div
+            style={styles.innerContent}
+            ref={(el) => this.innerContentEl = el}>
 
-        <Pulse 
-          pulsate={this.props.commonProps.pulsate} />
+            <div style={ Utils.mergeStyles(styles.content, {width: this.props.commonProps.expandedStyle.width - (C.panelPadding * 2), height: this.props.commonProps.expandedStyle.height - C.panelPadding * 2 }) } ref={el => this.content = el}>
+              {this.props.children}
+            </div>
 
-        <div
-          style={styles.innerContent}
-          ref={(el) => this.innerContentEl = el}>
-
-          <div style={ Utils.mergeStyles(styles.content, {width: this.props.commonProps.expandedStyle.width - (C.panelPadding * 2), height: this.props.commonProps.expandedStyle.height - C.panelPadding * 2 }) } ref={el => this.content = el}>
-            {this.props.children}
+            <Icon _onClick={(e) => this.onClose(e)} buttonStyle='panelClose' iconRef='close' iconType='png' />
           </div>
 
-          <Icon _onClick={(e) => this.onClose(e)} buttonStyle='panelClose' iconRef='close' iconType='png' />
-        </div>
-
-        <div
-          style={ Utils.mergeStyles(styles.navIcon, Utils.genBgImgStyle(this.props.navIconUrl)) }
-          ref={ (el) => this.navIconEl = el }
-          onClick={(e, id) => this.onOpen(e, id)}>
+          <div
+            style={ Utils.mergeStyles(styles.navIcon, Utils.genBgImgStyle(this.props.navIconUrl)) }
+            ref={ (el) => this.navIconEl = el }
+            onClick={(e, id) => this.onOpen(e, id)}>
+          </div>
         </div>
 
       </div>

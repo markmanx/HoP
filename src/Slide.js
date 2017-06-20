@@ -43,10 +43,10 @@ const styles = {
   },
   centeredText: Utils.mergeStyles({
     position: 'absolute',
-    width: '100%',
+    width: '90%',
     height: '100%',
     top: 0,
-    left: 0,
+    left: '5%',
     flexDirection: 'column',
     textAlign: 'center',
     alignItems: 'center',
@@ -70,7 +70,8 @@ class Slide extends Component {
     this.state = {
       audioReady:  !!!this.props.roomData.hasAudio,
       visualMediaReady: false,
-      loaderVisible: true
+      loaderVisible: true,
+      videoPlayError: false
     }
   }
 
@@ -84,6 +85,10 @@ class Slide extends Component {
 
   onLoaderGone() {
     this.setState({ loaderVisible: false });
+  }
+
+  onVideoPlayError() {
+    this.setState({ videoPlayError: true });
   }
 
   onResize() {
@@ -135,7 +140,29 @@ class Slide extends Component {
   render() {
 
     let exploreButton,
-        isPanorama = (this.props.roomData.type === C.mediaTypes.VIDEO_PANORAMA || this.props.roomData.type === C.mediaTypes.IMAGE_PANORAMA); 
+        isPanorama = (this.props.roomData.type === C.mediaTypes.VIDEO_PANORAMA || this.props.roomData.type === C.mediaTypes.IMAGE_PANORAMA),
+        showVideoPlayer = this.props.roomData.type === C.mediaTypes.VIDEO && !this.state.videoPlayError,
+        splashBackupImgCss;
+
+    // Find best fit for splash backup image
+    let winAspectRatio = this.props.winInfo.width / this.props.winInfo.height,
+        imgAspectRatio = 1600 / 900;
+
+    if (imgAspectRatio > winAspectRatio) {
+      splashBackupImgCss = {
+          width: this.props.winInfo.height * imgAspectRatio,
+          height: this.props.winInfo.height,
+          left: (this.props.winInfo.width * 0.5) - ((this.props.winInfo.height * imgAspectRatio) * 0.5),
+          top: 0
+      }
+    } else {
+      splashBackupImgCss = {
+        width: this.props.winInfo.width,
+        height: this.props.winInfo.width / imgAspectRatio,
+        left: 0,
+        top: (this.props.winInfo.height * 0.5) - ((this.props.winInfo.width / imgAspectRatio) * 0.5)
+      }
+    }
     
     if (this.props.winInfo.isDesktop) {
       exploreButton =                  
@@ -164,10 +191,11 @@ class Slide extends Component {
 
             <div style={ Utils.mergeStyles(styles.bestFitWrapper, this.state.bestFitProps) } key={this.props.videoKey}>
 
-              {this.props.roomData.type === C.mediaTypes.VIDEO &&
+              {showVideoPlayer &&
                 <VideoPlayer
                   videoSources={ Utils.createVideoSourcesArray(this.props.roomData.id) }
                   onReady={ () => this.onVisualMediaReady() }
+                  onPlayError={ () => this.onVideoPlayError() }
                   globalPauseMedia={this.props.globalPauseMedia} />
               }
 
@@ -197,6 +225,9 @@ class Slide extends Component {
 
             {this.props.roomData.id === 'Splash' &&
               <div style={styles.splashScreenWrapper}>
+                {this.state.videoPlayError && 
+                  <img src={`${C.dirs.images}/splash.jpg`} style={splashBackupImgCss} />
+                }
                 <div style={styles.centeredText}>
                   <Text text="Houses of Parliament" textStyle={ Utils.mergeStyles(C.h1, C.textShadow) } color={C.textLight}></Text>
                   <Text text="Explore this historic British seat of power as CNN gains unique 360 access" textStyle={ Utils.mergeStyles(C.h2, C.textShadow) } color={C.textLight}></Text>
