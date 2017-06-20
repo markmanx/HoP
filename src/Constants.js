@@ -1,4 +1,5 @@
-const ASSETS_DIR = process.env.PUBLIC_URL + '/assets';
+//const ASSETS_DIR = process.env.PUBLIC_URL + '/assets';
+const ASSETS_DIR = 'http://i.cdn.cnn.com/cnn/interactive/2017/04/world/house-of-parliament/assets';
 
 module.exports = {
   // Media Types
@@ -12,7 +13,7 @@ module.exports = {
   dirs: {
     assets:   ASSETS_DIR,
     images:   ASSETS_DIR + '/images',
-    video:    ASSETS_DIR + '/video',
+    video:    process.env.PUBLIC_URL + '/assets/video',
     audio:    ASSETS_DIR + '/audio',
     icons:    ASSETS_DIR + '/icons'
   },

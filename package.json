@@ -2,7 +2,7 @@
   "name": "HousesOfParliament",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://cnnpreview.cnn.com:94/interactive/2017/05/world/HousesOfParliament",
+  "homepage": "http://cnnpreview.cnn.com:82/interactive/2017/04/world/house-of-parliament",
   "devDependencies": {
     "react-scripts": "0.9.0",
     "video.js": "^5.16.0"
