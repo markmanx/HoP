@@ -88,7 +88,10 @@ class Slide extends Component {
   }
 
   onVideoPlayError() {
-    this.setState({ videoPlayError: true });
+    this.setState({ 
+      videoPlayError: true,
+      visualMediaReady: true
+    });
   }
 
   onResize() {
