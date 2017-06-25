@@ -41,7 +41,8 @@ class HotspotImage extends Component {
   }
 
   render (){
-    let contentDisplay = this.state.unmountLoader ? 'inline-block' : 'none';
+    let contentDisplay = this.state.unmountLoader ? 'inline-block' : 'none',
+        fontSize = this.props.isDesktop ? 14 : 12;
 
     return (
       <div style={styles.wrapper}>
@@ -51,7 +52,7 @@ class HotspotImage extends Component {
           style={ Utils.mergeStyles(styles.hotspotImage, {display: contentDisplay}) }
           onLoad={ () => this.onImageLoaded() } />
         
-        <div style={ Utils.mergeStyles(styles.hotspotImage, {display: contentDisplay}) }>
+        <div style={ Utils.mergeStyles(styles.hotspotImage, {display: contentDisplay}, {fontSize: fontSize}) }>
             {this.props.caption}
         </div>
 

@@ -19,43 +19,26 @@ const styles = {
 class PanoramaViewer extends Component {
   state = {
     hotspotLocations: [],
-    currPanoramaType: 'image',
-    fallbackToImage: false
+    videoError: false,
+    imageTextureLoaded: false
   }
 
   onVideoReady(player) {
     this.videoEl = player.el_.getElementsByTagName('video')[0];
-    this.initVideoPanorama();
+
+    if (this.panorama) {
+      this.panorama.loadTexture( Object.assign(this.defaults, {
+        sourceType: 'video',
+        texSource: this.videoEl,
+        sourceSize: { width: C.videoPanoramaW, height: C.videoPanoramaH }
+      }));
+
+      this.onResize();
+    }
   }
 
   onPlayError() {
-    this.setState({ fallbackToImage: true });
-    if (this.panorama) this.panorama.destroy();
-    this.initImagePanorama();
-  }
-
-  initVideoPanorama() {
-    let settings = Object.assign(this.defaults, {
-      sourceType: 'video',
-      texSource: this.videoEl,
-      sourceSize: { width: C.videoPanoramaW, height: C.videoPanoramaH }
-    });
-
-    this.setState({ currPanoramaType: 'video' });
-    this.panorama = new Panorama(settings);
-    this.onResize();
-  }
-
-  initImagePanorama() {
-    let settings = Object.assign(this.defaults, {
-      sourceType: 'image',
-      texSource: `${C.dirs.images}/image_panoramas/${this.props.roomId}.jpg`,
-      sourceSize: { width: C.imagePanoramaW, height: C.imagePanoramaH }
-    });
-
-    this.setState({ currPanoramaType: 'image' });
-    this.panorama = new Panorama(settings);
-    this.onResize();
+    this.setState({ videoError: true });
   }
 
   onResize() {
@@ -71,10 +54,18 @@ class PanoramaViewer extends Component {
       },
       onReady: () => {
         this.props.onReady();
+        this.setState({ imageTextureLoaded: true });
       }
     };
+  
+    // Initialize panorama with an image, if a video texture is needed we'll load that later
+    this.panorama = new Panorama( Object.assign(this.defaults, {
+      sourceType: 'image',
+      texSource: `${C.dirs.images}/image_panoramas/${this.props.roomId}.jpg`,
+      sourceSize: { width: C.imagePanoramaW, height: C.imagePanoramaH }
+    }));
 
-    if (this.props.type === C.mediaTypes.IMAGE_PANORAMA) this.initImagePanorama();
+    this.onResize();
   }
   
   componentWillUnmount() {
@@ -94,11 +85,11 @@ class PanoramaViewer extends Component {
   }
 
   render() {
-    let isVideoNeeded = this.props.type === C.mediaTypes.VIDEO_PANORAMA && !this.state.fallbackToImage;
+    let videoPlayerNeeded = (this.props.type === C.mediaTypes.VIDEO_PANORAMA) && this.state.imageTextureLoaded && !this.state.videoError;
 
     return (
       <div>
-        { isVideoNeeded &&
+        { videoPlayerNeeded &&
           <VideoPlayer
             videoSources={ Utils.createVideoSourcesArray(this.props.roomId) }
             onReady={(player) => this.onVideoReady(player)}

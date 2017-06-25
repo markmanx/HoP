@@ -16,7 +16,7 @@ const styles = {
   }, C.h3),
   roomTitle: Utils.mergeStyles({
     display: 'block',
-    marginTop: 20
+    marginTop: 0
   }, C.h6),
   roomWrapper: Utils.mergeStyles({
     display: 'inline-block',
@@ -40,47 +40,44 @@ class RoomDiscovery extends Component {
   }
 
   refreshLayout() {
-    if (this.roomEls && this.roomEls.length > 0) {
-      let firstRoomEl = this.roomEls[0],
-          availableHeight = this.props.height,
-          tileHeight = firstRoomEl.clientHeight,
-          numRoomsToDisplay = Math.floor( availableHeight / tileHeight ),
-          roomsToDisplay = this.props.discoverMoreList.slice(0, numRoomsToDisplay);
+    let availableHeight = this.props.winInfo.height - 625,
+        titleHeight = 34,
+        wrapperHeight;
+
+    if (this.firstRoomEl && this.firstRoomEl.clientHeight > 0) {
+      let numRows = Math.floor((availableHeight - titleHeight) / this.firstRoomEl.clientHeight);
       
-      this.setState({ roomsToDisplay: roomsToDisplay });
+      if (numRows === 0) {
+        wrapperHeight = 0;
+      } else {
+        wrapperHeight = (numRows * this.firstRoomEl.clientHeight) + titleHeight;
+      }
+      this.setState({ wrapperHeight: wrapperHeight });
     }
   }
 
+  componentDidMount() {
+    this.refreshTimer = setInterval( () => this.refreshLayout(), 300 );
+  }
+
   componentWillReceiveProps(nextProps) {
-    let wrapperHeight;
+    this.refreshLayout();
+  }
 
-    if (this.firstRoomEl) {
-      let firstRoomElHeight = this.firstRoomEl.clientHeight,
-          titleHeight = this.wrapperTitleEl ? this.wrapperTitleEl.clientHeight : 0,
-          numRowsToDisplay = Math.floor((nextProps.height - (titleHeight + C.discoverMoreMarginT)) / firstRoomElHeight);
-      
-      if (numRowsToDisplay > 0) {
-        wrapperHeight = (numRowsToDisplay * firstRoomElHeight) + titleHeight;
-      } else {
-        wrapperHeight = 0;
-      }
-      
-    } else {
-      wrapperHeight = 0;
-    }
-
-    this.setState({ wrapperHeight: wrapperHeight });
+  componentWillUnmount() {
+    if (this.refreshTimer) clearInterval(this.refreshTimer);
   }
   
   render() {
 
     return (
       <div style={ Utils.mergeStyles(styles.wrapper, {height: this.state.wrapperHeight}) } id="roomWrapper" >
-        <div style={styles.wrapperTitle} ref={ (el) => this.wrapperTitleEl = el }>Rooms to discover</div>
+        <div style={styles.wrapperTitle} ref={ (el) => this.wrapperTitleEl = el }>More to discover</div>
 
-        {
-          this.props.discoverMoreList.map((item, index) => {
+        {this.props.discoverMoreList.map((item, index) => {
             
+            if (index > this.props.maxNumRoomsToDisplay - 1) return;
+
             return (
               <div 
                 style={ Utils.mergeStyles(styles.roomWrapper, (index % 2 == 0) ? styles.leftCol : styles.rightCol ) }
@@ -103,7 +100,6 @@ class RoomDiscovery extends Component {
 
               </div>
             )
-
           })
         }
 

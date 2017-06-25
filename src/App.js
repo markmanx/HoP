@@ -84,7 +84,7 @@ class App extends Component {
     let roomsNotVisited = [];
 
     for (const item of Rooms) {
-      if (!this.state.roomsVisited.includes(item.id)) {
+      if (!this.state.roomsVisited.includes(item.id) && item.id !== 'Splash') {
         roomsNotVisited.push(item);
       }
     }

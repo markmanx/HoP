@@ -81,7 +81,7 @@ const Rooms = [
   {
     id: 'ActRoom',
     name: 'Act Room',
-    mapCoords: [629, 0],
+    mapCoords: [620, 15],
     type: C.mediaTypes.IMAGE_PANORAMA,
     hasAudio: true
   },

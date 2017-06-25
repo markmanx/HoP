@@ -6,7 +6,7 @@ import NavItem from './NavItem.js';
 import Map from './Map.js';
 import HotspotImage from './HotspotImage.js';
 import Footer from './Footer.js';
-import RoomDiscovery from './RoomDiscovery.js';
+import DiscoverMore from './DiscoverMore.js';
 import { TimelineMax, TweenMax, Expo } from 'gsap';
 
 const styles = {
@@ -158,14 +158,6 @@ class PrimaryNav extends Component {
     }
   }
 
-  componentWillReceiveProps() {
-    if (this.mapEl) {
-      this.setState({ 
-        discoverMoreHeight: this.mapEl.clientHeight - (C.mapImgHeight + C.mapPaddingT) 
-      });
-    }
-  }
-
   componentDidMount() {
     this.creditsAnim = new TimelineMax({ paused: this.state.creditsShowing })
       .to(this.mapEl, 0.3, {autoAlpha: 0})
@@ -208,6 +200,7 @@ class PrimaryNav extends Component {
                           <HotspotImage 
                             key={item.id}
                             src={`${C.dirs.images}/hotspot_images/hotspotImage_${item.id}.jpg`}
+                            isDesktop={this.props.winInfo.isDesktop}
                             caption={item.caption} />
                         )
                       })
@@ -243,10 +236,11 @@ class PrimaryNav extends Component {
                   totalRooms={this.props.totalRooms}
                   winInfo={this.props.winInfo}
                   />
-
-                <RoomDiscovery 
+                
+                <DiscoverMore 
                   discoverMoreList={this.props.discoverMoreList}
-                  height={ this.state.discoverMoreHeight }
+                  winInfo={ this.props.winInfo }
+                  maxNumRoomsToDisplay={this.props.winInfo.isDesktop ? 6 : 2}
                   onRoomClicked={ (roomId) => this.props.onRoomClicked(roomId) }
                   />
               </div>
