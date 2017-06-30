@@ -122,10 +122,13 @@ class PanoramaViewer extends Component {
               hotspotStyle.opacity = 1;
             }
 
+            let icon = item.icon ? item.icon : 'hotspot-plus.png';
+
             return (
               <div style={hotspotStyle} key={`hotspot${index}`}>
                 <Hotspot
                   text={item.title}
+                  icon={icon}
                   enableClick={true}
                   onClick={ () => this.props.onPanoramaHotspotClicked(item.id) }
                   winInfo={this.props.winInfo} />

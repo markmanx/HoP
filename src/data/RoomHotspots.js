@@ -40,6 +40,7 @@ const RoomHotspots = [
         roomLink: 'BigBenClockDial',
         coords: [ 652, 453 ],
         title: `Go upstairs`,
+        icon: 'go-upstairs_icon.png'
     },
     
     {
@@ -73,6 +74,7 @@ const RoomHotspots = [
         roomLink: 'BigBen',
         coords: [ 1578, 580 ],
         title: `Go upstairs`,
+        icon: 'go-upstairs_icon.png'
     },
 
     {
@@ -80,7 +82,8 @@ const RoomHotspots = [
         roomId: 'BigBenClockDial',
         roomLink: 'BigBenMechanismFloor',
         coords: [ 502, 578 ],
-        title: `Go downstairs`
+        title: `Go downstairs`,
+        icon: 'go-downstairs_icon.png'
     },
 
     {
@@ -121,7 +124,8 @@ const RoomHotspots = [
         roomId: 'BigBen',
         roomLink: 'BigBenClockSupport',
         coords: [ 1872, 622 ],
-        title: `Go upstairs`
+        title: `Go upstairs`,
+        icon: 'go-upstairs_icon.png'
     },
 
     {
@@ -129,7 +133,8 @@ const RoomHotspots = [
         roomId: 'BigBen',
         roomLink: 'BigBenClockDial',
         coords: [ 508, 607 ],
-        title: `Go downstairs`
+        title: `Go downstairs`,
+        icon: 'go-downstairs_icon.png'
     },
 
     {
@@ -146,7 +151,8 @@ const RoomHotspots = [
         roomId: 'BigBenClockSupport',
         roomLink: 'BigBen',
         coords: [ 297, 591 ],
-        title: `Go downstairs`
+        title: `Go downstairs`,
+        icon: 'go-downstairs_icon.png'
     },
 
     {

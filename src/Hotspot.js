@@ -36,7 +36,7 @@ const styles = {
     display: 'inline',
     lineHeight: C.hotspotInitialHeight + 'px'
   },
-  plusIcon: {
+  collapsedIcon: {
     position: 'absolute',
     width: '22px',
     top: '50%',
@@ -134,7 +134,7 @@ class Hotspot extends Component {
         this.expandAnim = new TimelineMax({ paused: !this.state.isExpanded })
         .to(this.wrapper, 0.001, {zIndex: 10})
         .appendMultiple([
-          TweenMax.to(this.plusIcon, 0.2, {opacity: 0}),
+          TweenMax.to(this.collapsedIcon, 0.2, {opacity: 0}),
           TweenMax.to(this.textWrapper, 0.2, {opacity: 1, delay: 0.1}),
           TweenMax.to(this.wrapper, 0.5, {width: textWidth + (C.hotspotPadding * 2), left: -((textWidth * 0.5) - C.hotspotPadding), ease: Expo.easeInOut})
         ]);
@@ -177,7 +177,8 @@ class Hotspot extends Component {
 
   render() {
     let bgColor = this.props.winInfo.isDesktop && this.state.hover ? C.color2 : C.color1,
-        textColor = {color: this.props.winInfo.isDesktop && this.state.hover ? C.textDark : C.textLight};
+        textColor = {color: this.props.winInfo.isDesktop && this.state.hover ? C.textDark : C.textLight},
+        collapsedIcon = this.props.icon ? `${C.dirs.icons}/${this.props.icon}` : `${C.dirs.icons}/hotspot-plus.png`;
 
     return (
       <div
@@ -194,7 +195,7 @@ class Hotspot extends Component {
               {this.props.text}
             </div>
           </div>
-          <img style={styles.plusIcon} src={C.dirs.icons + '/hotspot-plus.png'} ref={el => this.plusIcon = el}/>
+          <img style={styles.collapsedIcon} src={collapsedIcon} ref={el => this.collapsedIcon = el}/>
         </div>
 
         {this.props.visited &&
